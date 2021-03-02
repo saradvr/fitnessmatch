@@ -1,35 +1,5 @@
 import React from "react"
-
-class FormInputs extends React.Component {
-  render() {
-    const {children, type, name, id} = this.props
-    return (
-      <form>
-        <label htmlFor={id}>
-          {children}
-        </label>
-        <input type={type} name={name} id={id}/>
-      </form>
-    )
-  }
-}
-
-class Button extends React.Component {
-  render() {
-      const {children, type, name, id} = this.props
-    return (
-      <>
-      <label htmlFor={id}>
-
-      </label>
-      <button type={type} name={name} id={id} >
-        {children}
-      </button>
-      </>
-    )
-  }
-}
-
+import FormInputs from "./components/FormInputs"
 
 function App() {
   return (
@@ -42,12 +12,12 @@ function App() {
    >
      Password
   </FormInputs>
-  <Button type="submit" name="login" id="login">
+  {/* <Button type="submit" name="login" id="login">
     Login
-  </Button>
-  <Button type="#" name="login" id="login">
+  </Button> */}
+  {/* <Button type="#" name="login" id="login">
     Sign Up
-  </Button>
+  </Button> */}
    </section>
   );
 }
