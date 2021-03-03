@@ -1,12 +1,12 @@
 import React from 'react'
 
 
-function Button ({type, children, handleClick, handleClickArg}){
+function Button ({type, children, handleClick}){
 
   return (
     <button 
       type={type}
-      onClick={handleClick(handleClickArg)}
+      onClick={handleClick}
     >
       {children}
     </button>
