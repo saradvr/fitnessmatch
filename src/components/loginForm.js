@@ -1,26 +1,67 @@
-import Button from "./components/Button"
+import React from "react"
+import Button from "./Button"
+import {dataUsers} from "../dataUsers"
+import {dataCoaches} from "../dataCoaches"
+import { BrowserRouter, Route, Link } from "react-router-dom";
+import FormInputs from "./FormInputs"
 
-hanleClick = () => {
-  
+class LoginForm extends React.Component {
+  state = {
+    email: "",
+    password: "",
+    error: null,
+  }
+
+  handleChange = e => {
+    const {name, value} = e.target
+    this.setState({
+      [name]: value,
+    })
+  }
+
+  handleSubmit = e => {
+    e.preventDefault()
+    const {email, password} = this.state
+    dataUsers.forEach((dataUser)=> {
+      if(dataUser.email === email && dataUser.password === password)
+      {
+        this.props.history.push("/coachesList")
+      } 
+    })
+    this.setState({
+      error: " Incorrect username or password "
+    }) 
+  }
+
+  render() {
+    const {email, password, error} = this.state
+    return (
+      <form onSubmit={this.handleSubmit}> 
+        {error && <p>{error}</p>}
+        <FormInputs 
+          type="text" 
+          name="email" 
+          id="email" 
+          value={email}
+          onChange={this.handleChange}
+        >
+          Email
+        </FormInputs>
+        <FormInputs 
+          type="password" 
+          name="password" 
+          id="password"
+          value={password} 
+          onChange={this.handleChange}
+        >
+          Password
+        </FormInputs>
+        <Button type="submit">
+          Entrar
+        </Button>
+      </form>
+    )
+  }
 }
 
-<form>
-  <FormInputs 
-    type="text" 
-    name="email" 
-    id="email" 
-  >
-    Email
-  </FormInputs>
-  <FormInputs 
-    type="password" 
-    name="password" 
-    id="password" 
-  >
-    Password
-  </FormInputs>
-  <Button type="submit" onClick
-  >
-
-  </Button>
-</form>
+export default LoginForm
