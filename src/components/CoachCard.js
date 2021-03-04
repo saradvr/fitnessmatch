@@ -1,5 +1,8 @@
-export function CoachCard ({ name, specializations, disciplines, experienceYears, appointmentFee, profilePicture}) {
-    return (
+import { Link } from 'react-router-dom';
+import Button from './Button';
+export function CoachCard ({ _idUserType, name, specializations, disciplines, experienceYears, appointmentFee, profilePicture, seeProfile}) {
+  
+  return (
     <article>
       <table>
         <thead>
@@ -19,6 +22,13 @@ export function CoachCard ({ name, specializations, disciplines, experienceYears
               <p>Especialidades: {specializations.join(', ')}</p>
               <p>Disciplinas: {disciplines.join(', ')}</p>
               <p>Precio de la cita: ${new Intl.NumberFormat('co-CO', { style: 'currency', currency: 'COP' }).format(appointmentFee)}</p>
+              <Link to={`/coach/${_idUserType}`}>
+                <Button
+                  type="button"
+                >
+                  Ver Perfil
+                </Button>
+              </Link>
             </td>
           </tr>
         </tbody>
