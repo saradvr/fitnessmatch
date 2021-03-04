@@ -1,3 +1,9 @@
+import Button from "./components/Button"
+
+hanleClick = () => {
+  
+}
+
 <form>
   <FormInputs 
     type="text" 
@@ -13,4 +19,8 @@
   >
     Password
   </FormInputs>
+  <Button type="submit" onClick
+  >
+
+  </Button>
 </form>
