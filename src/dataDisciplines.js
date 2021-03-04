@@ -1,4 +1,4 @@
-const disciplines = [
+export const disciplines = [
   'Pesas',
   'Trote',
   'Abdominales',
@@ -8,5 +8,3 @@ const disciplines = [
   'Yoga',
   'Crossfit'
 ]
-
-export default disciplines;

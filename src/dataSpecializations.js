@@ -1,4 +1,4 @@
-const specializations = [
+export const specializations = [
   'Bajar de peso',
   'Aumentar masa muscular',
   'Tonificación',
@@ -6,5 +6,3 @@ const specializations = [
   'Liberar estrés',
   'Mejorar condición física'
 ]
-
-export default specializations;
