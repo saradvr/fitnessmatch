@@ -5,6 +5,7 @@ export function CoachesList ({ coaches }) {
     <section>
       {!!coaches && coaches.length > 0 ? coaches.map(({
         _id, 
+        _idUserType,
         name, 
         specializations, 
         disciplines, 
@@ -21,6 +22,7 @@ export function CoachesList ({ coaches }) {
             experienceYears={experienceYears}
             appointmentFee={appointmentFee}
             profilePicture={profilePicture}
+            _idUserType={_idUserType}
           />
         )
       }):
