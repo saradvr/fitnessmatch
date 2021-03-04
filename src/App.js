@@ -1,24 +1,18 @@
-import React from "react"
-import FormInputs from "./components/FormInputs"
+import {
+  BrowserRouter as Router,
+  Route,  
+  Switch,
+} from 'react-router-dom';
+import {ListadoEntrenadores} from './pages/ListadoEntrenadores';
+import './App.css';
 
 function App() {
   return (
-    <form>
-      <FormInputs 
-        type="text" 
-        name="email" 
-        id="email"
-      >
-        Email
-      </FormInputs>
-      <FormInputs 
-        type="password" 
-        name="password" 
-        id="password" 
-      >
-        Password
-      </FormInputs>
-   </form>
+    <Router>
+      <Switch>
+        <Route path="/coachesList" component={ListadoEntrenadores} />
+      </Switch>
+    </Router>
   );
 }
 
