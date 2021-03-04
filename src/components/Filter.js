@@ -6,10 +6,9 @@ function Filter({filterName, name}){
       {!!filterName && filterName.length > 0 && filterName.map(( item )  => {
         return (
             <Checkbox
-              nameFor = {item.toLowerCase().replace(/ /g, "")}
-              nameId = {item.toLowerCase().replace(/ /g, "")}
+              id = {item.toLowerCase().replace(/ /g, "")}
               name = {name.toLowerCase().replace(/ /g, "")}
-              nameValue = {item.toLowerCase().replace(/ /g, "")}
+              value = {item.toLowerCase().replace(/ /g, "")}
               children= {item}
             />
         )

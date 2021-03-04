@@ -1,8 +1,8 @@
-function Checkbox ({nameFor, nameId, nameValue, name, children}) {
+function Checkbox ({id, value, name, children}) {
     return (
       <>
-        <input type="checkbox" id={nameId} name={name} value={nameValue}/> 
-        <label htmlFor={nameFor}>{children}</label>
+        <input type="checkbox" id={id} name={name} value={value}/> 
+        <label htmlFor={id}>{children}</label>
       </>
     )
   } 
