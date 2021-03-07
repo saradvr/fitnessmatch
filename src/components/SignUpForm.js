@@ -12,8 +12,6 @@ class SignUpForm extends React.Component {
   
   handleChange = e =>{
     const {name, value} = e.target
-    // console.log(value)
-    console.dir(e.target)
     this.setState({
       [name]: value,
     })
@@ -21,7 +19,6 @@ class SignUpForm extends React.Component {
 
   handleSubmit = e =>{
     e.preventDefault()
-    console.log(this.state)
   }
   render () {
     const {name, password, email,} =this.state
