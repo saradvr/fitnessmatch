@@ -8,10 +8,30 @@ import FilterContainer from '../components/FilterContainer'
 export class ListadoEntrenadores extends React.Component {
   state = {
     coaches: dataCoaches,
+    checkDisciplines: [],
+    checkSpecializations: [],
+    minFee: 0,
+    maxFee: 1000000,
+  }
+
+  handleChange = e => {
+    const { name, value, type } = e.target
+    
+    if ( type === 'checkbox' ) {
+      this.setState((prevState) => ({
+        [name]: prevState[name].includes(value) ? prevState[name].filter(item => item !== value) : [...prevState[name], value],
+      }))
+    } else {
+
+      this.setState({
+        [name]: value,
+      })
+    }
+    
   }
 
   render(){
-    const {coaches} = this.state;
+    const {coaches, checkDisciplines, checkSpecializations, minFee, maxFee} = this.state;
     return (
       <main className="mainPage">
         <section className="explanation">
@@ -25,7 +45,12 @@ export class ListadoEntrenadores extends React.Component {
         <section>     
           <FilterContainer
             disciplines = {disciplines}
+            checkDisciplines = {checkDisciplines}
             specializations = {specializations}
+            checkSpecializations = {checkSpecializations}
+            minFee = {minFee}
+            maxFee = {maxFee}
+            handleChange = {this.handleChange}
           />          
         </section>
         <section className="coachesResults">
