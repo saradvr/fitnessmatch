@@ -22,13 +22,19 @@ export class ListadoEntrenadores extends React.Component {
         [name]: prevState[name].includes(value) ? prevState[name].filter(item => item !== value) : [...prevState[name], value],
       }))
     } else {
-
       this.setState({
         [name]: value,
+      }, () => {
+        const { minFee, maxFee } = this.state
+        this.setState({
+          coaches: dataCoaches.filter( element => {
+            return element.appointmentFee <= maxFee && element.appointmentFee >= minFee
+          })
+        })
       })
     }
-    
   }
+
 
   render(){
     const {coaches, checkDisciplines, checkSpecializations, minFee, maxFee} = this.state;
