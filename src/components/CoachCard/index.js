@@ -1,14 +1,14 @@
 import { Link } from 'react-router-dom';
-import Button from './Button';
+import {StyledArticle, StyledH2} from './styles';
 export function CoachCard ({ _idUserType, name, specializations, disciplines, experienceYears, appointmentFee, profilePicture, seeProfile}) {
   
   return (
-    <article>
+    <StyledArticle>
       <table>
         <thead>
           <tr>
             <td>
-              <h2>{name}</h2>
+              <StyledH2>{name}</StyledH2>
             </td>
           </tr>
         </thead>
@@ -23,16 +23,12 @@ export function CoachCard ({ _idUserType, name, specializations, disciplines, ex
               <p>Disciplinas: {disciplines.join(', ')}</p>
               <p>Precio de la cita: ${new Intl.NumberFormat('co-CO', { style: 'currency', currency: 'COP' }).format(appointmentFee)}</p>
               <Link to={`/coach/${_idUserType}`}>
-                <Button
-                  type="button"
-                >
-                  Ver Perfil
-                </Button>
+                Ver Perfil
               </Link>
             </td>
           </tr>
         </tbody>
       </table>
-    </article>
+    </StyledArticle>
   );
 }
