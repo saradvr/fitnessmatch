@@ -1,7 +1,7 @@
 import React from "react"
 import Button from "./Button"
 import {dataUsers} from "../dataUsers"
-import {dataCoaches} from "../dataCoaches"
+// import {dataCoaches} from "../dataCoaches"
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import FormInputs from "./FormInputs"
 
@@ -59,6 +59,8 @@ class LoginForm extends React.Component {
         <Button type="submit">
           Entrar
         </Button>
+        <p>¿No tienes una cuenta?</p>
+        <Link to="/signup">Registrarme</Link>
       </form>
     )
   }
