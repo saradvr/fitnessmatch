@@ -31,7 +31,16 @@ class SignUpForm extends React.Component {
           onChange={this.handleChange}
           value={name}       
         >
-            Nombre de usuario
+            Nombre completo
+        </FormInputs>
+        <FormInputs 
+          id="email"
+          type="email"
+          name="email"
+          onChange={this.handleChange}
+          value={email}               
+        >
+            Email
         </FormInputs>
         <FormInputs 
           id="password"
@@ -43,14 +52,15 @@ class SignUpForm extends React.Component {
           Contraseña
         </FormInputs>
         <FormInputs 
-          id="email"
-          type="email"
-          name="email"
+          id="password"
+          type="password"
+          name="password"
           onChange={this.handleChange}
-          value={email}               
+          value={password}                  
         >
-            Email
+         Confirmar contraseña
         </FormInputs>
+
         <label htmlFor="selectRole">Escoge tu rol</label>
          <select id="selectRole" name= "role" onChange={this.handleChange}>
          <option value="">Selecciona una opcion</option>

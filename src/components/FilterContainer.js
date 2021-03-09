@@ -1,26 +1,46 @@
 import Filter from "./Filter";
+import Button from "./Button";
 
-function FilterContainer({disciplines,specializations}){
+function FilterContainer({
+  disciplines, 
+  checkDisciplines, 
+  specializations, 
+  checkSpecializations, 
+  minFee, 
+  maxFee,
+  handleChange,
+  handleSubmit,
+}){
   return(
-    <>
+    <form onSubmit={handleSubmit}>
+      <h2>Objetivos</h2>
+      <Filter
+        filterName={specializations}
+        name='checkSpecializations'
+        checks = {checkSpecializations}
+        handleChange = {handleChange}
+      />
       <h2>Disciplinas</h2>
       <Filter
         filterName={disciplines}
-        name='disciplinas'
-      />
-      <h2>Especialidades</h2>
-      <Filter
-        filterName={specializations}
-        name='especialidades'
+        name='checkDisciplines'
+        checks = {checkDisciplines}
+        handleChange = {handleChange}
       />
       <h2>Rangos de precios</h2>
       <label htmlFor="minimo">Mínimo</label>
-      <input type="text" id="minimo" name="minimo" /> 
+      <input type="text" id="minimo" name="minFee" value={minFee} onChange={handleChange} /> 
         - 
-      <input type="text" id="maximo" name="maximo" /> 
+      <input type="text" id="maximo" name="maxFee" value={maxFee} onChange={handleChange} /> 
       <label htmlFor="maximo">Máximo</label>
 
-    </>
+      <Button
+        type="submit"
+      >
+        Aplicar filtros
+      </Button>
+
+    </form>
   )
 }
 

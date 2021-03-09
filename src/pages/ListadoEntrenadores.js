@@ -8,10 +8,52 @@ import FilterContainer from '../components/FilterContainer'
 export class ListadoEntrenadores extends React.Component {
   state = {
     coaches: dataCoaches,
+    checkDisciplines: [],
+    checkSpecializations: [],
+    minFee: 0,
+    maxFee: 1000000,
   }
 
+  handleSubmit = e => {
+    e.preventDefault()
+    const {checkDisciplines, checkSpecializations, minFee, maxFee} = this.state
+    if (checkDisciplines.length === 0 && checkSpecializations.length === 0 ) {
+      this.setState({
+        coaches: dataCoaches,
+      })
+    } else {
+      this.setState({
+        coaches: dataCoaches.filter( element => {
+          const discipline = element.disciplines.some(item => {
+            return checkDisciplines.includes(item.toLowerCase().replace(/ /g, ""))
+              
+          })
+          const specialization = element.specializations.some(item => {
+            return checkSpecializations.includes(item.toLowerCase().replace(/ /g, ""))
+          })
+          return (discipline || specialization) && element.appointmentFee <= maxFee && element.appointmentFee >= minFee
+        })
+      })
+    }
+  }
+
+  handleChange = e => {
+    const { name, value, type } = e.target
+    
+    if ( type === 'checkbox' ) {
+      this.setState((prevState) => ({
+        [name]: prevState[name].includes(value) ? prevState[name].filter(item => item !== value) : [...prevState[name], value],
+      })) 
+    } else {
+      this.setState({
+        [name]: value,
+      })
+    }
+  }
+
+
   render(){
-    const {coaches} = this.state;
+    const {coaches, checkDisciplines, checkSpecializations, minFee, maxFee} = this.state;
     return (
       <main className="mainPage">
         <section className="explanation">
@@ -25,7 +67,13 @@ export class ListadoEntrenadores extends React.Component {
         <section>     
           <FilterContainer
             disciplines = {disciplines}
+            checkDisciplines = {checkDisciplines}
             specializations = {specializations}
+            checkSpecializations = {checkSpecializations}
+            minFee = {minFee}
+            maxFee = {maxFee}
+            handleChange = {this.handleChange}
+            handleSubmit = {this.handleSubmit}
           />          
         </section>
         <section className="coachesResults">
