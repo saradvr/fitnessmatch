@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
-import {StyledArticle, StyledTable, StyledH2} from './styles';
+import {StyledArticle, StyledH2} from './styles';
 export function CoachCard ({ _idUserType, name, specializations, disciplines, experienceYears, appointmentFee, profilePicture, seeProfile}) {
   
   return (
     <StyledArticle>
-      <StyledTable>
+      <table>
         <thead>
           <tr>
             <td>
@@ -28,7 +28,7 @@ export function CoachCard ({ _idUserType, name, specializations, disciplines, ex
             </td>
           </tr>
         </tbody>
-      </StyledTable>
+      </table>
     </StyledArticle>
   );
 }

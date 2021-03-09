@@ -14,49 +14,39 @@ export class ListadoEntrenadores extends React.Component {
     maxFee: 1000000,
   }
 
+  handleSubmit = e => {
+    e.preventDefault()
+    const {checkDisciplines, checkSpecializations, minFee, maxFee} = this.state
+    if (checkDisciplines.length === 0 && checkSpecializations.length === 0 ) {
+      this.setState({
+        coaches: dataCoaches,
+      })
+    } else {
+      this.setState({
+        coaches: dataCoaches.filter( element => {
+          const discipline = element.disciplines.some(item => {
+            return checkDisciplines.includes(item.toLowerCase().replace(/ /g, ""))
+              
+          })
+          const specialization = element.specializations.some(item => {
+            return checkSpecializations.includes(item.toLowerCase().replace(/ /g, ""))
+          })
+          return (discipline || specialization) && element.appointmentFee <= maxFee && element.appointmentFee >= minFee
+        })
+      })
+    }
+  }
+
   handleChange = e => {
     const { name, value, type } = e.target
     
     if ( type === 'checkbox' ) {
       this.setState((prevState) => ({
         [name]: prevState[name].includes(value) ? prevState[name].filter(item => item !== value) : [...prevState[name], value],
-      }), () => {
-        const {checkDisciplines, checkSpecializations} = this.state
-        if (checkDisciplines.length === 0 && checkSpecializations.length === 0 ) {
-          this.setState({
-            coaches: dataCoaches,
-          })
-        } else {
-          this.setState({
-            coaches: dataCoaches.filter( element => {
-              let loContiene = false
-              element.disciplines.forEach(item => {
-                console.log(item.toLowerCase().replace(/ /g, ""))
-                if(checkDisciplines.includes(item.toLowerCase().replace(/ /g, ""))) {
-                  loContiene = true
-                }
-              })
-              element.specializations.forEach(item => {
-                console.log(item.toLowerCase().replace(/ /g, ""))
-                if(checkSpecializations.includes(item.toLowerCase().replace(/ /g, ""))) {
-                  loContiene = true
-                }
-              })
-              return loContiene
-            })
-          })
-        }
-      })
+      })) 
     } else {
       this.setState({
         [name]: value,
-      }, () => {
-        const { minFee, maxFee } = this.state
-        this.setState({
-          coaches: dataCoaches.filter( element => {
-            return element.appointmentFee <= maxFee && element.appointmentFee >= minFee
-          })
-        })
       })
     }
   }
@@ -83,6 +73,7 @@ export class ListadoEntrenadores extends React.Component {
             minFee = {minFee}
             maxFee = {maxFee}
             handleChange = {this.handleChange}
+            handleSubmit = {this.handleSubmit}
           />          
         </section>
         <section className="coachesResults">

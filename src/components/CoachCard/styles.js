@@ -6,9 +6,6 @@ export const StyledArticle = styled.article`
   margin: 20px;
   padding: 20px;
 `
-export const StyledTable = styled.table`
-  
-`
 
 export const StyledH2 = styled.h2`
   margin: 0;

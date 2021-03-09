@@ -1,4 +1,5 @@
 import Filter from "./Filter";
+import Button from "./Button";
 
 function FilterContainer({
   disciplines, 
@@ -8,9 +9,10 @@ function FilterContainer({
   minFee, 
   maxFee,
   handleChange,
+  handleSubmit,
 }){
   return(
-    <>
+    <form onSubmit={handleSubmit}>
       <h2>Objetivos</h2>
       <Filter
         filterName={specializations}
@@ -32,7 +34,13 @@ function FilterContainer({
       <input type="text" id="maximo" name="maxFee" value={maxFee} onChange={handleChange} /> 
       <label htmlFor="maximo">Máximo</label>
 
-    </>
+      <Button
+        type="submit"
+      >
+        Aplicar filtros
+      </Button>
+
+    </form>
   )
 }
 

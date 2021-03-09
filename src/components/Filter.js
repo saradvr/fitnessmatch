@@ -9,11 +9,8 @@ function Filter({
   return(
     <>
       {!!filterName && filterName.length > 0 && filterName.map(( item )  => {
-        // item = 'Bajar de peso'
-        // name = 'bajardepeso'
-        // id= 'bajardepeso'
         const itemValue = item.toLowerCase().replace(/ /g, "")
-        const isChecked = checks.includes(itemValue) //true
+        const isChecked = checks.includes(itemValue)
 
         return (
             <Checkbox
