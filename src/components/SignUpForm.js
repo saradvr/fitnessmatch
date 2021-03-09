@@ -60,7 +60,7 @@ class SignUpForm extends React.Component {
         >
          Confirmar contraseña
         </FormInputs>
-      
+
         <label htmlFor="selectRole">Escoge tu rol</label>
          <select id="selectRole" name= "role" onChange={this.handleChange}>
          <option value="">Selecciona una opcion</option>
