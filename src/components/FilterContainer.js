@@ -11,18 +11,18 @@ function FilterContainer({
 }){
   return(
     <>
+      <h2>Objetivos</h2>
+      <Filter
+        filterName={specializations}
+        name='checkSpecializations'
+        checks = {checkSpecializations}
+        handleChange = {handleChange}
+      />
       <h2>Disciplinas</h2>
       <Filter
         filterName={disciplines}
         name='checkDisciplines'
         checks = {checkDisciplines}
-        handleChange = {handleChange}
-      />
-      <h2>Especialidades</h2>
-      <Filter
-        filterName={specializations}
-        name='checkSpecializations'
-        checks = {checkSpecializations}
         handleChange = {handleChange}
       />
       <h2>Rangos de precios</h2>

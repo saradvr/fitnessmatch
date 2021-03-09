@@ -20,7 +20,33 @@ export class ListadoEntrenadores extends React.Component {
     if ( type === 'checkbox' ) {
       this.setState((prevState) => ({
         [name]: prevState[name].includes(value) ? prevState[name].filter(item => item !== value) : [...prevState[name], value],
-      }))
+      }), () => {
+        const {checkDisciplines, checkSpecializations} = this.state
+        if (checkDisciplines.length === 0 && checkSpecializations.length === 0 ) {
+          this.setState({
+            coaches: dataCoaches,
+          })
+        } else {
+          this.setState({
+            coaches: dataCoaches.filter( element => {
+              let loContiene = false
+              element.disciplines.forEach(item => {
+                console.log(item.toLowerCase().replace(/ /g, ""))
+                if(checkDisciplines.includes(item.toLowerCase().replace(/ /g, ""))) {
+                  loContiene = true
+                }
+              })
+              element.specializations.forEach(item => {
+                console.log(item.toLowerCase().replace(/ /g, ""))
+                if(checkSpecializations.includes(item.toLowerCase().replace(/ /g, ""))) {
+                  loContiene = true
+                }
+              })
+              return loContiene
+            })
+          })
+        }
+      })
     } else {
       this.setState({
         [name]: value,
