@@ -16,14 +16,14 @@ function FilterContainer({
       <h2>Objetivos</h2>
       <Filter
         filterName={specializations}
-        name='checkSpecializations'
+        nameCheckbox='checkSpecializations'
         checks = {checkSpecializations}
         handleChange = {handleChange}
       />
       <h2>Disciplinas</h2>
       <Filter
         filterName={disciplines}
-        name='checkDisciplines'
+        nameCheckbox='checkDisciplines'
         checks = {checkDisciplines}
         handleChange = {handleChange}
       />
