@@ -1,14 +1,7 @@
 import React from "react"
-<<<<<<< HEAD:src/components/LoginForm/index.js
-import Button from "../Button"
-import {dataUsers} from "../../dataUsers"
-import { BrowserRouter, Route, Link } from "react-router-dom";
-import FormInputs from "../FormInputs"
-=======
 import Button from "./Button"
 import {dataUsers} from "../dataUsers"
 import FormInputs from "./FormInputs"
->>>>>>> d17d17fa8e09466f279c2c68626d853d0c27ce6b:src/components/loginForm.js
 
 class LoginForm extends React.Component {
   state = {
