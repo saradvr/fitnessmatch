@@ -17,4 +17,5 @@ export const StyledSection = styled.section`
   display: ${props => props.primerColumna ? "": "flex"};
   flex-direction: column;
   justify-content: center;
+  padding: 15px;
 `

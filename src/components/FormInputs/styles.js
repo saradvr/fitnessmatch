@@ -9,7 +9,7 @@ export const StyledInput = styled.input`
   font-weight: 300;
   padding: 14px 5px 14px 5px;
   display: block;
-  width: 85%;
+  width: 100%;
   border: none;
   `
 
