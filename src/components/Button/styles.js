@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const StyledButton = styled.button`
-  border: #FBFCF9;
-  background-color: ${props => props.green ? "#69B32D" : "none"};
+  border: 1px solid #FBFCF9;
+  background-color: ${props => props.green ? "#69B32D" : "transparent"};
   color: #FBFCF9;
   text-decoration: none;
   padding: 10px;
