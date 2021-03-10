@@ -1,14 +1,14 @@
 import React from "react"
-import {StyledInput} from "./styles"
+import {StyledInput, StyledLabel} from "./styles"
 
 class FormInputs extends React.Component {
   render() {
     const {children, type, name, id, value, onChange} = this.props
     return (
       <>
-        <label htmlFor={id}>
+        <StyledLabel htmlFor={id}>
           {children}
-        </label>
+        </StyledLabel>
         <StyledInput 
           type={type} 
           name={name} 

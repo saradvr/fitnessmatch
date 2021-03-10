@@ -6,7 +6,18 @@ export const StyledInput = styled.input`
   color: #0B1517;
   font-size: 18px;
   font-family: "Roboto";
-  font-weight: 100;
-  padding: 14px 0px 14px 0px;
-  margin: 10px 0px 10px 0px;
+  font-weight: 300;
+  padding: 14px 5px 14px 5px;
+  display: block;
+  width: 85%;
+  border: none;
   `
+
+export const StyledLabel = styled.label`
+  font-family: Roboto;
+  font-weight: 700;
+  font-size: 22px;
+  color: #FBFCF9;
+  display: block;
+  margin: 10px auto 10px auto;
+`

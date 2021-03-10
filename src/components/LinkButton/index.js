@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const LinkButton = styled(Link)`
-  border: 1px solid ${props => props.green ? "white" : "#69B32D"};
+  border: 1px solid #FBFCF9;
   background-color: ${props => props.green ? "#69B32D" : "none"};
   color: #FBFCF9;
   text-decoration: none;
@@ -15,6 +15,7 @@ export const LinkButton = styled(Link)`
   font-weight: 700;
   border-radius: 5.5px;
   text-align: center;
+  align-self: center;
 
   @media all and (max-width:420px){
     display: block;

@@ -1,7 +1,12 @@
 import React from "react"
-import Button from "./Button"
-import {dataUsers} from "../dataUsers"
-import FormInputs from "./FormInputs"
+import Button from "../Button"
+import {dataUsers} from "../../dataUsers"
+import FormInputs from "../FormInputs"
+import { LinkButton } from "../LinkButton"
+import { StyledForm, StyledSection, StyledDiv } from "./styles"
+import {StyledLabel} from "../FormInputs/styles"
+import { StyledLink } from "../StyledLink"
+
 
 class LoginForm extends React.Component {
   state = {
@@ -34,34 +39,37 @@ class LoginForm extends React.Component {
   render() {
     const {email, password, error} = this.state
     return (
-      <form onSubmit={this.handleSubmit}> 
+      <StyledForm onSubmit={this.handleSubmit}> 
         {error && <p>{error}</p>}
-        <FormInputs 
-          type="text" 
-          name="email" 
-          id="email" 
-          value={email}
-          onChange={this.handleChange}
-        >
-          Email
-        </FormInputs>
-        <FormInputs 
-          type="password" 
-          name="password" 
-          id="password"
-          value={password} 
-          onChange={this.handleChange}
-        >
-          Password
-        </FormInputs>
-        <Button type="submit">
-          Entrar
-        </Button>
-        <p>¿No tienes una cuenta?</p>
-        <Link to="/signup">Registrarme</Link>
-        <br/>
-        <Link to="/#">¿Olvidaste tu contraseña?</Link>
-      </form>
+        <StyledSection primerColumna>
+          <FormInputs 
+            type="text" 
+            name="email" 
+            id="email" 
+            value={email}
+            onChange={this.handleChange}
+          >
+            Email
+          </FormInputs>
+          <FormInputs 
+            type="password" 
+            name="password" 
+            id="password"
+            value={password} 
+            onChange={this.handleChange}
+          >
+            Password
+          </FormInputs>
+          <StyledLink to="/#">¿Olvidaste tu contraseña?</StyledLink>
+          <Button type="submit">
+            Iniciar Sesión
+          </Button>
+        </StyledSection>
+        <StyledSection>
+          <StyledLabel>¿No tienes una cuenta?</StyledLabel>
+          <LinkButton to="/signup">Registrarme</LinkButton>
+        </StyledSection>
+      </StyledForm>
     )
   }
 }
