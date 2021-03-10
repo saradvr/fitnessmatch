@@ -1,8 +1,8 @@
 import React from "react"
-import Button from "./Button"
-import {dataUsers} from "../dataUsers"
+import Button from "../Button"
+import {dataUsers} from "../../dataUsers"
 import { BrowserRouter, Route, Link } from "react-router-dom";
-import FormInputs from "./FormInputs"
+import FormInputs from "../FormInputs"
 
 class LoginForm extends React.Component {
   state = {

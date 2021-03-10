@@ -1,4 +1,5 @@
 import React from "react"
+import {StyledInput} from "./styles"
 
 class FormInputs extends React.Component {
   render() {
@@ -8,7 +9,7 @@ class FormInputs extends React.Component {
         <label htmlFor={id}>
           {children}
         </label>
-        <input 
+        <StyledInput 
           type={type} 
           name={name} 
           id={id} 
