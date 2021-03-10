@@ -55,11 +55,11 @@ function FilterContainer({
       </Collapse>
       <h2 onClick={onClick3}>Rangos de precios</h2>
       <Collapse isOpened={isInputsCollapseOpen}>
-      <label htmlFor="minimo">Mínimo</label>
-      <input type="text" id="minimo" name="minFee" value={minFee} onChange={handleChange} /> 
-        - 
-      <input type="text" id="maximo" name="maxFee" value={maxFee} onChange={handleChange} /> 
-      <label htmlFor="maximo">Máximo</label>
+        <label htmlFor="minimo">Mínimo</label>
+        <input type="text" id="minimo" name="minFee" value={minFee} onChange={handleChange} /> 
+          - 
+        <input type="text" id="maximo" name="maxFee" value={maxFee} onChange={handleChange} /> 
+        <label htmlFor="maximo">Máximo</label>
       </Collapse>
       <Button
         type="submit"
