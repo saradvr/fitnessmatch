@@ -1,5 +1,6 @@
 import styled from "styled-components"
+import backimg from './fondo.png'
 
-export const styledMain = styled.main`
-  background-color: #0B1517;
+export const StyledMain = styled.main`
+  background-image: url(${backimg});
 `
