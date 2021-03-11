@@ -14,29 +14,29 @@ function FilterContainer({
   handleSubmit,
 }){
 
-  const [isCheckboxCollapseOpen1, setIsCheckboxCollapseOpen1] = useState(false);
-  const [isCheckboxCollapseOpen2, setIsCheckboxCollapseOpen2] = useState(false);
-  const [isInputsCollapseOpen, setIsInputsCollapseOpen] = useState(false);
+  const [isCollapseSpecializationsOpen, setIsCollapseSpecializationsOpen] = useState(false);
+  const [isCollapseDisciplinesOpen, setIsCollapseDisciplinesOpen] = useState(false);
+  const [isCollapsePriceRangeOpen, setIsCollapsePriceRangeOpen] = useState(false);
 
-  const onClick1 = useCallback(
-    () => setIsCheckboxCollapseOpen1(!isCheckboxCollapseOpen1),
-    [isCheckboxCollapseOpen1]
+  const collapseSpecializations = useCallback(
+    () => setIsCollapseSpecializationsOpen(!isCollapseSpecializationsOpen),
+    [isCollapseSpecializationsOpen]
   )
 
-  const onClick2 = useCallback(
-    () => setIsCheckboxCollapseOpen2(!isCheckboxCollapseOpen2),
-    [isCheckboxCollapseOpen2]
+  const collapseDisciplines = useCallback(
+    () => setIsCollapseDisciplinesOpen(!isCollapseDisciplinesOpen),
+    [isCollapseDisciplinesOpen]
   )
 
-  const onClick3 = useCallback(
-    () => setIsInputsCollapseOpen(!isInputsCollapseOpen),
-    [isInputsCollapseOpen]
+  const collapsePriceRange = useCallback(
+    () => setIsCollapsePriceRangeOpen(!isCollapsePriceRangeOpen),
+    [isCollapsePriceRangeOpen]
   )
 
   return(
     <form onSubmit={handleSubmit}>
-      <h2 onClick={onClick1}>Objetivos</h2>
-      <Collapse isOpened={isCheckboxCollapseOpen1}>
+      <h2 onClick={collapseSpecializations}>Objetivos</h2>
+      <Collapse isOpened={isCollapseSpecializationsOpen}>
         <Filter
           filterName={specializations}
           nameCheckbox='checkSpecializations'
@@ -44,8 +44,8 @@ function FilterContainer({
           handleChange = {handleChange}
         />
       </Collapse>
-      <h2 onClick={onClick2}>Disciplinas</h2>
-      <Collapse isOpened={isCheckboxCollapseOpen2}>
+      <h2 onClick={collapseDisciplines}>Disciplinas</h2>
+      <Collapse isOpened={isCollapseDisciplinesOpen}>
         <Filter
           filterName={disciplines}
           nameCheckbox='checkDisciplines'
@@ -53,8 +53,8 @@ function FilterContainer({
           handleChange = {handleChange}
         />
       </Collapse>
-      <h2 onClick={onClick3}>Rangos de precios</h2>
-      <Collapse isOpened={isInputsCollapseOpen}>
+      <h2 onClick={collapsePriceRange}>Rangos de precios</h2>
+      <Collapse isOpened={isCollapsePriceRangeOpen}>
         <label htmlFor="minimo">Mínimo</label>
         <input type="text" id="minimo" name="minFee" value={minFee} onChange={handleChange} /> 
           - 
