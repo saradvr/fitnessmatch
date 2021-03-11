@@ -1,15 +1,26 @@
 import Checkbox from './Checkbox'
 
-function Filter({filterName, name}){
+function Filter({
+  filterName, 
+  name, 
+  checks, 
+  handleChange 
+}){
   return(
     <>
       {!!filterName && filterName.length > 0 && filterName.map(( item )  => {
+        const itemValue = item.toLowerCase().replace(/ /g, "")
+        const isChecked = checks.includes(itemValue)
+
         return (
             <Checkbox
-              id = {item.toLowerCase().replace(/ /g, "")}
-              name = {name.toLowerCase().replace(/ /g, "")}
-              value = {item.toLowerCase().replace(/ /g, "")}
+              key = {itemValue}
+              id = {itemValue}
+              name = {name}
+              value = {itemValue}
+              isChecked = {isChecked}
               children= {item}
+              handleChange = {handleChange}
             />
         )
       })  
