@@ -6,7 +6,7 @@ export class SignUp extends React.Component {
     render(){
         return (
             <main>
-               <SignUpForm />
+               <SignUpForm history={this.props.history}/>
             </main>
         )
     }
