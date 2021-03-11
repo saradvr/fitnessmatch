@@ -4,7 +4,7 @@ import {
   Switch,
 } from 'react-router-dom';
 import {ListadoEntrenadores} from './pages/ListadoEntrenadores';
-import Login from "./pages/Login"
+import {Login} from "./pages/Login"
 import {CoachProfile} from './pages/CoachProfile';
 import './App.css';
 import { SignUp } from './pages/SignUp';
