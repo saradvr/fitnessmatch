@@ -26,11 +26,11 @@ export class ListadoEntrenadores extends React.Component {
       this.setState({
         coaches: dataCoaches.filter( element => {
           const discipline = element.disciplines.some(item => {
-            return checkDisciplines.includes(item.toLowerCase().replace(/ /g, ""))
+            return checkDisciplines.includes(item)
               
           })
           const specialization = element.specializations.some(item => {
-            return checkSpecializations.includes(item.toLowerCase().replace(/ /g, ""))
+            return checkSpecializations.includes(item)
           })
           return (discipline || specialization) && element.appointmentFee <= maxFee && element.appointmentFee >= minFee
         })
@@ -39,11 +39,11 @@ export class ListadoEntrenadores extends React.Component {
   }
 
   handleChange = e => {
-    const { name, value, type } = e.target
-    
+    const { name, id, type, value } = e.target
+    console.dir(e.target)
     if ( type === 'checkbox' ) {
       this.setState((prevState) => ({
-        [name]: prevState[name].includes(value) ? prevState[name].filter(item => item !== value) : [...prevState[name], value],
+        [name]: prevState[name].includes(id) ? prevState[name].filter(item => item !== id) : [...prevState[name], id],
       })) 
     } else {
       this.setState({
