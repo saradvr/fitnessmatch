@@ -1,7 +1,7 @@
 import { LinkButton } from '../LinkButton';
 import LogoPeq from './LogoPeq.png'
 import {StyledArticle, StyledTd, StyledH2} from './styles';
-export function CoachCard ({ _idUserType, name, specializations, disciplines, experienceYears, appointmentFee, profilePicture, seeProfile}) {
+export function CoachCard ({ _idUserType, name, specializations, disciplines, experienceYears, appointmentFee, profilePicture}) {
   
   return (
     <StyledArticle>

@@ -2,24 +2,28 @@ import Checkbox from './Checkbox'
 
 function Filter({
   filterName, 
-  name, 
+  nameCheckbox, 
   checks, 
   handleChange 
 }){
   return(
     <>
-      {!!filterName && filterName.length > 0 && filterName.map(( item )  => {
-        const itemValue = item.toLowerCase().replace(/ /g, "")
-        const isChecked = checks.includes(itemValue)
+      {!!filterName && filterName.length > 0 && filterName.map(({_id, name})  => {
+        const removeAccents = (str) => {
+          return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        } 
+        let value = removeAccents(name)
+        value = value.toLowerCase().replace(/ /g, "")
+        const isChecked = checks.includes(_id)
 
         return (
             <Checkbox
-              key = {itemValue}
-              id = {itemValue}
-              name = {name}
-              value = {itemValue}
+              key = {_id}
+              id = {_id}
+              name = {nameCheckbox}
+              value = {value}
               isChecked = {isChecked}
-              children= {item}
+              children= {name}
               handleChange = {handleChange}
             />
         )
