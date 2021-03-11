@@ -1,17 +1,17 @@
 import styled from 'styled-components'
 
 export const StyledForm = styled.form`
-    color: #69B32D;
+    color: #FBFCF9;
     opacity: 70%;
     border-radius: 20px;
     box-sizing: border-box;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    background-color: #0B1517;
+    background-color: #69B32D;
     margin: 215px auto 300px auto;
     width: 730px;
     height: 330px;
-    
+
 `
 export const StyledSection = styled.section`
     grid-column: ${props => props.primerColumna ? "1" : "2"};
