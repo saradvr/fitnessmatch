@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const StyledForm = styled.form`
-    color: #FBFCF9git;
+    color: #FBFCF9;
     opacity: 70%;
     border-radius: 20px;
     box-sizing: border-box;
