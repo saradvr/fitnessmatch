@@ -37,10 +37,10 @@ export const StyledSection = styled.section`
 `
 
 export const StyledLabels = styled.label`
-font-size: 18px;
-color: #0B1517;
-font-family: 'Roboto';
-margin: 10px;
+  font-size: 18px;
+  color: #0B1517;
+  font-family: 'Roboto';
+  margin: 10px;
 `
 
 export const StyledInput = styled.input`
@@ -53,4 +53,4 @@ export const StyledInput = styled.input`
   padding: 10px;
   border: 1px solid #69B32D;
   margin-bottom: 15px;
-  `
+`
