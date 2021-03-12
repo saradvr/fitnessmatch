@@ -7,19 +7,20 @@ export const LinkButton = styled(Link)`
   color: #FBFCF9;
   text-decoration: none;
   padding: 10px;
-  width: 145px;
-  display: inline-block;
+  width: auto;
+  display: block;
+  margin: 0 0 0 auto;
   max-width: 100%;
-  font-size: 18px;
+  font-size: 16px;
   font-family: "Roboto";
   font-weight: 700;
   border-radius: 5.5px;
   text-align: center;
   align-self: center;
 
-  @media all and (max-width:420px){
-    display: block;
-    margin: 0 0 0 auto;
-    width: auto;
+  @media screen and (min-width:768px){
+    display: inline-block;
+    width: 145px;
+    margin: 0;
   }
 `

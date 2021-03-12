@@ -3,7 +3,7 @@ import {dataCoaches} from '../../dataCoaches'
 import {CoachesList} from '../../components/CoachesList'
 import {disciplines} from '../../dataDisciplines'
 import {specializations} from '../../dataSpecializations'
-import FilterContainer from '../../components/FilterContainer'
+import FilterContainer from '../../components/FilterContainer/index'
 import {StyledMain} from './styles'
 
 export class ListadoEntrenadores extends React.Component {

@@ -5,4 +5,5 @@ export const StyledLink = styled(Link)`
   color: #FBFCF9;
   margin: 10px auto 10px 0;
   display: block;
+  font-size: 14px;
 `
