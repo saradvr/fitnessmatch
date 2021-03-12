@@ -1,7 +1,9 @@
+import {StyledInputCheckbox,StyledInput} from './styles';
+
 function Checkbox ({id, value, name, isChecked, handleChange, children}) {
     return (
-      <>
-        <input 
+      <StyledInputCheckbox>
+        <StyledInput
           type="checkbox" 
           id={id} 
           name={name} 
@@ -10,7 +12,7 @@ function Checkbox ({id, value, name, isChecked, handleChange, children}) {
           onChange={handleChange} 
         /> 
         <label htmlFor={id}>{children}</label>
-      </>
+      </StyledInputCheckbox>
     )
   } 
 
