@@ -20,7 +20,7 @@ export const LinkButton = styled(Link)`
 
   @media screen and (min-width:768px){
     display: inline-block;
-    margin: auto;
     width: 145px;
+    margin: 0;
   }
 `
