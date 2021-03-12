@@ -1,8 +1,12 @@
 import React from "react"
 import LoginForm from "../../components/LoginForm"
+<<<<<<< HEAD
 import { StyledMain, StyledSection, StyledImage, StyledBackImg } from "./styles"
 import girlimg from './girl-50.png'
 import logo from '../../components/Images/Logo-fondoOscuro.png'
+=======
+import { StyledMain } from "./styles"
+>>>>>>> 32bb5b3c3f351f5cf2dfda9a47df015b28df815f
 
 export class Login extends React.Component {
 
