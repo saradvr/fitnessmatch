@@ -1,13 +1,13 @@
 import styled from "styled-components"
 
 export const StyledForm = styled.form`
-  background-color: #69B32D;
+  background-color: rgba(105,179,45,0.6);
   box-sizing: border-box;
-  margin: auto;
-  width: 690px;
+  margin: 30px auto;
+  width: 580px;
   border-radius: 20px;
   display: grid;
-  padding: 35px;
+  padding: 20px;
   grid-template-columns: 1fr 1fr;
 `
 export const StyledSection = styled.section`
@@ -17,5 +17,5 @@ export const StyledSection = styled.section`
   display: ${props => props.primerColumna ? "": "flex"};
   flex-direction: column;
   justify-content: center;
-  padding: 15px;
+  padding: ${props => props.primerColumna ? "15px 30px 15px 15px" : "15px"};
 `
