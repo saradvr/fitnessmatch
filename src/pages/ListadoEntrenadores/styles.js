@@ -2,7 +2,6 @@ import styled from 'styled-components'
 import backimg from '../../components/Images/fondoOscuro.webp'
 
 export const StyledMain = styled.main`
-  /* background-color: #396118; */
   background-image: url(${backimg});
   color: #FBFCF9;
   font-size: 18px;
