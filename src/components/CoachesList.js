@@ -2,7 +2,7 @@ import {CoachCard} from './CoachCard';
 
 export function CoachesList ({ coaches }) {
   return (
-    <section>
+    <>
       {!!coaches && coaches.length > 0 ? coaches.map(({
         _id, 
         _idUserType,
@@ -28,6 +28,6 @@ export function CoachesList ({ coaches }) {
       }):
           <p>No se encontraron coaches</p>
       }
-    </section>
+    </>
   );
 }

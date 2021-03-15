@@ -2,7 +2,7 @@ import React, {useState, useCallback} from 'react';
 import {Collapse} from 'react-collapse'
 import Filter from "../Filter";
 import Button from "../Button/index";
-import {StyledFiltrosH2,StyledSection,StyledLabels,StyledInput,StyledTitle,StyledCaret} from './styles';
+import {StyledFiltrosH2,StyledSection,StyledLabels,StyledInput,StyledTitle,StyledCaret,StyledDiv} from './styles';
 
 function FilterContainer({
   disciplines, 
@@ -37,7 +37,7 @@ function FilterContainer({
   return(
     <StyledSection>
       <form onSubmit={handleSubmit}>
-        <StyledFiltrosH2>Entrenadores</StyledFiltrosH2>
+        <StyledFiltrosH2>ENTRENADORES</StyledFiltrosH2>
         <StyledTitle onClick={collapseSpecializations}>Objetivos <StyledCaret></StyledCaret></StyledTitle>
         <Collapse isOpened={isCollapseSpecializationsOpen}>
           <Filter
@@ -60,17 +60,16 @@ function FilterContainer({
         <Collapse isOpened={isCollapsePriceRangeOpen}>
           <StyledLabels htmlFor="minimo">Mínimo</StyledLabels>
           <StyledInput type="text" id="minimo" name="minFee" value={minFee} onChange={handleChange} /> 
-            - 
+          <StyledLabels htmlFor="maximo">Máximo</StyledLabels>  
           <StyledInput type="text" id="maximo" name="maxFee" value={maxFee} onChange={handleChange} /> 
-          <StyledLabels htmlFor="maximo">Máximo</StyledLabels>
         </Collapse>
-        <Button
-          type="submit"
-          isGreen={true}
-        >
-          Aplicar filtros
-        </Button>
-
+        <StyledDiv>
+          <Button
+            type="submit"
+          >
+            Aplicar
+          </Button>
+        </StyledDiv>
       </form>
     </StyledSection>
   )

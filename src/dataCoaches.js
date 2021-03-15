@@ -3,7 +3,7 @@ export const dataCoaches = [
     _idUserType: 'e2f2a94f-7c2a-40d4-b9f0-2e06d8d6dc74',
     _id: '9f94d491-64b2-48ff-8766-426abdca11d1',
     name: 'Samir',
-    profilePicture: 'https://cdn.iconscout.com/icon/free/png-256/user-1648810-1401302.png',
+    profilePicture: 'http://www.copyflash.net/web/wp-content/uploads/bfi_thumb/our-team-4-1-32gnuklh724qwr4b45h6h6@2x.jpg',
     specializations: ['dh45gfbd745jght8475h', 'ohdfer3645ifht96egdf'],
     disciplines: ['f4e53r65ty78ujhgfd3m', 'a73gd62hd84kdit7dhbs'],
     experienceYears: 3,

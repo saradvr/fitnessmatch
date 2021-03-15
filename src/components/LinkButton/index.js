@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const LinkButton = styled(Link)`
-  border: 1px solid #FBFCF9;
+  border: 1px solid ${props => props.green ? "none" : "#FBFCF9"};
   background-color: ${props => props.green ? "#69B32D" : "none"};
   color: #FBFCF9;
   text-decoration: none;
@@ -20,7 +20,12 @@ export const LinkButton = styled(Link)`
 
   @media screen and (min-width:768px){
     display: inline-block;
-    width: 145px;
+    width: 125px;
     margin: 0;
+  }
+
+  &:hover {
+    background-color: ${props => props.green ? "rgba(105,179,45,0.5)" : "none"};
+    border: 1px solid #FBFCF9;
   }
 `
