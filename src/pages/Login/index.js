@@ -1,7 +1,7 @@
 import React from "react"
 import LoginForm from "../../components/LoginForm"
 import { StyledMain, StyledSection, StyledImage, StyledBackImg } from "./styles"
-import girlimg from './girl-50.png'
+import girlimg from './login-girl-50.png'
 import logo from '../../components/Images/Logo-fondoOscuro.png'
 
 export class Login extends React.Component {

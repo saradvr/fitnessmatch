@@ -1,18 +1,18 @@
 import { LinkButton } from '../LinkButton';
-import LogoPeq from './LogoPeq.png'
-import {StyledArticle, StyledTd, StyledH2} from './styles';
+import LogoPeq from './LogoPeq-negro.png'
+import {StyledArticle, StyledTd, StyledH2, StyledImg, StyledTable} from './styles';
 export function CoachCard ({ _idUserType, name, specializations, disciplines, experienceYears, appointmentFee, profilePicture}) {
   
   return (
     <StyledArticle>
-      <table>
+      <StyledTable>
         <tbody>
           <tr>
-            <StyledTd rowSpan="5" alignCenter={true}>
-              <img alt="Foto de perfil" src={profilePicture} width="100%"/>
+            <StyledTd rowSpan="5" alignCenter>
+              <StyledImg alt="Foto de perfil" src={profilePicture} width="100%"/>
             </StyledTd>
             <StyledTd>
-              <StyledH2>{name}</StyledH2>
+              <StyledH2>{name.toUpperCase()}</StyledH2>
             </StyledTd>
           </tr>
           <tr>
@@ -36,17 +36,17 @@ export function CoachCard ({ _idUserType, name, specializations, disciplines, ex
             </StyledTd>
           </tr>
           <tr>
-            <StyledTd alignCenter={true}>
+            <StyledTd alignCenter>
               <LinkButton to={`/coach/${_idUserType}`} green="true">
                 Ver Perfil
               </LinkButton>
             </StyledTd>
-            <StyledTd alignRight={true}>
+            <StyledTd alignRight>
               <img alt="Logo Fitness Match" src={LogoPeq} width="60px"/>
             </StyledTd>
           </tr>
         </tbody>
-      </table>
+      </StyledTable>
     </StyledArticle>
   );
 }
