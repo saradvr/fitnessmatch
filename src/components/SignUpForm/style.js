@@ -20,7 +20,7 @@ export const StyledSection = styled.section`
 export const StyledSelect = styled.select`
     border-radius: 5.5px;
     color: #0B1517;
-    font-size: 18px;
+    font-size: 14px;
     font-family: Roboto;
     font-weight: 300;
     padding: 10px;
