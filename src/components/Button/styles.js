@@ -23,7 +23,7 @@ export const StyledButton = styled.button`
   font-weight: 700;
   border-radius: 5.5px;
   text-align: center;
-  margin: 10px auto;
+  margin: ${props => props.registrarme ? "40px 10px 10px 0px" : "10px auto" };
 
   &:hover {
     cursor: pointer;

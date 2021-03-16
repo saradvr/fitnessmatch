@@ -2,7 +2,9 @@ import FormInputs from '../FormInputs'
 import Button from '../Button'
 import React from 'react'
 import { dataUsers } from '../../dataUsers'
-import {StyledForm, StyledSection} from './style'
+import {StyledForm, StyledSection, StyledSelect} from './style'
+import {StyledLabel} from '../FormInputs/styles'
+import {StyledButton} from '../Button/styles'
 
 
 class SignUpForm extends React.Component {
@@ -66,13 +68,13 @@ class SignUpForm extends React.Component {
               Email
           </FormInputs>
 
-          <label htmlFor="selectRole">Escoge tu rol</label>
-          <select id="selectRole" name= "role" onChange={this.handleChange}>
+          <StyledLabel htmlFor="selectRole">Escoge tu rol</StyledLabel>
+          <StyledSelect id="selectRole" name= "role" onChange={this.handleChange}>
           <option value="">Selecciona una opcion</option>
             <option value="cliente">Cliente</option>
             <option value="entrenador">Entrenador</option>
-          </select>
-          </StyledSection>
+          </StyledSelect>
+        </StyledSection>
         <StyledSection>
           <FormInputs 
             id="password"
@@ -92,14 +94,14 @@ class SignUpForm extends React.Component {
           >
           Confirmar contraseña
           </FormInputs>
-          
-          <Button 
+          <StyledButton 
             type="submit"
+            registrarme
           >
             Registrarme  
-          </Button>
+          </StyledButton>
         </StyledSection>
-       
+        
       </StyledForm>
     )
   }
