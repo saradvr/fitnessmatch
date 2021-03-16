@@ -70,7 +70,7 @@ class SignUpForm extends React.Component {
 
           <StyledLabel htmlFor="selectRole">Escoge tu rol</StyledLabel>
           <StyledSelect id="selectRole" name= "role" onChange={this.handleChange}>
-          <option value="">Selecciona una opciòn</option>
+          <option value="">Selecciona una opción</option>
             <option value="client">Cliente</option>
             <option value="coach">Entrenador</option>
           </StyledSelect>
