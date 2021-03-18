@@ -2,7 +2,7 @@ import FormInputs from '../FormInputs'
 import Button from '../Button'
 import React from 'react'
 import { dataUsers } from '../../dataUsers'
-import {StyledForm, StyledSection, StyledSelect} from './style'
+import {StyledForm, StyledSection, StyledSelect, StyledP} from './style'
 import {StyledLabel} from '../FormInputs/styles'
 import {StyledButton} from '../Button/styles'
 
@@ -47,7 +47,7 @@ class SignUpForm extends React.Component {
     const {name, password, email, passwordconfir, error} = this.state
     return(
       <StyledForm onSubmit={this.handleSubmit}>
-        {error && <p>{error}</p>}
+        
         <StyledSection primerColumna>
           <FormInputs 
             id="name"
@@ -94,6 +94,7 @@ class SignUpForm extends React.Component {
           >
           Confirmar contraseña
           </FormInputs>
+          {error && <StyledP> {error} </StyledP>}
           <StyledButton 
             type="submit"
             registrarme
