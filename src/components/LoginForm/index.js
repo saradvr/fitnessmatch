@@ -3,7 +3,7 @@ import Button from "../Button"
 import {dataUsers} from "../../dataUsers"
 import FormInputs from "../FormInputs"
 import { LinkButton } from "../LinkButton"
-import { StyledForm, StyledSection, StyledDiv } from "./styles"
+import { StyledForm, StyledSection, StyledDiv, StyledParagraph } from "./styles"
 import {StyledLabel} from "../FormInputs/styles"
 import { StyledLink } from "../StyledLink"
 
@@ -32,7 +32,7 @@ class LoginForm extends React.Component {
       } 
     })
     this.setState({
-      error: " Incorrect username or password "
+      error: " Usuario o contraseña inválido "
     }) 
   }
 
@@ -40,7 +40,6 @@ class LoginForm extends React.Component {
     const {email, password, error} = this.state
     return (
       <StyledForm onSubmit={this.handleSubmit}> 
-        {error && <p>{error}</p>}
         <StyledSection primerColumna>
           <FormInputs 
             type="text" 
@@ -60,6 +59,7 @@ class LoginForm extends React.Component {
           >
             Password
           </FormInputs>
+          {error && <StyledParagraph>{error}</StyledParagraph>}
           <StyledLink to="/#">¿Olvidaste tu contraseña?</StyledLink>
           <Button type="submit">
             Iniciar Sesión
