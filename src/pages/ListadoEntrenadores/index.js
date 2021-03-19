@@ -1,5 +1,6 @@
 import React from 'react'
-import {dataCoaches} from '../../dataCoaches'
+// import {dataCoaches} from '../../dataCoaches'
+import axios from 'axios'
 import {CoachesList} from '../../components/CoachesList'
 import {disciplines} from '../../dataDisciplines'
 import {specializations} from '../../dataSpecializations'
@@ -7,41 +8,73 @@ import FilterContainer from '../../components/FilterContainer/index'
 import {StyledMain, ContainerSection, StyledSection, StyledDescription} from './styles'
 import banner from './BannerCoachesList.png'
 
+async function getCoaches(params) {
+  try {
+      const {data} = await axios({
+        method: 'GET',
+        baseURL: process.env.REACT_APP_SERVER_URL,
+        url: '/coaches',
+        params: params
+      })
+      return data
+    } catch (error) {
+      console.log("Hubo un error en el req: ", error)
+    }
+}
+
 export class ListadoEntrenadores extends React.Component {
   state = {
-    coaches: dataCoaches,
+    coaches: [],
     checkDisciplines: [],
     checkSpecializations: [],
     minFee: 0,
     maxFee: 1000000,
   }
 
-  handleSubmit = e => {
+  async componentDidMount() {
+    const {minFee, maxFee} = this.state
+    const dataCoaches = await getCoaches({
+      minFee: minFee,
+      maxFee: maxFee
+    })
+    this.setState({
+      coaches: dataCoaches,
+    })
+  }
+
+  handleSubmit = async e => {
     e.preventDefault()
     const {checkDisciplines, checkSpecializations, minFee, maxFee} = this.state
-    if (checkDisciplines.length === 0 && checkSpecializations.length === 0 ) {
-      this.setState({
-        coaches: dataCoaches,
-      })
-    } else {
-      this.setState({
-        coaches: dataCoaches.filter( element => {
-          const discipline = element.disciplines.some(item => {
-            return checkDisciplines.includes(item)
+    const dataCoaches = await getCoaches({
+      minFee: minFee,
+      maxFee: maxFee
+    })
+    // if (checkDisciplines.length === 0 && checkSpecializations.length === 0 ) {
+    //   dataCoaches = await getCoaches();
+    // } else {
+    //   dataCoaches = await getCoaches({
+    //     appointmentFee: 25000
+    //   })
+      // this.setState((prevState) => ({
+      //   coaches: prevState.coaches.filter( element => {
+      //     const discipline = element.disciplines.some(item => {
+      //       return checkDisciplines.includes(item)
               
-          })
-          const specialization = element.specializations.some(item => {
-            return checkSpecializations.includes(item)
-          })
-          return (discipline || specialization) && element.appointmentFee <= maxFee && element.appointmentFee >= minFee
-        })
-      })
-    }
+      //     })
+      //     const specialization = element.specializations.some(item => {
+      //       return checkSpecializations.includes(item)
+      //     })
+      //     return (discipline || specialization) && element.appointmentFee <= maxFee && element.appointmentFee >= minFee
+      //   })
+      // }))
+    // }
+    this.setState({
+      coaches: dataCoaches
+    })
   }
 
   handleChange = e => {
     const { name, id, type, value } = e.target
-    console.dir(e.target)
     if ( type === 'checkbox' ) {
       this.setState((prevState) => ({
         [name]: prevState[name].includes(id) ? prevState[name].filter(item => item !== id) : [...prevState[name], id],
@@ -55,7 +88,7 @@ export class ListadoEntrenadores extends React.Component {
 
 
   render(){
-    const {coaches, checkDisciplines, checkSpecializations, minFee, maxFee} = this.state;
+    const {coaches, checkDisciplines, checkSpecializations, minFee, maxFee} = this.state
     return (
       <StyledMain>
         <img 

@@ -40,7 +40,7 @@ class LoginForm extends React.Component {
     const {email, password, error} = this.state
     return (
       <StyledForm onSubmit={this.handleSubmit}> 
-        {error && <p>{error}</p>}
+        
         <StyledSection primerColumna>
           <FormInputs 
             type="text" 
@@ -60,6 +60,7 @@ class LoginForm extends React.Component {
           >
             Password
           </FormInputs>
+          {error && <p>{error}</p>}
           <StyledLink to="/#">¿Olvidaste tu contraseña?</StyledLink>
           <Button type="submit">
             Iniciar Sesión

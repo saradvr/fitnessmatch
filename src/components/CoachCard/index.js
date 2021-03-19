@@ -17,12 +17,12 @@ export function CoachCard ({ _idUserType, name, specializations, disciplines, ex
           </tr>
           <tr>
             <StyledTd>
-              <strong>Especialidades:</strong> {specializations.join(', ')}
+              {/* <strong>Especialidades:</strong> {specializations.join(', ')} */}
             </StyledTd>
           </tr>
           <tr>
             <StyledTd>
-              <strong>Disciplinas:</strong> {disciplines.join(', ')}
+              {/* <strong>Disciplinas:</strong> {disciplines.join(', ')} */}
             </StyledTd>
           </tr>
           <tr>
