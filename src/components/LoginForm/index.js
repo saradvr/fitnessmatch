@@ -6,6 +6,7 @@ import { LinkButton } from "../LinkButton"
 import { StyledForm, StyledSection, StyledDiv, StyledParagraph } from "./styles"
 import {StyledLabel} from "../FormInputs/styles"
 import { StyledLink } from "../StyledLink"
+import axios from "axios"
 
 
 class LoginForm extends React.Component {
@@ -22,18 +23,25 @@ class LoginForm extends React.Component {
     })
   }
 
-  handleSubmit = e => {
+  handleSubmit = async e => {
     e.preventDefault()
-    const {email, password} = this.state
-    dataUsers.forEach((dataUser)=> {
-      if(dataUser.email === email && dataUser.password === password)
-      {
-        this.props.history.push("/coachesList")
-      } 
+
+    try {
+      const {data} = await axios({
+        method: 'POST',
+        baseURL: process.env.REACT_APP_SERVER_URL,
+        url: '/users/signin',
+        data: this.state
+      })
+
+      localStorage.setItem('token', data.token)
+      this.props.history.push('/coacheslist')
+    
+    } catch(error){
+      this.setState({
+      error: `Usuario o contraseña inválido`
     })
-    this.setState({
-      error: " Usuario o contraseña inválido "
-    }) 
+    }
   }
 
   render() {
