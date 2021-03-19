@@ -10,7 +10,8 @@ class FormInputs extends React.Component {
           {children}
         </StyledLabel>
         <StyledInput 
-          type={type} 
+          type={type}
+          required
           name={name} 
           id={id} 
           value={value} 
