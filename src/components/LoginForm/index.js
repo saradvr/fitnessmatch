@@ -3,9 +3,10 @@ import Button from "../Button"
 import {dataUsers} from "../../dataUsers"
 import FormInputs from "../FormInputs"
 import { LinkButton } from "../LinkButton"
-import { StyledForm, StyledSection, StyledDiv } from "./styles"
+import { StyledForm, StyledSection, StyledDiv, StyledParagraph } from "./styles"
 import {StyledLabel} from "../FormInputs/styles"
 import { StyledLink } from "../StyledLink"
+import axios from "axios"
 
 
 class LoginForm extends React.Component {
@@ -22,25 +23,31 @@ class LoginForm extends React.Component {
     })
   }
 
-  handleSubmit = e => {
+  handleSubmit = async e => {
     e.preventDefault()
-    const {email, password} = this.state
-    dataUsers.forEach((dataUser)=> {
-      if(dataUser.email === email && dataUser.password === password)
-      {
-        this.props.history.push("/coachesList")
-      } 
+
+    try {
+      const {data} = await axios({
+        method: 'POST',
+        baseURL: process.env.REACT_APP_SERVER_URL,
+        url: '/users/signin',
+        data: this.state
+      })
+
+      localStorage.setItem('token', data.token)
+      this.props.history.push('/coacheslist')
+    
+    } catch(error){
+      this.setState({
+      error: `Usuario o contraseña inválido`
     })
-    this.setState({
-      error: " Incorrect username or password "
-    }) 
+    }
   }
 
   render() {
     const {email, password, error} = this.state
     return (
       <StyledForm onSubmit={this.handleSubmit}> 
-        {error && <p>{error}</p>}
         <StyledSection primerColumna>
           <FormInputs 
             type="text" 
@@ -60,6 +67,7 @@ class LoginForm extends React.Component {
           >
             Password
           </FormInputs>
+          {error && <StyledParagraph>{error}</StyledParagraph>}
           <StyledLink to="/#">¿Olvidaste tu contraseña?</StyledLink>
           <Button type="submit">
             Iniciar Sesión
