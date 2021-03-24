@@ -1,47 +1,85 @@
 import React from 'react'
-import {dataCoaches} from '../../dataCoaches'
+import axios from 'axios'
+import qs from 'qs'
 import {CoachesList} from '../../components/CoachesList'
-import {disciplines} from '../../dataDisciplines'
-import {specializations} from '../../dataSpecializations'
 import FilterContainer from '../../components/FilterContainer/index'
 import {StyledMain, ContainerSection, StyledSection, StyledDescription} from './styles'
 import banner from './BannerCoachesList.png'
 
+async function getCoaches(params) {
+  try {
+      const {data} = await axios({
+        method: 'GET',
+        baseURL: process.env.REACT_APP_SERVER_URL,
+        url: '/coaches',
+        params: params,
+        paramsSerializer: params => {
+          return qs.stringify(params, { arrayFormat: "repeat" })
+        }
+      })
+      return data
+    } catch (error) {
+      console.log(`Hubo un error en el req: ${error}`)
+    }
+}
+
 export class ListadoEntrenadores extends React.Component {
   state = {
-    coaches: dataCoaches,
+    coaches: [],
     checkDisciplines: [],
     checkSpecializations: [],
     minFee: 0,
     maxFee: 1000000,
+    loading: false,
   }
 
-  handleSubmit = e => {
+  async componentDidMount() {
+    this.setState({
+      loading: true,
+    })
+    const {minFee, maxFee, checkDisciplines, checkSpecializations} = this.state
+    const dataCoaches = await getCoaches({
+      minFee,
+      maxFee,
+      checkDisciplines,
+      checkSpecializations,
+    })
+    const specializations = await axios({
+      method: 'GET',
+      baseURL: process.env.REACT_APP_SERVER_URL,
+      url: '/specializations'
+    })
+    const disciplines = await axios({
+      method: 'GET',
+      baseURL: process.env.REACT_APP_SERVER_URL,
+      url: '/disciplines'
+    })
+    this.setState({
+      coaches: dataCoaches,
+      specializations: specializations.data,
+      disciplines: disciplines.data,
+      loading: false,
+    })
+  }
+
+  
+
+  handleSubmit = async e => {
     e.preventDefault()
     const {checkDisciplines, checkSpecializations, minFee, maxFee} = this.state
-    if (checkDisciplines.length === 0 && checkSpecializations.length === 0 ) {
-      this.setState({
-        coaches: dataCoaches,
-      })
-    } else {
-      this.setState({
-        coaches: dataCoaches.filter( element => {
-          const discipline = element.disciplines.some(item => {
-            return checkDisciplines.includes(item)
-              
-          })
-          const specialization = element.specializations.some(item => {
-            return checkSpecializations.includes(item)
-          })
-          return (discipline || specialization) && element.appointmentFee <= maxFee && element.appointmentFee >= minFee
-        })
-      })
-    }
+    const dataCoaches = await getCoaches({
+      minFee,
+      maxFee,
+      checkSpecializations,
+      checkDisciplines,
+    })
+    this.setState({
+      coaches: dataCoaches
+    })
   }
 
   handleChange = e => {
     const { name, id, type, value } = e.target
-    console.dir(e.target)
     if ( type === 'checkbox' ) {
       this.setState((prevState) => ({
         [name]: prevState[name].includes(id) ? prevState[name].filter(item => item !== id) : [...prevState[name], id],
@@ -55,7 +93,7 @@ export class ListadoEntrenadores extends React.Component {
 
 
   render(){
-    const {coaches, checkDisciplines, checkSpecializations, minFee, maxFee} = this.state;
+    const {loading, coaches, specializations, disciplines, checkDisciplines, checkSpecializations, minFee, maxFee} = this.state
     return (
       <StyledMain>
         <img 
@@ -79,8 +117,9 @@ export class ListadoEntrenadores extends React.Component {
               maxFee = {maxFee}
               handleChange = {this.handleChange}
               handleSubmit = {this.handleSubmit}
-            />          
+            />
           </StyledSection>
+          {loading && <p>Cargando entrenadores disponibles...</p>}
           <StyledSection>
             <CoachesList
               coaches={coaches}
