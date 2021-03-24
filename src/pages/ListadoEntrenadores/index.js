@@ -31,7 +31,6 @@ export class ListadoEntrenadores extends React.Component {
     minFee: 0,
     maxFee: 1000000,
     loading: false,
-    specializations: [],
   }
 
   async componentDidMount() {
