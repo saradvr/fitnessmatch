@@ -19,3 +19,8 @@ export const StyledSection = styled.section`
   justify-content: center;
   padding: ${props => props.primerColumna ? "15px 30px 15px 15px" : "15px"};
 `
+export const StyledParagraph = styled.p`
+  font-size: 14px;
+  font-family: Roboto;
+  color: #FBFCF9;
+`

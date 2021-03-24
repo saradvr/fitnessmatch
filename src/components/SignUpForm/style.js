@@ -29,3 +29,9 @@ export const StyledSelect = styled.select`
     border: none;
 
 `
+export const StyledP = styled.p`
+    font-family: Roboto;
+    font-weight: 300;
+    color: #FBFCF9;
+    font-size: 14px;
+`

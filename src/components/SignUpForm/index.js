@@ -2,9 +2,10 @@ import FormInputs from '../FormInputs'
 import Button from '../Button'
 import React from 'react'
 import { dataUsers } from '../../dataUsers'
-import {StyledForm, StyledSection, StyledSelect} from './style'
+import {StyledForm, StyledSection, StyledSelect, StyledP} from './style'
 import {StyledLabel} from '../FormInputs/styles'
 import {StyledButton} from '../Button/styles'
+import axios from 'axios'
 
 
 class SignUpForm extends React.Component {
@@ -13,8 +14,8 @@ class SignUpForm extends React.Component {
     password: '',
     passwordconfir: '',
     email: '',
-    role:'',
-    error: null,
+    userType:'',
+    error: '',
   }
   
   handleChange = e =>{
@@ -24,30 +25,39 @@ class SignUpForm extends React.Component {
     }) 
   }
 
-  handleSubmit = e => {
+  handleSubmit = async e => {
     e.preventDefault()
-    const {email, password, passwordconfir} = this.state
-    const correo = dataUsers.some(dataUser =>{
-      return dataUser.email === email    
-    })
-    if (!correo && password === passwordconfir){
-         this.props.history.push("/coachesList")
-    } else if (correo){
-      this.setState({
-        error: 'El correo ya esta en uso'
-      })
-    } else {
+    const {password, passwordconfir} = this.state
+    if( password !== passwordconfir){
       this.setState({
         error: 'Las contraseñas no coinciden'
       })
-    }           
+    } else {
+      try {
+        const { data } = await axios ({
+          method: 'POST',
+          baseURL: process.env.REACT_APP_SERVER_URL,
+          url: '/users/signup',
+          data: this.state,
+        })
+  
+        localStorage.setItem('token', data.token)
+        this.props.history.push('/coacheslist')
+        
+      } catch(error){
+        this.setState({
+          error: error.response.data.error.errors.email.message,
+        })
+      }
+    }
+                      
   }
 
   render () {
     const {name, password, email, passwordconfir, error} = this.state
     return(
       <StyledForm onSubmit={this.handleSubmit}>
-        {error && <p>{error}</p>}
+        
         <StyledSection primerColumna>
           <FormInputs 
             id="name"
@@ -69,10 +79,10 @@ class SignUpForm extends React.Component {
           </FormInputs>
 
           <StyledLabel htmlFor="selectRole">Escoge tu rol</StyledLabel>
-          <StyledSelect id="selectRole" name= "role" onChange={this.handleChange}>
-          <option value="">Selecciona una opcion</option>
-            <option value="cliente">Cliente</option>
-            <option value="entrenador">Entrenador</option>
+          <StyledSelect id="selectRole" name= "userType" onChange={this.handleChange}>
+            <option value="">Selecciona una opción</option>
+            <option value="client">Cliente</option>
+            <option value="coach">Entrenador</option>
           </StyledSelect>
         </StyledSection>
         <StyledSection>
@@ -94,6 +104,7 @@ class SignUpForm extends React.Component {
           >
           Confirmar contraseña
           </FormInputs>
+          {error && <StyledP> {error} </StyledP>}
           <StyledButton 
             type="submit"
             registrarme
