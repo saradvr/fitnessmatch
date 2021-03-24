@@ -2,7 +2,10 @@ import { LinkButton } from '../LinkButton';
 import LogoPeq from './LogoPeq-negro.png'
 import {StyledArticle, StyledTd, StyledH2, StyledImg, StyledTable} from './styles';
 export function CoachCard ({ _idUserType, name, specializations, disciplines, experienceYears, appointmentFee, profilePicture}) {
-  
+  const namesSpecializations = []
+  const namesDisciplines = []
+  specializations.forEach(el => namesSpecializations.push(el.name))
+  disciplines.forEach(el => namesDisciplines.push(el.name))
   return (
     <StyledArticle>
       <StyledTable>
@@ -17,12 +20,12 @@ export function CoachCard ({ _idUserType, name, specializations, disciplines, ex
           </tr>
           <tr>
             <StyledTd>
-              {/* <strong>Especialidades:</strong> {specializations.join(', ')} */}
+              <strong>Especialidades:</strong> {namesSpecializations.join(', ')}
             </StyledTd>
           </tr>
           <tr>
             <StyledTd>
-              {/* <strong>Disciplinas:</strong> {disciplines.join(', ')} */}
+              <strong>Disciplinas:</strong> {namesDisciplines.join(', ')}
             </StyledTd>
           </tr>
           <tr>

@@ -26,7 +26,7 @@ export function CoachesList ({ coaches }) {
           />
         )
       }):
-          <p>No se encontraron coaches</p>
+          <p>No se encontraron entrenadores con esas características</p>
       }
     </>
   );
