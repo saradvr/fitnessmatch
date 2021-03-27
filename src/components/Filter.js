@@ -3,8 +3,8 @@ import Checkbox from './Checkbox/index.js'
 function Filter({
   filterName, 
   nameCheckbox, 
-  checks, 
-  handleChange 
+  checks,
+  handleChange,
 }){
   return(
     <>
