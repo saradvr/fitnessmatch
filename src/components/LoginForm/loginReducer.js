@@ -9,9 +9,10 @@ export function changeEmail(value) {
   }
 }
 
-export function changePassword() {
+export function changePassword(value) {
   return {
     type: CHANGE_PASSWORD,
+    payload: value,
   }
 }
 
@@ -33,6 +34,11 @@ function loginReducer(state, action) {
       return {
         ...state,
         email: action.payload
+      }
+    case CHANGE_PASSWORD:
+      return {
+        ...state,
+        password: action.payload
       }
     default:
       return state
