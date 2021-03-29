@@ -7,10 +7,7 @@ import { StyledLink } from "../StyledLink"
 import {useDispatch, useSelector} from "react-redux"
 import { StyledForm, StyledSection, StyledParagraph } from "./styles"
 import axios from "axios"
-import {changeEmail} from "./loginReducer"
-
-
-// let store = createStore(LoginForm)
+import { changeEmail, changePassword } from "../../store/loginReducer"
 
 const LoginForm = function() {
   // handleSubmit = async e => {
@@ -34,7 +31,16 @@ const LoginForm = function() {
   //   }
   // }
   // const {email, password, error} = this.state
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
+  // const { email, password } = useSelector(state => {
+  //   console.log(state)
+  //   return {
+  //     email: state.loginReducer.email,
+  //     password: state.loginReducer.password,
+  //   }
+  // })
+  const email = ""
+  const password = ""
   return (
     <StyledForm onSubmit={this.handleSubmit}> 
       <StyledSection primerColumna>
@@ -43,7 +49,7 @@ const LoginForm = function() {
           name="email" 
           id="email" 
           value={email}
-          onChange={(e) => dispatch(changeEmail(e.target.value))}
+          // onChange={(e) => dispatch(changeEmail(e.target.value))}
         >
           Email
         </FormInputs>
@@ -52,7 +58,7 @@ const LoginForm = function() {
           name="password" 
           id="password"
           value={password} 
-          onChange={(e) => dispatch(changeEmail(e.target.value))}
+          // onChange={(e) => dispatch(changePassword(e.target.value))}
         >
           Password
         </FormInputs>

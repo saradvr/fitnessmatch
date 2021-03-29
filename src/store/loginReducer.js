@@ -28,7 +28,7 @@ const initialState = {
   error: null,
 }
 
-function loginReducer(state, action) {
+export function loginReducer(state = initialState, action) {
   switch(action.type) {
     case CHANGE_EMAIL:
       return {
