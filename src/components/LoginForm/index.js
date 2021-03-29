@@ -7,49 +7,53 @@ import { StyledLink } from "../StyledLink"
 import {useDispatch, useSelector} from "react-redux"
 import { StyledForm, StyledSection, StyledParagraph } from "./styles"
 import axios from "axios"
-import { changeEmail, changePassword } from "../../store/loginReducer"
+import { changeEmail, changePassword, changeError } from "../../store/loginReducer"
+import { useHistory } from "react-router-dom"
 
 const LoginForm = function() {
-  // handleSubmit = async e => {
-  //   e.preventDefault()
+ 
+ const history = useHistory()
+  
+  const dispatch = useDispatch()
+  const { email, password, error } = useSelector(state => {
+    return {
+      email: state.loginReducer.email,
+      password: state.loginReducer.password,
+      error: state.loginReducer.error,
+    }
+  })
 
-  //   try {
-  //     const {data} = await axios({
-  //       method: 'POST',
-  //       baseURL: process.env.REACT_APP_SERVER_URL,
-  //       url: '/users/signin',
-  //       data: this.state
-  //     })
+  const handleSubmit = async e => {
+    e.preventDefault()
 
-  //     localStorage.setItem('token', data.token)
-  //     this.props.history.push('/coacheslist')
+    try {
+      const {data} = await axios({
+        method: 'POST',
+        baseURL: process.env.REACT_APP_SERVER_URL,
+        url: '/users/signin',
+        data: {
+          email,
+          password,
+        }
+      })
+
+      localStorage.setItem('token', data.token)
+      history.push('/coacheslist')
     
-  //   } catch(error){
-  //     this.setState({
-  //     error: `Usuario o contraseña inválido`
-  //   })
-  //   }
-  // }
-  // const {email, password, error} = this.state
-  // const dispatch = useDispatch()
-  // const { email, password } = useSelector(state => {
-  //   console.log(state)
-  //   return {
-  //     email: state.loginReducer.email,
-  //     password: state.loginReducer.password,
-  //   }
-  // })
-  const email = ""
-  const password = ""
+    } catch(error){
+    dispatch(changeError())
+    }
+  }
+
   return (
-    <StyledForm onSubmit={this.handleSubmit}> 
+    <StyledForm onSubmit={handleSubmit}> 
       <StyledSection primerColumna>
         <FormInputs 
           type="text" 
           name="email" 
           id="email" 
           value={email}
-          // onChange={(e) => dispatch(changeEmail(e.target.value))}
+          onChange={(e) => dispatch(changeEmail(e.target.value))}
         >
           Email
         </FormInputs>
@@ -58,11 +62,11 @@ const LoginForm = function() {
           name="password" 
           id="password"
           value={password} 
-          // onChange={(e) => dispatch(changePassword(e.target.value))}
+          onChange={(e) => dispatch(changePassword(e.target.value))}
         >
           Password
         </FormInputs>
-        {/* {error && <StyledParagraph>{error}</StyledParagraph>} */}
+        {error && <StyledParagraph>{error}</StyledParagraph>}
         <StyledLink to="/#">¿Olvidaste tu contraseña?</StyledLink>
         <Button type="submit">
           Iniciar Sesión

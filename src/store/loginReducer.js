@@ -40,6 +40,11 @@ export function loginReducer(state = initialState, action) {
         ...state,
         password: action.payload
       }
+    case CHANGE_ERROR:
+      return {
+        ...state,
+        error: 'Usuario o contraseña inválida'
+      }
     default:
       return state
   }
