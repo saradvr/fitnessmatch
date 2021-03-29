@@ -12,7 +12,7 @@ class SignUpForm extends React.Component {
   state = {
     name: '',
     password: '',
-    passwordconfir: '',
+    passwordconfirm: '',
     email: '',
     userType:'',
     error: '',
@@ -27,8 +27,8 @@ class SignUpForm extends React.Component {
 
   handleSubmit = async e => {
     e.preventDefault()
-    const {password, passwordconfir} = this.state
-    if( password !== passwordconfir){
+    const {password, passwordconfirm} = this.state
+    if( password !== passwordconfirm){
       this.setState({
         error: 'Las contraseñas no coinciden'
       })
@@ -54,7 +54,7 @@ class SignUpForm extends React.Component {
   }
 
   render () {
-    const {name, password, email, passwordconfir, error} = this.state
+    const {name, password, email, passwordconfirm, error} = this.state
     return(
       <StyledForm onSubmit={this.handleSubmit}>
         
@@ -96,11 +96,11 @@ class SignUpForm extends React.Component {
             Contraseña
           </FormInputs>
           <FormInputs 
-            id="passwordconfir"
+            id="passwordconfirm"
             type="password"
-            name="passwordconfir"
+            name="passwordconfirm"
             onChange={this.handleChange}
-            value={passwordconfir}                  
+            value={passwordconfirm}                  
           >
           Confirmar contraseña
           </FormInputs>
