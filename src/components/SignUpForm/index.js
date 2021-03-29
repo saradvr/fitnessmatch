@@ -1,7 +1,5 @@
 import FormInputs from '../FormInputs'
-import Button from '../Button'
 import React from 'react'
-import { dataUsers } from '../../dataUsers'
 import {StyledForm, StyledSection, StyledSelect, StyledP} from './style'
 import {StyledLabel} from '../FormInputs/styles'
 import {StyledButton} from '../Button/styles'
