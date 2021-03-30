@@ -12,7 +12,7 @@ import { useHistory } from "react-router-dom"
 
 const LoginForm = function() {
  
- const history = useHistory()
+  const history = useHistory()
   
   const dispatch = useDispatch()
   const { email, password, error } = useSelector(state => {
@@ -41,7 +41,7 @@ const LoginForm = function() {
       history.push('/coacheslist')
     
     } catch(error){
-    dispatch(changeError())
+      dispatch(changeError())
     }
   }
 
