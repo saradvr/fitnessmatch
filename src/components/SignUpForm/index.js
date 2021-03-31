@@ -4,64 +4,63 @@ import {StyledForm, StyledSection, StyledSelect, StyledP} from './style'
 import {StyledLabel} from '../FormInputs/styles'
 import {StyledButton} from '../Button/styles'
 import axios from 'axios'
+import { changeEmail, changeError, changeName, changePassword, changePasswordConfirm, changeUserType } from '../../store/signUpReducer'
+import {useDispatch, useSelector} from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
 
-class SignUpForm extends React.Component {
-  state = {
-    name: '',
-    password: '',
-    passwordconfir: '',
-    email: '',
-    userType:'',
-    error: '',
-  }
-  
-  handleChange = e =>{
-    const {name, value} = e.target
-    this.setState({
-      [name]: value,
-    }) 
-  }
+function SignUpForm() {
+  const history = useHistory()
+  const { 
+    name, 
+    password, 
+    passwordconfirm, 
+    email, 
+    userType, 
+    error } = useSelector(({signUpReducer})=> ({
+    name: signUpReducer.name,
+    password: signUpReducer.password,
+    passwordconfirm: signUpReducer.passwordconfirm,
+    email: signUpReducer.email,
+    userType: signUpReducer.userType,
+    error: signUpReducer.error,
+  }))
 
-  handleSubmit = async e => {
+  async function handleSubmit(e){
     e.preventDefault()
-    const {password, passwordconfir} = this.state
-    if( password !== passwordconfir){
-      this.setState({
-        error: 'Las contraseñas no coinciden'
-      })
+    if( password !== passwordconfirm){
+      dispatch(changeError('Las contraseñas no coinciden'))
     } else {
       try {
         const { data } = await axios ({
           method: 'POST',
           baseURL: process.env.REACT_APP_SERVER_URL,
           url: '/users/signup',
-          data: this.state,
+          data: {
+            name,
+            password,
+            email,
+            userType,
+          },
         })
   
         localStorage.setItem('token', data.token)
-        this.props.history.push('/coacheslist')
+        history.push('/coacheslist')
         
       } catch(error){
-        this.setState({
-          error: error.response.data.error.errors.email.message,
-        })
+        dispatch(changeError(error.response.data.error.errors.email.message))
       }
-    }
-                      
+    }                   
   }
-
-  render () {
-    const {name, password, email, passwordconfir, error} = this.state
+    const dispatch = useDispatch()
     return(
-      <StyledForm onSubmit={this.handleSubmit}>
-        
+      <StyledForm onSubmit={handleSubmit}>
         <StyledSection primerColumna>
           <FormInputs 
             id="name"
             type="text"
             name="name"
-            onChange={this.handleChange}
+            onChange={(e) => dispatch(changeName(e.target.value))}
             value={name}       
           >
               Nombre completo
@@ -70,14 +69,14 @@ class SignUpForm extends React.Component {
             id="email"
             type="email"
             name="email"
-            onChange={this.handleChange}
+            onChange={(e) => dispatch(changeEmail(e.target.value))}
             value={email}               
           >
               Email
           </FormInputs>
 
           <StyledLabel htmlFor="selectRole">Escoge tu rol</StyledLabel>
-          <StyledSelect id="selectRole" name= "userType" onChange={this.handleChange}>
+          <StyledSelect id="selectRole" name= "userType" onChange={(e) => dispatch(changeUserType(e.target.value))}>
             <option value="">Selecciona una opción</option>
             <option value="client">Cliente</option>
             <option value="coach">Entrenador</option>
@@ -88,17 +87,17 @@ class SignUpForm extends React.Component {
             id="password"
             type="password"
             name="password"
-            onChange={this.handleChange}
+            onChange={(e) => dispatch(changePassword(e.target.value))}
             value={password}                  
           >
             Contraseña
           </FormInputs>
           <FormInputs 
-            id="passwordconfir"
+            id="passwordconfirm"
             type="password"
-            name="passwordconfir"
-            onChange={this.handleChange}
-            value={passwordconfir}                  
+            name="passwordconfirm"
+            onChange={(e) => dispatch(changePasswordConfirm(e.target.value))}
+            value={passwordconfirm}                  
           >
           Confirmar contraseña
           </FormInputs>
@@ -112,9 +111,7 @@ class SignUpForm extends React.Component {
         </StyledSection>
         
       </StyledForm>
-    )
-  }
-  
+    ) 
 }
 
 export default SignUpForm
