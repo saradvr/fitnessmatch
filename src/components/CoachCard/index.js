@@ -9,7 +9,7 @@ export function CoachCard ({ _idUserType, name, specializations, disciplines, ex
       <StyledTable>
         <tbody>
           <tr>
-            <StyledTd rowSpan="5" alignCenter>
+            <StyledTd rowSpan="5" alignCenter fixWidth='300px'>
               <StyledImg alt="Foto de perfil" src={profilePicture} width="100%"/>
             </StyledTd>
             <StyledTd>
