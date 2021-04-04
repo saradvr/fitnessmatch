@@ -24,6 +24,10 @@ export const StyledTd = styled.td`
   text-align: ${props => props.alignCenter ? 'center' : props.alignRight ? 'right' : 'left'};
   padding: 0 10px 0 10px;
   font-size: 14px;
+
+  @media screen and (min-width: 1024px) {
+    width: ${props => props.fixWidth ? props.fixWidth : 'auto'};;
+  }
 `
 
 export const StyledImg = styled.img`
