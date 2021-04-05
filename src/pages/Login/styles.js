@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import backimg from '../../components/Images/fondoOscuro.webp'
+import { Link } from "react-router-dom"
 
 export const StyledMain = styled.main`
   background-image: url(${backimg});
@@ -27,4 +28,8 @@ export const StyledBackImg = styled.img`
   height: 578px;
   width: auto;
   z-index: 1;
+`
+
+export const StyledLink = styled(Link)`
+  text-align: center;
 `

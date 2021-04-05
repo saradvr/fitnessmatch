@@ -11,10 +11,15 @@ export function getCoaches(params) {
   return async function(dispatch){
     dispatch({ type: COACHES_LOADING })
     try {
+      const token = localStorage.getItem('token')
+      
       const {data} = await axios({
         method: 'GET',
         baseURL: process.env.REACT_APP_SERVER_URL,
         url: '/coaches',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
         params: params,
         paramsSerializer: params => {
           return qs.stringify(params, { arrayFormat: "repeat" })
@@ -22,6 +27,7 @@ export function getCoaches(params) {
       })
       dispatch({ type: COACHES_SUCCESS, payload: data})
     } catch (error) {
+      localStorage.removeItem('token')
       dispatch({ type: COACHES_ERROR, payload: error })
     } finally {
       dispatch({ type: COACHES_FINISHED })
