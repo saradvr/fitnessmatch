@@ -1,6 +1,6 @@
 import FormInputs from '../FormInputs'
 import React from 'react'
-import {StyledForm, StyledSection, StyledSelect, StyledP} from './style'
+import {StyledForm, StyledSection, StyledSelect, StyledP, StyledLink, LoginText} from './style'
 import {StyledLabel} from '../FormInputs/styles'
 import {StyledButton} from '../Button/styles'
 import axios from 'axios'
@@ -108,6 +108,7 @@ function SignUpForm() {
           >
             Registrarme  
           </StyledButton>
+          <LoginText>¿Ya tienes una cuenta? <StyledLink to="/login">Inicia sesión</StyledLink></LoginText>
         </StyledSection>
         
       </StyledForm>
