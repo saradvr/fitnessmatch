@@ -27,8 +27,12 @@ function App() {
   return (
     <Router history={history}>
       <Switch>
-        <Route exact path="/" component={LandingPage} />
-        <Route exact path="/signup" component={SignUp} />
+        <Route exact path="/">
+          <LandingPage />
+        </Route>
+        <Route exact path="/signup">
+          <SignUp />
+        </Route>
         <Route exact path="/login">
           <Login />
         </Route>
