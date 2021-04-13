@@ -5,6 +5,7 @@ function Filter({
   nameCheckbox, 
   checks,
   handleChange,
+  marginLeft,
 }){
   return(
     <>
@@ -25,6 +26,7 @@ function Filter({
               isChecked = {isChecked}
               children= {name}
               handleChange = {handleChange}
+              marginLeft = {marginLeft}
             />
         )
       })  

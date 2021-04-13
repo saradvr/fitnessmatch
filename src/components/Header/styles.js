@@ -6,7 +6,7 @@ export const StyledNav = styled.nav`
   flex-direction: column;
   justify-content: center;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 5fr;
 `
 
 export const LogoSection = styled.section`
