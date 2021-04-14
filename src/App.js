@@ -10,6 +10,7 @@ import {CoachProfile} from './pages/CoachProfile';
 import './App.css';
 import { SignUp } from './pages/SignUp';
 import { LandingPage } from './pages/LandingPage';
+import { ClientProfile } from './pages/ClientProfile';
 
 function PrivateRoute(props) {
   const token = localStorage.getItem('token')
@@ -25,6 +26,7 @@ function App() {
         <Route exact path="/" component={LandingPage} />
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/login" component={Login} />
+        <Route exact path="/clientprofile" component={ClientProfile} />
         <PrivateRoute exact path="/coacheslist" component={ListadoEntrenadores} />
         <PrivateRoute exact path="/coach/:idUserType" component={CoachProfile} />
       </Switch>
