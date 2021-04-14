@@ -94,6 +94,7 @@ function FilterContainer(){
             nameCheckbox='checkSpecializations'
             checks = {checkSpecializations}
             handleChange = {e => dispatch(toggleSpecialization(checkSpecializations.includes(e.target.id), e.target.id))}
+            marginLeft = '20px'
           />
         </Collapse>
         <StyledTitle onClick={collapseDisciplines}>Disciplinas <StyledCaret></StyledCaret></StyledTitle>
@@ -105,6 +106,7 @@ function FilterContainer(){
             nameCheckbox='checkDisciplines'
             checks = {checkDisciplines}
             handleChange = {e => dispatch(toggleDiscipline(checkDisciplines.includes(e.target.id), e.target.id))}
+            marginLeft = '20px'
           />
         </Collapse>
         <StyledTitle onClick={collapsePriceRange}>Rangos de precios <StyledCaret></StyledCaret></StyledTitle>

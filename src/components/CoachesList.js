@@ -21,8 +21,7 @@ export function CoachesList () {
   return (
     <>
       {!!coaches && coaches.length > 0 ? coaches.map(({
-        _id, 
-        _idUserType,
+        _id,
         name, 
         specializations, 
         disciplines, 
@@ -39,7 +38,7 @@ export function CoachesList () {
             experienceYears={experienceYears}
             appointmentFee={appointmentFee}
             profilePicture={profilePicture}
-            _idUserType={_idUserType}
+            _idUserType={_id}
           />
         )
       }):
