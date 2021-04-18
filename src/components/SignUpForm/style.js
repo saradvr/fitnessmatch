@@ -37,7 +37,7 @@ export const StyledP = styled.p`
   font-size: 14px;
 `
 
-export const LoginText = styled.p`
+export const LoginText = styled.text`
   font-family: Roboto;
   font-weight: 300;
   color: #FBFCF9;

@@ -6,10 +6,10 @@ import {
 } from 'react-router-dom';
 import {ListadoEntrenadores} from './pages/ListadoEntrenadores';
 import {Login} from "./pages/Login"
-import {CoachProfile} from './pages/CoachProfile';
 import './App.css';
 import { SignUp } from './pages/SignUp';
 import { LandingPage } from './pages/LandingPage';
+import { CoachProfile } from './pages/CoachProfile/index';
 
 function PrivateRoute(props) {
   const token = localStorage.getItem('token')
@@ -25,8 +25,9 @@ function App() {
         <Route exact path="/" component={LandingPage} />
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/login" component={Login} />
+        <Route exact path="/coachprofile" component={CoachProfile} />
         <PrivateRoute exact path="/coacheslist" component={ListadoEntrenadores} />
-        <PrivateRoute exact path="/coach/:idUserType" component={CoachProfile} />
+        {/* <PrivateRoute exact path="/coach/:idUserType" component={CoachProfile} /> */}
       </Switch>
     </Router>
   );
