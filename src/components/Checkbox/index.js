@@ -1,8 +1,18 @@
 import {StyledInputCheckbox,StyledInput} from './styles'
 
-function Checkbox ({id, value, name, isChecked, handleChange, children}) {
+function Checkbox ({
+  id, 
+  value, 
+  name, 
+  isChecked, 
+  handleChange, 
+  children, 
+  black, 
+  disabled, 
+  marginLeft
+}) {
   return (
-    <StyledInputCheckbox>
+    <StyledInputCheckbox black={black}>
       <StyledInput
         type="checkbox" 
         id={id} 
@@ -10,6 +20,8 @@ function Checkbox ({id, value, name, isChecked, handleChange, children}) {
         value={value} 
         checked={isChecked} 
         onChange={handleChange} 
+        disabled={disabled}
+        marginLeft={marginLeft}
       /> 
       <label htmlFor={id}>{children}</label>
     </StyledInputCheckbox>
