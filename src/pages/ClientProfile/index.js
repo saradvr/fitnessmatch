@@ -55,105 +55,106 @@ export function ClientProfile() {
     })
     console.dir(data)
   }
-
-  if(edit === true) {
-    return(
-      <>
-        <Header></Header>
-        <StyledMain>
-          <form onSubmit={handleSubmit}>
-            <StyledSection primerColumna>
-              <StyledImage src=""></StyledImage>
-                <FileUploader 
-                  file={file}
-                  setFile={setFile}
-                />
-              <StyledSectionEdit 
-                edit={edit}
-              >
-              </StyledSectionEdit>
-                <StyledLabel htmlFor="weight">Weight:</StyledLabel>
-                <StyledInputWeightEdit 
-                  type="text" 
-                  id="weight" 
-                  name="weight" 
-                  value={wtext}
-                  onChange={handleChange}
-                  edit={edit} />
-                <p edit={edit}>{wtext}</p>
-                <StyledLabel htmlFor="height">Height:</StyledLabel>
-                <StyledInputHeightEdit 
-                  type="text" 
-                  id="height" 
-                  name="height" 
-                  value={htext}
-                  onChange={handleChangeHeight}
-                  edit={edit} 
-                />
-              <p edit={edit}>{htext}</p>
-              <StyledLabel htmlFor="bmi"> BMI: </StyledLabel>
-              <StyledParagraph
-                id="bmi"
-                name="bmi"
-              >
-                {calcBMI()}
-              </StyledParagraph>
-                <StyledButtonSave
-                  type="submit"
-                  edit={edit}
-                  type="button"
-                >
-                  Guardar Cambios
-                </StyledButtonSave>
-            </StyledSection>
-          </form>
-        </StyledMain>
-      </>
-    )
-  }else if(edit === false) {
-    return(
-      <>
-      <Header></Header>
-      <StyledMain>
-        <StyledSection primerColumna>
-          <StyledImage src=""></StyledImage>
-          <StyledLabel htmlFor="weight"> Weight: </StyledLabel>
-          <StyledParagraph 
-            edit={edit}
-            type="weight"
-            id="weight"
-            name="weight"
-          >
-            {wtext}
-          </StyledParagraph>
-          <StyledLabel htmlFor="height"> Height: </StyledLabel>
-          <StyledParagraph
-            edit={edit}
-            type="height"
-            id="height"
-            name="height"
-          >
-            {htext}
-          </StyledParagraph>
-          <StyledLabel htmlFor="bmi"> BMI: </StyledLabel>
-          <StyledParagraph
-            id="bmi"
-            name="bmi"
-          >
-            {calcBMI()}
-          </StyledParagraph>
-          <StyledButtonEdit 
-            edit={edit}
-            type="button"
-            onClick={e => setEdit(true)}
-          >
-            Editar Perfil
-          </StyledButtonEdit>
-        </StyledSection>
-        <StyledSection>
-        </StyledSection>
-      </StyledMain>
-    </>
-    )
-  }
+  return (
+    <>
+      <Header />
+      <FileUploader />
+    </> 
+  )
+  // if(edit === true) {
+  //   return(
+  //     <>
+  //       <Header></Header>
+  //       <StyledMain>
+  //         <form onSubmit={handleSubmit}>
+  //           <StyledSection primerColumna>
+  //             <FileUploader />
+  //             <StyledSectionEdit 
+  //               edit={edit}
+  //             >
+  //             </StyledSectionEdit>
+  //               <StyledLabel htmlFor="weight">Weight:</StyledLabel>
+  //               <StyledInputWeightEdit 
+  //                 type="text" 
+  //                 id="weight" 
+  //                 name="weight" 
+  //                 value={wtext}
+  //                 onChange={handleChange}
+  //                 edit={edit} />
+  //               <p edit={edit}>{wtext}</p>
+  //               <StyledLabel htmlFor="height">Height:</StyledLabel>
+  //               <StyledInputHeightEdit 
+  //                 type="text" 
+  //                 id="height" 
+  //                 name="height" 
+  //                 value={htext}
+  //                 onChange={handleChangeHeight}
+  //                 edit={edit} 
+  //               />
+  //             <p edit={edit}>{htext}</p>
+  //             <StyledLabel htmlFor="bmi"> BMI: </StyledLabel>
+  //             <StyledParagraph
+  //               id="bmi"
+  //               name="bmi"
+  //             >
+  //               {calcBMI()}
+  //             </StyledParagraph>
+  //               <StyledButtonSave
+  //                 type="submit"
+  //                 edit={edit}
+  //                 type="button"
+  //               >
+  //                 Guardar Cambios
+  //               </StyledButtonSave>
+  //           </StyledSection>
+  //         </form>
+  //       </StyledMain>
+  //     </>
+  //   )
+  // }else if(edit === false) {
+  //   return(
+  //     <>
+  //     <Header></Header>
+  //     <StyledMain>
+  //       <StyledSection primerColumna>
+  //         <StyledImage src=""></StyledImage>
+  //         <StyledLabel htmlFor="weight"> Weight: </StyledLabel>
+  //         <StyledParagraph 
+  //           edit={edit}
+  //           type="weight"
+  //           id="weight"
+  //           name="weight"
+  //         >
+  //           {wtext}
+  //         </StyledParagraph>
+  //         <StyledLabel htmlFor="height"> Height: </StyledLabel>
+  //         <StyledParagraph
+  //           edit={edit}
+  //           type="height"
+  //           id="height"
+  //           name="height"
+  //         >
+  //           {htext}
+  //         </StyledParagraph>
+  //         <StyledLabel htmlFor="bmi"> BMI: </StyledLabel>
+  //         <StyledParagraph
+  //           id="bmi"
+  //           name="bmi"
+  //         >
+  //           {calcBMI()}
+  //         </StyledParagraph>
+  //         <StyledButtonEdit 
+  //           edit={edit}
+  //           type="button"
+  //           onClick={e => setEdit(true)}
+  //         >
+  //           Editar Perfil
+  //         </StyledButtonEdit>
+  //       </StyledSection>
+  //       <StyledSection>
+  //       </StyledSection>
+  //     </StyledMain>
+  //   </>
+  //   )
+  // }
 }

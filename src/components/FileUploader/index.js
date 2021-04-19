@@ -1,11 +1,13 @@
 import { StyledInput, StyledLabel} from '../FormInputs/styles'
 import axios from 'axios'
 import { useState } from 'react'
+import Button from '../Button'
 
 export function FileUploader() {
   const [image, setImage] = useState(null)
   const [file, setFile] = useState(null)
   const [picture, setPicture] = useState(null)
+  const [edit, setEdit] = useState(false)
 
   function handleChange(e) {
     readFile(e.target.files[0])
@@ -44,23 +46,46 @@ export function FileUploader() {
     })
     setPicture(data.profilePicture)
     console.log(data)
+    setEdit(false)
   }
 
-  return (
-    <>
-      <img src={picture}></img>
-      <StyledLabel htmlFor="file"></StyledLabel>
-      <StyledInput
-        type="file"
-        accept="image/*"
-        name="file"
-        id="file"
-        onChange={handleChange}
-      />
-      <button onClick={handleSubmit}>Enviar Foto</button>
+  console.log(edit)
 
-      {image && <img src={image} alt="Profile Picture Preview" />}
-    </>
-  )
+  if(edit === false) {
+    return(
+      <> 
+        <img src={picture}></img>
+        <StyledLabel htmlFor="file"></StyledLabel>
+        <Button 
+          type="button"
+          isGreen={true}
+          handleClick={e => setEdit(true)}
+        >
+          Cambiar Foto
+        </Button>
+      </>  
+    )
+  } 
+  else {
+    return(
+      <>
+        <StyledLabel htmlFor="file"></StyledLabel>
+        <StyledInput
+          type="file"
+          accept="image/*"
+          name="file"
+          id="file"
+          onChange={handleChange}
+        />
+        {image && <img src={image} alt="Profile Picture Preview" />}
+        <Button 
+          handleClick={handleSubmit}
+          isGreen={true}
+        >
+          Guardar Foto
+        </Button>
+      </>
+    ) 
+  }
 }
 
