@@ -6,12 +6,14 @@ import { StyledMain } from './styles'
 export class CoachProfile extends React.Component {
   render(){
     return(
+      <>
+      <Header />
       <StyledMain>
-        <Header />
         <section>
           <CoachProfileForm history={this.props.history}/>
         </section>
       </StyledMain>
+      </>
     )
   }
 }

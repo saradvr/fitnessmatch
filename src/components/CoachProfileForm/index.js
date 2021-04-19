@@ -4,11 +4,13 @@ import FormInputs from '../FormInputs'
 import Filter from '../Filter'
 import { useHistory } from 'react-router'
 import { StyledForm, StyledSection1, StyledSection2, StyledLabel, StyledTextArea, StyledTopContainer, StyledTop, StyledMid, StyledSpan } from './styles'
-import { changeDescription, changeExperience, changeName, changePrice, editProfile } from '../../store/coachesProfileReducer'
+import { changeDescription, changeExperience, changeName, changePrice, editProfile, changeError, GET_COACH } from '../../store/coachesProfileReducer'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
-import { getDisciplines, toggleDiscipline } from '../../store/disciplinesReducer'
-import { getSpecializations, toggleSpecialization } from '../../store/specializationsReducer'
+import { getDisciplines } from '../../store/disciplinesReducer'
+import { getSpecializations } from '../../store/specializationsReducer'
+import { toggleSpecialization, toggleDiscipline } from '../../store/coachesProfileReducer'
+import axios from 'axios'
 
 
 
@@ -26,20 +28,24 @@ function CoachProfileForm (){
     disciplines,
     checkDisciplines,
     edit,
+    error,
+    coach,
     } = useSelector(({
-      coachesProfileReducer, 
-      specializationReducer, 
-      disciplineReducer
+      coachesProfileReducer,
+      specializationReducer,
+      disciplineReducer,
     })=>({
     name: coachesProfileReducer.name,
     description: coachesProfileReducer.description,
     experience: coachesProfileReducer.experience,
     price: coachesProfileReducer.price,
     specializations: specializationReducer.specializations,
-    checkSpecializations: specializationReducer.checkSpecializations,
+    checkSpecializations: coachesProfileReducer.checkSpecializations,
     disciplines: disciplineReducer.disciplines,
-    checkDisciplines: disciplineReducer.checkDisciplines,
+    checkDisciplines: coachesProfileReducer.checkDisciplines,
     edit: coachesProfileReducer.edit,
+    error: coachesProfileReducer.error,
+    coach: coachesProfileReducer.coach,
   }))
 
 
@@ -48,28 +54,75 @@ function CoachProfileForm (){
     dispatch(getDisciplines())
   }, [])
   const dispatch = useDispatch()
+
+  async function handleSubmit (e){
+    e.preventDefault()
+    try {
+      const token = localStorage.getItem('token')
+      const { data } = await axios ({
+        method: 'PUT',
+        baseURL: process.env.REACT_APP_SERVER_URL,
+        url: '/coaches/profile',
+        data: {
+          name,
+          description,
+          experienceYears: experience,
+          appointmentFee: price,
+          disciplines: checkDisciplines,
+          specializations: checkSpecializations,
+        },
+        headers:{
+          Authorization: `bearer ${token}`
+        }
+      })
+      dispatch({type: GET_COACH, payload: data.coach})
+      dispatch(editProfile(!edit))
+    } catch(error) {
+        dispatch(changeError(error.response.data.message))
+    }
+  }
   return(
 
     <StyledForm>
       
       <StyledSection1 primerColumna>
-        <button
+        {edit === false ? (
+          <button
           type="button"
           onClick={() => dispatch(editProfile(!edit))}
-
-        >
-          Editar perfil
+          >
+           Editar perfil
         </button>
+        ) : ("")}
+        {edit === true ? (
+          <button
+          type="button"
+          onClick={handleSubmit}
+          >
+           Guardar cambios
+          </button>
+        
+        ) : ("")}
+        {edit === true ? (
+          <button
+          type="button"
+          onClick={() => dispatch(editProfile(!edit))}
+          >
+           Cancelar
+          </button>
+        
+        ):("")}
+        {error && <p> {error} </p>}
         {edit === true ? (<FormInputs
           id="name"
           type="text"
           name="name"
           onChange={(e)=> dispatch(changeName(e.target.value))}
           value={name}
-        >
-          Nombre
-        </FormInputs>) :
-        (<StyledSpan>{name}</StyledSpan>)
+          >
+           Nombre
+          </FormInputs>) :
+        (<StyledSpan>{coach.name}</StyledSpan>)
         }
         </StyledSection1>
         <StyledSection1>
@@ -102,7 +155,7 @@ function CoachProfileForm (){
           Esta es una breve descripción acerca del entrenador
         </StyledTextArea>
         ) : (
-          <StyledSpan textArea>{description}</StyledSpan>
+          <StyledSpan textArea>{coach.description}</StyledSpan>
         )}
       </StyledSection1>
 
@@ -116,7 +169,7 @@ function CoachProfileForm (){
           handleChange = {(e) => dispatch(toggleSpecialization(checkSpecializations.includes(e.target.id), e.target.id))}
         />
          ) : ( 
-           <StyledSpan>{checkSpecializations}</StyledSpan>
+           <StyledSpan>{coach.specializations ? coach.specializations.map((el)=> <li>{el.name}</li>) : "" }</StyledSpan>
         )}
       </StyledSection2>
 
@@ -133,7 +186,7 @@ function CoachProfileForm (){
             >
             </FormInputs>
           ) : (
-            <StyledSpan>{experience}</StyledSpan>
+            <StyledSpan>{coach.experienceYears}</StyledSpan>
           )}
           <StyledLabel>Precio cita</StyledLabel>
           {edit === true ? (
@@ -146,7 +199,7 @@ function CoachProfileForm (){
           >
           </FormInputs>
           ) : (
-            <StyledSpan>{price}</StyledSpan>
+            <StyledSpan>{coach.appointmentFee}</StyledSpan>
           )}
         </StyledMid>
         <StyledMid>
@@ -157,12 +210,16 @@ function CoachProfileForm (){
 
       <StyledSection2>
         <StyledLabel>Disciplinas</StyledLabel>
-        <Filter
-            filterName={disciplines}
-            nameCheckbox='checkDisciplines'
-            checks = {checkDisciplines}
-            handleChange = {(e) => dispatch(toggleDiscipline(checkDisciplines.includes(e.target.id), e.target.id))}
-          />
+        {edit === true ? (
+          <Filter
+          filterName={disciplines}
+          nameCheckbox='checkDisciplines'
+          checks = {checkDisciplines}
+          handleChange = {(e) => dispatch(toggleDiscipline(checkDisciplines.includes(e.target.id), e.target.id))}
+        />
+        ) : (
+          <StyledSpan>{coach.disciplines ? coach.disciplines.map((el)=> <li>{el.name}</li> ) : "" }</StyledSpan>
+        )}
       </StyledSection2>
     </StyledForm>
   
