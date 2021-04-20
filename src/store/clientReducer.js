@@ -4,6 +4,7 @@ import { history } from '../utils/history'
 export const CHANGE_WEIGHT = 'CHANGE_WEIGHT'
 export const CHANGE_HEIGHT = 'CHANGE_HEIGHT'
 export const CHANGE_BMI = 'CHANGE_BMI'
+export const CHANGE_NAME = 'CHANGE_NAME'
 export const CLIENT_INFO_LOADING = 'CLIENT_INFO_LOADING'
 export const CLIENT_INFO_LOADED = 'CLIENT_INFO_LOADED'
 export const CLIENT_INFO_ERROR = 'CLIENT_INFO_ERROR'
@@ -43,6 +44,7 @@ export function getClient() {
   }
 }
 
+
 export function setClientInfo(client, metric) {
   return async function(dispatch) {
     dispatch({type: SETTING_CLIENT_INFO})
@@ -73,6 +75,35 @@ export function setClientInfo(client, metric) {
     }finally{
       dispatch({type: SETTING_CLIENT_INFO_FINISHED})
     }
+  }
+}
+
+export function changeWeight(value) {
+  return {
+    type: CHANGE_WEIGHT,
+    payload: value,
+  }
+}
+
+export function changeHeight(value) {
+  return {
+    type: CHANGE_HEIGHT,
+    payload: value,
+  }
+}
+
+export function changeBMI(weight, height) {
+  const BMI = weight / (height**2)
+  return {
+    type: CHANGE_BMI,
+    payload: Math.ceil(BMI),
+  }
+}
+
+export function changeName(value) {
+  return {
+    type: CHANGE_NAME,
+    payload: value,
   }
 }
 
@@ -131,7 +162,27 @@ export function clientReducer(state = initialState, action) {
         ...state,
         saving: false,
       }
-    default:
+    case CHANGE_WEIGHT:
+      return {
+        ...state,
+        weight: action.payload,
+      } 
+    case CHANGE_HEIGHT:
+      return {
+        ...state,
+        height: action.payload,
+      }
+    case CHANGE_NAME:
+      return {
+        ...state,
+        name: action.payload,
+      }
+    case CHANGE_BMI:
+      return {
+        ...state,
+        bmi: action.payload,
+      }   
+  default:
       return state
   }
 }

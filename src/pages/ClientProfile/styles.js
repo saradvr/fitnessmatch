@@ -1,7 +1,4 @@
 import styled from 'styled-components'
-import logo from '../../components/Images/fondoOscuro.webp'
-
-/*Renders if edit === false*/
 
 export const StyledMain = styled.main`
   
@@ -25,23 +22,23 @@ export const StyledParagraph = styled.p`
 export const StyledLabel = styled.label`
 
 `
-
-/*Renders if edit === true*/
-
 export const StyledInputWeightEdit = styled.input`
-display: ${props => props.edit === true ? 'block' : 'none'}
+display: block;
 `
 export const StyledInputHeightEdit = styled.input`
-display: ${props => props.edit === true ? 'block' : 'none'}
+display: block;
 `
 
 export const StyledButtonEdit = styled.button`
-  display: ${props => props.edit === false ? 'block' : 'none'}
+  display: block;
 `
 export const StyledButtonSave = styled.button`
-  display: ${props => props.edit === true ? 'block' : 'none'}
+  display: block;
 `
 
 export const StyledSectionEdit = styled.div`
-  display: ${props => props.edit === true ? 'block' : 'none'} 
+  display: block;
+`
+export const StyledInputName = styled.input`
+  
 `

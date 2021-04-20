@@ -3,10 +3,10 @@ import axios from 'axios'
 import { useState } from 'react'
 import Button from '../Button'
 
-export function FileUploader() {
+export function FileUploader({initialPicture}) {
   const [image, setImage] = useState(null)
   const [file, setFile] = useState(null)
-  const [picture, setPicture] = useState(null)
+  const [picture, setPicture] = useState(initialPicture)
   const [edit, setEdit] = useState(false)
 
   function handleChange(e) {
@@ -37,7 +37,7 @@ export function FileUploader() {
     const { data } = await axios({
       method: 'PUT',
       baseURL: process.env.REACT_APP_SERVER_URL,
-      url: '/clients/clientprofile',
+      url: '/clients/clientprofile/picture',
       data: form,
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -45,11 +45,8 @@ export function FileUploader() {
       }
     })
     setPicture(data.profilePicture)
-    console.log(data)
     setEdit(false)
   }
-
-  console.log(edit)
 
   if(edit === false) {
     return(
