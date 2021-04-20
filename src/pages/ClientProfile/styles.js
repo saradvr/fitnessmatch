@@ -20,7 +20,7 @@ export const StyledParagraph = styled.p`
   display: inline;
 `
 export const StyledLabel = styled.label`
-
+  display: block;
 `
 export const StyledInputWeightEdit = styled.input`
 display: block;
@@ -40,5 +40,5 @@ export const StyledSectionEdit = styled.div`
   display: block;
 `
 export const StyledInputName = styled.input`
-  
+  display: block;
 `
