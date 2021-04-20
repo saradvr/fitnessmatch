@@ -7,6 +7,8 @@ import { disciplineReducer } from './disciplinesReducer'
 import { pricesRangeReducer } from './pricesRangeReducer'
 import { signUpReducer} from './signUpReducer'
 import { loginReducer } from "./loginReducer"
+import { availabilityReducer } from './availabilityReducer'
+import { appointmentReducer } from './appointmentsReducer'
 
 const rootReducer = combineReducers({
   coachReducer,
@@ -15,6 +17,8 @@ const rootReducer = combineReducers({
   pricesRangeReducer,
   signUpReducer,
   loginReducer,
+  availabilityReducer,
+  appointmentReducer,
 })
 
 const middlewares = applyMiddleware(thunk, logger)
