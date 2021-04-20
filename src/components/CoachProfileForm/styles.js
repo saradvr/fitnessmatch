@@ -33,7 +33,7 @@ export const StyledLabel = styled.label`
   font-size: 16px;
   color: #FBFCF9;
   display: block;
-  margin: 10px auto 10px auto;
+  margin: 10px;
 `
 
 export const StyledTextArea = styled.textarea`
@@ -48,12 +48,9 @@ export const StyledTop = styled.div`
   flex-direction: row-reverse;
 `
 export const StyledMid = styled.div`
-  align-items: center;
   display: flex;
-  width: 50%;
-  label:first-child {
-    margin-right: 0.5em;
-  }
+  justify-content: center;
+  padding: ${props => props.expYears ? "10px" : ""}
   
 `
 
@@ -75,4 +72,16 @@ export const StyledSpan = styled.span`
   margin: ${props => props.textArea ? "0px" : "10px auto 10px auto"};
   width: ${props => props.textArea ? "755px" : ""};
   height: ${props => props.textArea ? "242px" : ""};
+`
+
+export const StyledRedes = styled.div`
+  font-size: 4em;
+  color: #FBFCF9;
+  display: flex;
+  justify-content: center;
+  
+`
+export const StyledRed = styled.div`
+  padding: 5px;
+  
 `

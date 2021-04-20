@@ -1,23 +1,24 @@
+import axios from 'axios'
 import React from 'react'
 import Button from '../Button'
 import FormInputs from '../FormInputs'
 import Filter from '../Filter'
 import { useHistory } from 'react-router'
-import { StyledForm, StyledSection1, StyledSection2, StyledLabel, StyledTextArea, StyledTopContainer, StyledTop, StyledMid, StyledSpan } from './styles'
+import { StyledForm, StyledSection1, StyledSection2, StyledLabel, StyledTextArea, StyledTopContainer, StyledTop, StyledMid, StyledSpan, StyledRedes, StyledRed } from './styles'
 import { changeDescription, changeExperience, changeName, changePrice, editProfile, changeError, GET_COACH } from '../../store/coachesProfileReducer'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { getDisciplines } from '../../store/disciplinesReducer'
 import { getSpecializations } from '../../store/specializationsReducer'
 import { toggleSpecialization, toggleDiscipline } from '../../store/coachesProfileReducer'
-import axios from 'axios'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFacebookSquare, faInstagram, faTwitterSquare } from '@fortawesome/free-brands-svg-icons'
 
 
 
 function CoachProfileForm (){
 
-
-  const history = useHistory()
+  // const history = useHistory()
   const {
     name,
     description,
@@ -182,7 +183,7 @@ function CoachProfileForm (){
       </StyledSection2>
 
       <StyledSection2 segundaColumna>
-        <StyledMid>
+        <StyledMid expYears>
           <StyledLabel>Años de experiencia</StyledLabel>
           {edit === true ? (
             <FormInputs
@@ -209,7 +210,11 @@ function CoachProfileForm (){
         <StyledMid>
           <StyledLabel>Redes sociales</StyledLabel>
         </StyledMid>
-        
+        <StyledRedes>
+          <StyledRed><FontAwesomeIcon icon={faFacebookSquare}/></StyledRed>
+          <StyledRed><FontAwesomeIcon icon={faInstagram}/></StyledRed>
+          <StyledRed><FontAwesomeIcon icon={faTwitterSquare}/></StyledRed>
+        </StyledRedes>
       </StyledSection2>
 
       <StyledSection2>
