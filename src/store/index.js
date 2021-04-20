@@ -2,6 +2,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import logger from 'redux-logger'
 import { coachReducer } from './coachesReducer'
+import { clientReducer } from './clientReducer'
 import { specializationReducer } from './specializationsReducer'
 import { disciplineReducer } from './disciplinesReducer'
 import { pricesRangeReducer } from './pricesRangeReducer'
@@ -13,6 +14,7 @@ import { appointmentReducer } from './appointmentsReducer'
 
 const rootReducer = combineReducers({
   coachReducer,
+  clientReducer,
   specializationReducer,
   disciplineReducer,
   pricesRangeReducer,
