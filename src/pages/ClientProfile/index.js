@@ -44,7 +44,7 @@ export function ClientProfile() {
         'Authorization': `Bearer ${token}`
       }
     })
-    console.dir(data)
+
   }
   if(edit === true) {
     return(
@@ -86,7 +86,7 @@ export function ClientProfile() {
                 />
                 <StyledButton
                   type="submit"
-    
+                  green={true}
                 >
                   Guardar Cambios
                 </StyledButton>
@@ -130,6 +130,7 @@ export function ClientProfile() {
             edit={edit}
             type="button"
             onClick={e => setEdit(true)}
+            green={true}
           >
             Editar Perfil
           </StyledButton>
