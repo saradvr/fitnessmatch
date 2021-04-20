@@ -38,7 +38,7 @@ const LoginForm = function() {
       })
 
       localStorage.setItem('token', data.token)
-      history.push('/coacheslist')
+      history.push('/clientprofile')
     
     } catch(error){
       dispatch(changeError())
