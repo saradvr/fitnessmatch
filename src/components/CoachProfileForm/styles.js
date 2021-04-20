@@ -76,4 +76,3 @@ export const StyledSpan = styled.span`
   width: ${props => props.textArea ? "755px" : ""};
   height: ${props => props.textArea ? "242px" : ""};
 `
-

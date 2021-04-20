@@ -1,4 +1,3 @@
-import axios from 'axios'
 const CHANGE_NAME = 'CHANGE_NAME'
 const CHANGE_DESCRIPTION = 'CHANGE_DESCRIPTION'
 const CHANGE_EXPERIENCE = 'CHANGE_EXPERIENCE'
@@ -7,35 +6,12 @@ const CHANGE_SPECIALIZATIONS = 'CHANGE_SPECIALIZATIONS'
 const CHANGE_DISCIPLINES = 'CHANGE_DISCIPLINES'
 const EDIT_PROFILE = 'EDIT_PROFILE'
 const CHANGE_ERROR = 'CHANGE_ERROR'
-const SPECIALIZATIONS_LOADING = 'SPECIALIZATIONS_LOADING'
-const SPECIALIZATIONS_SUCCESS = 'SPECIALIZATIONS_SUCCESS'
-const SPECIALIZATIONS_ERROR = 'SPECIALIZATIONS_ERROR'
-const SPECIALIZATIONS_FINISHED = 'SPECIALIZATIONS_FINISHED'
 export const SPECIALIZATIONS_CHECKED = 'SPECIALIZATIONS_CHECKED'
 export const SPECIALIZATIONS_UNCHECKED = 'SPECIALIZATIONS_UNCHECKED'
 export const DISCIPLINES_CHECKED = 'DISCIPLINES_CHECKED'
 export const DISCIPLINES_UNCHECKED = 'DISCIPLINES_UNCHECKED'
 export const GET_COACH = 'GET_COACH'
 
-
-
-export function getSpecializationsCoach() {
-  return async function(dispatch){
-    dispatch({ type: SPECIALIZATIONS_LOADING })
-    try {
-      const {data} = await axios({
-        method: 'GET',
-        baseURL: process.env.REACT_APP_SERVER_URL,
-        url: '/coach'
-      })
-      dispatch({ type: SPECIALIZATIONS_SUCCESS, payload: data})
-    } catch (error) {
-      dispatch({ type: SPECIALIZATIONS_ERROR, payload: error })
-    } finally {
-      dispatch({ type: SPECIALIZATIONS_FINISHED })
-    }
-  }
-}
 
 export function changeName(value){
   return {
@@ -108,7 +84,6 @@ export function toggleDiscipline(isIncluded, id) {
 }
 
 
-
 const initialState = {
   name: '',
   description: '',
@@ -170,26 +145,6 @@ export function coachesProfileReducer (state = initialState, action){
       return {
         ...state,
         error: action.payload,
-      }
-    case SPECIALIZATIONS_LOADING:
-      return {
-        ...state,
-        loading: true,
-      }
-    case SPECIALIZATIONS_SUCCESS:
-      return {
-        ...state,
-        specializations: action.payload,
-      }
-    case SPECIALIZATIONS_ERROR:
-      return {
-        ...state,
-        specializations: action.payload,
-      }
-    case SPECIALIZATIONS_FINISHED:
-      return {
-        ...state,
-        loading: false,
       }
     case SPECIALIZATIONS_CHECKED:
       return {

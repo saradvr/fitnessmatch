@@ -86,46 +86,52 @@ function CoachProfileForm (){
     <StyledForm>
       
       <StyledSection1 primerColumna>
+        
         {edit === false ? (
-          <button
-          type="button"
-          onClick={() => dispatch(editProfile(!edit))}
+          <Button
+            type="button"
+            handleClick={() => dispatch(editProfile(!edit))}
           >
-           Editar perfil
-        </button>
-        ) : ("")}
-        {edit === true ? (
-          <button
-          type="button"
-          onClick={handleSubmit}
-          >
-           Guardar cambios
-          </button>
-        
-        ) : ("")}
-        {edit === true ? (
-          <button
-          type="button"
-          onClick={() => dispatch(editProfile(!edit))}
-          >
-           Cancelar
-          </button>
-        
-        ):("")}
-        {error && <p> {error} </p>}
-        {edit === true ? (<FormInputs
-          id="name"
-          type="text"
-          name="name"
-          onChange={(e)=> dispatch(changeName(e.target.value))}
-          value={name}
-          >
-           Nombre
-          </FormInputs>) :
-        (<StyledSpan>{coach.name}</StyledSpan>)
+            Editar perfil
+          </Button>
+          ) : ("")
         }
-        </StyledSection1>
-        <StyledSection1>
+
+        {edit === true ? (
+          <Button
+            type="button"
+            handleClick={handleSubmit}
+          >
+            Guardar cambios
+          </Button>
+          ) : ("")
+        }
+
+        {edit === true ? (
+          <Button
+            type="button"
+            handleClick={() => dispatch(editProfile(!edit))}
+          >
+            Cancelar
+          </Button>
+          ) : ("")
+        }
+
+        {error && <p> {error} </p>}
+        {edit === true ? (
+          <FormInputs
+            id="name"
+            type="text"
+            name="name"
+            onChange={(e)=> dispatch(changeName(e.target.value))}
+            value={name}
+          >
+            Nombre
+          </FormInputs>) :
+          (<StyledSpan>{coach.name}</StyledSpan>)
+        }
+      </StyledSection1>
+      <StyledSection1>
         <StyledTop>
           <StyledTopContainer align="right">
             <Button
@@ -147,60 +153,58 @@ function CoachProfileForm (){
       
         {edit === true ? (
           <StyledTextArea
-          id="description"
-          name="description"
-          onChange={(e)=> dispatch(changeDescription(e.target.value))}
-          value={description}
-        >
-          Esta es una breve descripción acerca del entrenador
-        </StyledTextArea>
-        ) : (
-          <StyledSpan textArea>{coach.description}</StyledSpan>
-        )}
+            id="description"
+            name="description"
+            onChange={(e)=> dispatch(changeDescription(e.target.value))}
+            value={description}
+          >
+            Esta es una breve descripción acerca del entrenador
+          </StyledTextArea>
+          ) : 
+          (<StyledSpan textArea>{coach.description}</StyledSpan>)
+        }
       </StyledSection1>
 
       <StyledSection2 primerColumna>
         <StyledLabel>Especializaciones</StyledLabel>
         {edit === true ? (
           <Filter
-          filterName={specializations}
-          nameCheckbox='checkSpecializations'
-          checks = {checkSpecializations}
-          handleChange = {(e) => dispatch(toggleSpecialization(checkSpecializations.includes(e.target.id), e.target.id))}
-        />
-         ) : ( 
-           <StyledSpan>{coach.specializations ? coach.specializations.map((el)=> <li>{el.name}</li>) : "" }</StyledSpan>
-        )}
+            filterName={specializations}
+            nameCheckbox='checkSpecializations'
+            checks = {checkSpecializations}
+            handleChange = {(e) => dispatch(toggleSpecialization(checkSpecializations.includes(e.target.id), e.target.id))}
+          />
+         ) : 
+         (<StyledSpan>{coach.specializations ? coach.specializations
+          .map((el)=> <li>{el.name}</li>) : "" }
+          </StyledSpan>)
+        }
       </StyledSection2>
 
       <StyledSection2 segundaColumna>
         <StyledMid>
-        <StyledLabel>Años de experiencia</StyledLabel>
+          <StyledLabel>Años de experiencia</StyledLabel>
           {edit === true ? (
             <FormInputs
-            id="experience"
-            type="text"
-            name="experience"
-            onChange={(e)=> dispatch(changeExperience(e.target.value))}
-            value={experience}
-            >
-            </FormInputs>
-          ) : (
-            <StyledSpan>{coach.experienceYears}</StyledSpan>
-          )}
+              id="experience"
+              type="text"
+              name="experience"
+              onChange={(e)=> dispatch(changeExperience(e.target.value))}
+              value={experience}
+            />) : 
+            (<StyledSpan>{coach.experienceYears}</StyledSpan>)
+          }
           <StyledLabel>Precio cita</StyledLabel>
           {edit === true ? (
             <FormInputs
-            id="price"
-            type="text"
-            name="price"
-            onChange={(e)=> dispatch(changePrice(e.target.value))}
-            value={price}
-          >
-          </FormInputs>
-          ) : (
-            <StyledSpan>{coach.appointmentFee}</StyledSpan>
-          )}
+              id="price"
+              type="text"
+              name="price"
+              onChange={(e)=> dispatch(changePrice(e.target.value))}
+              value={price}
+            />) : 
+            (<StyledSpan>{coach.appointmentFee}</StyledSpan>)
+          }
         </StyledMid>
         <StyledMid>
           <StyledLabel>Redes sociales</StyledLabel>
@@ -221,12 +225,7 @@ function CoachProfileForm (){
           <StyledSpan>{coach.disciplines ? coach.disciplines.map((el)=> <li>{el.name}</li> ) : "" }</StyledSpan>
         )}
       </StyledSection2>
-    </StyledForm>
-  
-     
-
-
-    
+    </StyledForm> 
 
   )
 }
