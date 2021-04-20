@@ -30,8 +30,6 @@ function ChargeVideo() {
           'Authorization' : `Bearer ${token}`
         }
       })
-
-      console.log(response)
       setResult(response.data.message)
     }
     catch(error){
