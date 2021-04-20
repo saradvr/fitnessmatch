@@ -98,7 +98,8 @@ export function CoachAvailability() {
             <StyledH2>Tus citas agendadas para la fecha seleccionada:</StyledH2>
             {!!loadingCoach && <StyledParagraph>Cargando sus citas agendadas...</StyledParagraph>}
             {!!errorCoach && <StyledParagraph>Hubo un error cargando sus citas.</StyledParagraph>}
-            {Object.keys(coach).length > 0 && todayDates.map(el => {
+            {!!todayDates && todayDates.length === 0 && <StyledParagraph>No hay citas programadas en esta fecha.</StyledParagraph>}
+            {!!todayDates && todayDates.length > 0 && todayDates.map(el => {
               const date = parseISO(el.appointmentDate, 'yyyy-MM-dd HH:mm', new Date())
 
               return (
