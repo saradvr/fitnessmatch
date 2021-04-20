@@ -48,8 +48,6 @@ function App() {
         <PrivateRoute exact path="/coach/:coachId">
           <CoachProfile />
         </PrivateRoute>
-        {/* <Route exact path="/coach/:coachId" render={props => <CoachProfile {...props} />} /> */}
-        
         <PrivateRoute exact path="/coach/:coachId/setappointment">
           <ClientSetAppointment />
         </PrivateRoute>

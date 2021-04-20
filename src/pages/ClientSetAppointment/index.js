@@ -19,7 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { getPublicCoach } from "../../store/coachesReducer";
 import { setAppointment } from "../../store/appointmentsReducer";
-import pasos from './pasos2.png'
+import pasos from './pasos.png'
 import banner from './banner.png'
 
 export function ClientSetAppointment(){
