@@ -50,11 +50,8 @@ export function CoachAvailability() {
 
   let todayDates = []
   if( Object.keys(coach).length > 0 ){
-    console.log(coach.appointments)
     todayDates = coach.appointments.filter(showAppointments)
   }
-
-  console.log(todayDates)
 
   return (
     <>
@@ -103,10 +100,10 @@ export function CoachAvailability() {
               const date = parseISO(el.appointmentDate, 'yyyy-MM-dd HH:mm', new Date())
 
               return (
-                <Appointment>
-                  <StyledParagraph
-                    key={el.appointmentDate}
-                  >
+                <Appointment 
+                  key={el.appointmentDate}
+                >
+                  <StyledParagraph>
                     {format(date, 'HH:mm')} - {format(addHours(date,1), 'HH:mm', { locale: es })}  
                     <LinkClientButton to={`/client/${el.clientId}`}>
                       <ClientImg src="https://cdn0.iconfinder.com/data/icons/set-ui-app-android/32/8-512.png" alt="Imagen estándar de usuario"></ClientImg>
