@@ -7,6 +7,7 @@ export const StyledNav = styled.nav`
   justify-content: center;
   display: grid;
   grid-template-columns: 1fr 5fr;
+  width: 100%;
 `
 
 export const LogoSection = styled.section`

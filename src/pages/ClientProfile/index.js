@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import { Header } from '../../components/Header'
 import { FileUploader } from '../../components/FileUploader'
-import { StyledImage, StyledMain, StyledSection, StyledButtonEdit, StyledButtonSave, StyledSectionEdit, StyledInputWeightEdit, StyledInputHeightEdit, StyledParagraph, StyledLabel, StyledInputName } from './styles'
 import { changeWeight, changeHeight, changeName, changeBMI } from '../../store/clientReducer'
+import { StyledButton } from '../../components/Button/styles'
 
 export function ClientProfile() {
   const [edit, setEdit] = useState(false)
@@ -51,23 +51,23 @@ export function ClientProfile() {
       <>
         <Header></Header>
 
-        <StyledMain>
+        <main>
           <FileUploader initialPicture="picture"/>
           <form onSubmit={handleSubmit}>
-            <StyledSection primerColumna>
-                <StyledLabel 
+            <section primerColumna>
+                <label 
                   htmlFor="name"
                 >
                   Nombre
-                </StyledLabel>  
-                <StyledInputName
+                </label>  
+                <input
                   type="text"
                   id="name"
                   value={name}
                   onChange={e => dispatch(changeName(e.target.value))}
                 />
-                <StyledLabel htmlFor="weight">Peso:</StyledLabel>
-                <StyledInputWeightEdit 
+                <label htmlFor="weight">Peso:</label>
+                <input 
                   type="text" 
                   id="weight" 
                   name="weight" 
@@ -75,8 +75,8 @@ export function ClientProfile() {
                   onChange={e => dispatch(changeWeight(e.target.value))}
     
                 />
-                <StyledLabel htmlFor="height">Estatura:</StyledLabel>
-                <StyledInputHeightEdit 
+                <label htmlFor="height">Estatura:</label>
+                <input 
                   type="text" 
                   id="height" 
                   name="height" 
@@ -84,59 +84,59 @@ export function ClientProfile() {
                   onChange={e => dispatch(changeHeight(e.target.value))}
      
                 />
-                <StyledButtonSave
+                <StyledButton
                   type="submit"
     
                 >
                   Guardar Cambios
-                </StyledButtonSave>
-            </StyledSection>
+                </StyledButton>
+            </section>
           </form>
-        </StyledMain>
+        </main>
       </>
     )
   }else if(edit === false) {
     return(
       <>
       <Header></Header>
-      <StyledMain>
-        <StyledSection primerColumna>
-          <StyledImage src=""></StyledImage>
-          <StyledLabel htmlFor="weight"> Weight: </StyledLabel>
-          <StyledParagraph 
+      <main>
+        <section primerColumna>
+          <img src=""></img>
+          <label htmlFor="weight"> Weight: </label>
+          <p 
             type="weight"
             id="weight"
             name="weight"
           >
             {weight}
-          </StyledParagraph>
-          <StyledLabel htmlFor="height"> Height: </StyledLabel>
-          <StyledParagraph
+          </p>
+          <label htmlFor="height"> Height: </label>
+          <p
             edit={edit}
             type="height"
             id="height"
             name="height"
           >
             {height}
-          </StyledParagraph>
-          <StyledLabel htmlFor="bmi"> IMC: </StyledLabel>
-          <StyledParagraph
+          </p>
+          <label htmlFor="bmi"> IMC: </label>
+          <p
             id="bmi"
             name="bmi"
           >
             {bmi}
-          </StyledParagraph>
-          <StyledButtonEdit 
+          </p>
+          <StyledButton
             edit={edit}
             type="button"
             onClick={e => setEdit(true)}
           >
             Editar Perfil
-          </StyledButtonEdit>
-        </StyledSection>
-        <StyledSection>
-        </StyledSection>
-      </StyledMain>
+          </StyledButton>
+        </section>
+        <section>
+        </section>
+      </main>
     </>
     )
   }

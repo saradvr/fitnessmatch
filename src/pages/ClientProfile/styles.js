@@ -35,7 +35,6 @@ export const StyledButtonEdit = styled.button`
 export const StyledButtonSave = styled.button`
   display: block;
 `
-
 export const StyledSectionEdit = styled.div`
   display: block;
 `

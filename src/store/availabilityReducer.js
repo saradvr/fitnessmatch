@@ -49,7 +49,7 @@ export function setAvailability({availableHours}) {
       const {data} = await axios({
         method: 'PUT',
         baseURL: process.env.REACT_APP_SERVER_URL,
-        url: '/coaches/profile/availability',
+        url: '/coaches/profile',
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -60,7 +60,7 @@ export function setAvailability({availableHours}) {
       dispatch({ type: AVAILABILITY_SAVING_SUCCESS, payload: data.message})
     } catch (error) {
       dispatch({ type: AVAILABILITY_ERROR, payload: error.message })
-      if(error.response.request.status === 401){
+      if(error.response !== undefined && error.response.request.status === 401){
         localStorage.removeItem('token')
         alert("Su sesión expiró, ingrese nuevamente.")
         history.push('/login')
