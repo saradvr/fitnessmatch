@@ -1,12 +1,13 @@
 import { WorkHours } from '../../components/WorkHours'
 import { Header } from "../../components/Header"
 import React, { useState } from 'react'
-import {CalendarSection, StyledDatePicker, StyledMain, AvailabilitySection, StyledH2, AppointmentsSection, StyledParagraph } from './styles'
+import {CalendarSection, StyledMain, AvailabilitySection, StyledH2, AppointmentsSection, StyledParagraph } from './styles'
 import { startOfDay } from 'date-fns'
 import Button from '../../components/Button'
 import { useDispatch, useSelector } from 'react-redux'
 import { setAvailability } from '../../store/availabilityReducer'
 import banner from './bannerAvailability.png'
+import { CalendarPicker } from '../../components/CalendarPicker'
 
 export function CoachAvailability() {
 
@@ -55,12 +56,9 @@ export function CoachAvailability() {
               alt='Programa tu match'
               width='100%'
             />
-            <StyledDatePicker
+            <CalendarPicker
               onChange={onChange}
               value={value}
-              locale="es-ES"
-              isOpen={true}
-              closeCalendar={false}
             />
           </CalendarSection>
           <AppointmentsSection>

@@ -12,10 +12,10 @@ import { CoachAvailability } from './pages/CoachSetAvailability'
 import {ListadoEntrenadores} from './pages/ListadoEntrenadores'
 import { LandingPage } from './pages/LandingPage'
 import { history } from './utils/history'
+import { ClientSetAppointment } from './pages/ClientSetAppointment'
 
-function PrivateRoute({ children, ...rest }) {
+function PrivateRoute({children, ...rest}) {
   const token = localStorage.getItem('token')
-
   return (
     <Route {...rest} render={() => {
       return token ? children : <Redirect to="/login" />
@@ -44,6 +44,14 @@ function App() {
         </PrivateRoute>
         <PrivateRoute exact path="/profile/availability">
           <CoachAvailability />  
+        </PrivateRoute>
+        <PrivateRoute exact path="/coach/:coachId">
+          <CoachProfile />
+        </PrivateRoute>
+        {/* <Route exact path="/coach/:coachId" render={props => <CoachProfile {...props} />} /> */}
+        
+        <PrivateRoute exact path="/coach/:coachId/setappointment">
+          <ClientSetAppointment />
         </PrivateRoute>
       </Switch>
     </Router>
