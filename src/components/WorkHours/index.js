@@ -1,9 +1,11 @@
 import { useDispatch, useSelector } from "react-redux"
 import { getAvailability, toggleHour } from "../../store/availabilityReducer"
+import { getCoach } from "../../store/coachesReducer"
 import Checkbox from "../Checkbox"
 import { addHours, compareAsc, eachHourOfInterval, format } from 'date-fns'
 import { es } from 'date-fns/locale'
 import { useEffect } from "react"
+import { StyledParagraph } from "../../pages/CoachSetAvailability/styles"
 
 export function WorkHours({selectedDate}) {
 
@@ -15,25 +17,36 @@ export function WorkHours({selectedDate}) {
   const dispatch = useDispatch()
 
   useEffect(() => {
+    dispatch(getCoach())
     dispatch(getAvailability())
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const { availableHours } = useSelector(({
+  const { availableHours, coach, loading } = useSelector(({
     availabilityReducer,
+    coachReducer,
   }) => ({
     availableHours: availabilityReducer.availableHours,
+    coach: coachReducer.coach,
+    loading: coachReducer.loading
   }))
 
+  let scheduledAppointments = []
+
+  if( Object.keys(coach).length > 0 ){
+    scheduledAppointments = coach.appointments.map(el => el.appointmentDate)
+  }
+  
   return(
     <>
-      {!!workHours && workHours.length > 0 && workHours.map((el)  => {
+      {!!loading && <StyledParagraph>Cargando horarios...</StyledParagraph>}
+      {Object.keys(coach).length > 0 && !!workHours && workHours.length > 0 && workHours.map((el)  => {
         
         const date = format(el, 'yyyy-MM-dd HH:mm', { locale: es })
 
-        const disabled = compareAsc(el, new Date())===-1 ? true : false
+        const disabled = (compareAsc(el, new Date())===-1 ? true : false || scheduledAppointments.includes(date))
 
-        const isChecked = availableHours.includes(date)
+        const isChecked = (availableHours.includes(date) || scheduledAppointments.includes(date)) 
 
         return (
             <Checkbox
