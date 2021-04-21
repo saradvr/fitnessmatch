@@ -15,6 +15,8 @@ export const StyledButton = styled.button`
     };
   text-decoration: none;
   padding: 10px;
+  width: ${props => props.customWidth ? props.customWidth : "145px" };
+  max-width: 100%
   display: inline-block;
   font-size: 16px;
   font-family: "Roboto";

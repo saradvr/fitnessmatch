@@ -106,7 +106,7 @@ function CoachProfileForm (){
       <StyledSection1 segundaColumna>
         <StyledTop>
           <StyledTopContainer align="right">
-            <Button
+            <Button customWidth='175px'
               type="button"
               >
               Ver transacciones
