@@ -32,6 +32,13 @@ export function toggleSpecialization(isIncluded, id) {
   }
 }
 
+export function addSpecialization(id){
+  return {
+    type: SPECIALIZATIONS_CHECKED,
+    payload: id,
+  }
+}
+
 const initialState = {
   specializations: [],
   checkSpecializations: [],

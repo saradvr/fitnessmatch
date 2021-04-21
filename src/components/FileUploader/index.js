@@ -8,7 +8,7 @@ export function FileUploader({initialPicture, url}) {
   const [file, setFile] = useState(null)
   const [picture, setPicture] = useState(initialPicture)
   const [edit, setEdit] = useState(false)
-
+  
   function handleChange(e) {
     readFile(e.target.files[0])
     setFile(e.target.files)
@@ -51,7 +51,7 @@ export function FileUploader({initialPicture, url}) {
   if(edit === false) {
     return(
       <> 
-        <img src={picture}></img>
+        <img src={picture} alt='imagen de perfil' width='150px'></img>
         <StyledLabel htmlFor="file"></StyledLabel>
         <Button 
           type="button"
