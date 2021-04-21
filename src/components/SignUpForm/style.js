@@ -37,14 +37,6 @@ export const StyledP = styled.p`
   font-size: 14px;
 `
 
-export const LoginText = styled.text`
-  font-family: Roboto;
-  font-weight: 300;
-  color: #FBFCF9;
-  font-size: 14px;
-  margin: 5px 0;
-`
-
 export const StyledLink = styled(Link)`
   color: #FBFCF9;
   margin-left: 5px;

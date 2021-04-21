@@ -7,12 +7,12 @@ export class CoachProfile extends React.Component {
   render(){
     return(
       <>
-      <Header />
-      <StyledMain>
-        <section>
-          <CoachProfileForm history={this.props.history}/>
-        </section>
-      </StyledMain>
+        <Header />
+        <StyledMain>
+          <section>
+            <CoachProfileForm history={this.props.history}/>
+          </section>
+        </StyledMain>
       </>
     )
   }

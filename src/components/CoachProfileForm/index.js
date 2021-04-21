@@ -53,7 +53,6 @@ function CoachProfileForm (){
 
   async function handleSubmit (e){
     e.preventDefault()
-    console.log(checkDisciplines)
     try {
       const token = localStorage.getItem('token')
       const { data } = await axios ({
