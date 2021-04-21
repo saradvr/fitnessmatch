@@ -50,7 +50,6 @@ function CoachProfileForm (){
     coach: coachReducer.coach,
   }))
 
-
   async function handleSubmit (e){
     e.preventDefault()
     try {
