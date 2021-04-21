@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import backimg from '../../components/Images/fondoOscuro.webp'
 
@@ -22,7 +23,7 @@ export const AvailabilitySection = styled.section`
   min-width: 213px;
 `
 export const AppointmentsSection = styled.section`
-  background-color: rgba(251, 252, 249, 0.5);
+  background-color: rgba(105,179,45,0.5);
   padding: 15px;
   border-radius: 20px;
   grid-column: 1;
@@ -55,4 +56,27 @@ export const CalendarSection = styled.section`
   @media screen and (min-width:870px){
     grid-column: 2;
   }
+`
+
+export const Appointment = styled.article`
+  background-color: rgba(251, 252, 249, 0.3);
+  border: 1px solid white;
+  border-radius: 10px;
+  padding: 5px;
+  margin: 10px 5px;
+`
+
+export const LinkClientButton = styled(Link)`
+  border: 1px solid white;
+  border-radius: 10px;
+  padding: 8px 5px 0 5px;
+  margin-left: 25px;
+
+  &:hover{
+    background-color: white;
+  }
+`
+
+export const ClientImg = styled.img`
+  width: 20px;
 `
