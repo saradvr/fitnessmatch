@@ -2,12 +2,16 @@ import { HeaderLink, StyledNav, StyledImage, HeaderButton, NavSection, LogoSecti
 import logo from '../../components/Images/Logo-fondoOscuro.png'
 import { useHistory } from 'react-router'
 import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
 
 export function Header() {
   const history = useHistory()
-
+  const dispatch = useDispatch()
+  
   function handleClick() {
+    
+    dispatch({type: 'USER_LOGOUT'})
     localStorage.clear()
     history.push('/login')
   }

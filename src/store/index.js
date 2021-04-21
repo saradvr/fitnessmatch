@@ -11,7 +11,7 @@ import { loginReducer } from "./loginReducer"
 import { availabilityReducer } from './availabilityReducer'
 import { appointmentReducer } from './appointmentsReducer'
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
   coachReducer,
   clientReducer,
   specializationReducer,
@@ -22,6 +22,13 @@ const rootReducer = combineReducers({
   availabilityReducer,
   appointmentReducer,
 })
+
+const rootReducer = (state, action) => {
+  if (action.type === 'USER_LOGOUT') {
+    state = undefined
+  }
+  return appReducer(state, action)
+}
 
 const middlewares = applyMiddleware(thunk, logger)
 

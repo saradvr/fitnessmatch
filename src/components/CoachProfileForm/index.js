@@ -53,6 +53,7 @@ function CoachProfileForm (){
 
   async function handleSubmit (e){
     e.preventDefault()
+    console.log(checkDisciplines)
     try {
       const token = localStorage.getItem('token')
       const { data } = await axios ({
@@ -84,7 +85,7 @@ function CoachProfileForm (){
       
       <StyledSection1 primerColumna>
         <StyledPicture picture>
-          {coach.profilePicture && <FileUploader initialPicture={coach.profilePicture} url='/coaches/profile/picture'/>}
+          {coach.profilePicture !== undefined && <FileUploader initialPicture={coach.profilePicture} url='/coaches/profile/picture'/>}
         </StyledPicture>
         
         <StyledPicture>
@@ -146,10 +147,10 @@ function CoachProfileForm (){
                   setPrice(coach.appointmentFee)
                   setEdit(true)
                   if( coach.specializations.length > 0){
-                    coach.specializations.map(el => dispatch(addSpecialization(el._id)))
+                    coach.specializations.map(el => checkSpecializations.includes(el._id) ? "" : dispatch(addSpecialization(el._id)))
                   }
                   if( coach.disciplines.length > 0){
-                    coach.disciplines.map(el => dispatch(addDiscipline(el._id)))
+                    coach.disciplines.map(el => checkDisciplines.includes(el._id) ? "" : dispatch(addDiscipline(el._id)))
                   }
                 }}
               >

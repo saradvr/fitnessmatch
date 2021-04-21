@@ -32,7 +32,7 @@ export function toggleDiscipline(isIncluded, id) {
   }
 }
 
-export function addDiscipline(id) {
+export function addDiscipline(id){
   return {
     type: DISCIPLINES_CHECKED,
     payload: id,
