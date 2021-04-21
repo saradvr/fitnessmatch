@@ -83,7 +83,7 @@ function CoachProfileForm (){
       
       <StyledSection1 primerColumna>
         <StyledPicture picture>
-          {coach.profilePicture !== undefined && <FileUploader initialPicture={coach.profilePicture} url='/coaches/profile/picture'/>}
+          {!!coach && coach.profilePicture !== undefined && <FileUploader initialPicture={coach.profilePicture} url='/coaches/profile/picture'/>}
         </StyledPicture>
         
         <StyledPicture>
