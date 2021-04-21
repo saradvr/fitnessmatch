@@ -27,7 +27,7 @@ const LoginForm = function() {
     e.preventDefault()
 
     try {
-      const {data} = await axios({
+      const { data } = await axios({
         method: 'POST',
         baseURL: process.env.REACT_APP_SERVER_URL,
         url: '/users/signin',
@@ -38,7 +38,15 @@ const LoginForm = function() {
       })
 
       localStorage.setItem('token', data.token)
-      history.push('/clientprofile')
+      
+      const { userKind } = data
+  
+      if(userKind === "coach") {
+        history.push('/profile')
+      } else {
+        history.push('/clientprofile')
+      }
+      
     
     } catch(error){
       dispatch(changeError())

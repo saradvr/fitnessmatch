@@ -3,7 +3,7 @@ import axios from 'axios'
 import { useState } from 'react'
 import Button from '../Button'
 
-export function FileUploader({initialPicture}) {
+export function FileUploader({initialPicture, url}) {
   const [image, setImage] = useState(null)
   const [file, setFile] = useState(null)
   const [picture, setPicture] = useState(initialPicture)
@@ -37,7 +37,7 @@ export function FileUploader({initialPicture}) {
     const { data } = await axios({
       method: 'PUT',
       baseURL: process.env.REACT_APP_SERVER_URL,
-      url: '/clients/clientprofile/picture',
+      url: url,
       data: form,
       headers: {
         'Content-Type': 'multipart/form-data',

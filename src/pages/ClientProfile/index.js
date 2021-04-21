@@ -1,9 +1,9 @@
-import React, { useCallback, useState} from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import { Header } from '../../components/Header'
 import { FileUploader } from '../../components/FileUploader'
-import { changeWeight, changeHeight, changeName, changeBMI } from '../../store/clientReducer'
+import { changeWeight, changeHeight, changeName, changeBMI, getClient, getMetric } from '../../store/clientReducer'
 import { StyledButton } from '../../components/Button/styles'
 
 export function ClientProfile() {
@@ -11,24 +11,31 @@ export function ClientProfile() {
   
   const dispatch = useDispatch()
 
+  useEffect(() => {
+    dispatch(getClient())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
+
   const {
     name,
     weight,
     height,
     bmi,
+    client,
 
   } = useSelector(({clientReducer}) => ({
     name: clientReducer.name,
     weight: clientReducer.weight,
     height: clientReducer.height,
     bmi: clientReducer.bmi,
+    client: clientReducer.client
   }))
 
+  console.log(client)
   async function handleSubmit(e) {
     e.preventDefault()
     setEdit(false)
     const token = localStorage.getItem('token')
-    dispatch(changeBMI(weight, height))
 
     const { data } = await axios({
       method: 'PUT',
@@ -38,12 +45,12 @@ export function ClientProfile() {
         name,
         weight,
         height,
-        bmi,
       },
       headers: {
         'Authorization': `Bearer ${token}`
       }
     })
+    dispatch(getClient())
 
   }
   if(edit === true) {
@@ -52,7 +59,7 @@ export function ClientProfile() {
         <Header></Header>
 
         <main>
-          <FileUploader initialPicture="picture"/>
+          <FileUploader initialPicture="picture" url="/clients/clientprofile"/>
           <form onSubmit={handleSubmit}>
             <section primerColumna>
                 <label 
@@ -102,29 +109,26 @@ export function ClientProfile() {
       <main>
         <section primerColumna>
           <img src=""></img>
-          <label htmlFor="weight"> Weight: </label>
-          <p 
-            type="weight"
-            id="weight"
-            name="weight"
-          >
-            {weight}
-          </p>
+          <label htmlFor="name"> Nombre: </label>
+          <p>{client !== undefined && client.name}</p>
+
+          <label> Weight: </label>
+          
+          {client.metric !== undefined && <p>{client.metric.weight}</p>}
           <label htmlFor="height"> Height: </label>
           <p
             edit={edit}
-            type="height"
             id="height"
             name="height"
           >
-            {height}
+            {client.metric !== undefined && client.metric.height}
           </p>
           <label htmlFor="bmi"> IMC: </label>
           <p
             id="bmi"
             name="bmi"
           >
-            {bmi}
+            {client.metric !== undefined && Math.ceil(client.metric.bmi)}
           </p>
           <StyledButton
             edit={edit}
