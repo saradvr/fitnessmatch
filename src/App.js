@@ -12,6 +12,7 @@ import { SignUp } from './pages/SignUp'
 import { LandingPage } from './pages/LandingPage'
 import { CoachAvailability } from './pages/CoachSetAvailability'
 import { history } from './utils/history'
+import { ClientProfile } from './pages/ClientProfile'
 import { ClientSetAppointment } from './pages/ClientSetAppointment'
 
 function PrivateRoute({children, ...rest}) {
@@ -41,6 +42,9 @@ function App() {
         </PrivateRoute>
         <PrivateRoute exact path="/profile">
           <CoachProfile /> 
+        </PrivateRoute>
+        <PrivateRoute exact path="/clientprofile">
+          <ClientProfile />
         </PrivateRoute>
         <PrivateRoute exact path="/profile/availability">
           <CoachAvailability />  
