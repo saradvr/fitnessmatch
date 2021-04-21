@@ -13,9 +13,9 @@ export const StyledForm = styled.form`
 `
 
 export const StyledSection1 = styled.section`
-  grid-column: ${props => props.primerColumna ? "1" : "2"};
-  border-left: ${props => props.primerColumna ? "" : "1px solid white"};
-  padding: ${props => props.primerColumna ? "15px 30px 30px 15px" : "15px 15px 15px 30px"};
+  grid-column: ${props => props.primerColumna ? "1" : props.segundaColumna ? "2" : "3"};
+  border-left: ${props => props.primerColumna ? "" : props.segundaColumna ? "1px solid white" : "1px solid white" };
+  padding: ${props => props.primerColumna ? "15px 30px 30px 15px" : props.segundaColumna ? "15px 30px 15px 30px" : "15px 30px 15px 30px"};
   
 `
 
@@ -65,7 +65,7 @@ export const StyledTopContainer = styled.div`
 
 export const StyledSpan = styled.span`
   font-family: Roboto;
-  font-weight: 700;
+  font-weight: 300;
   font-size: 16px;
   color: #FBFCF9;
   display: block;
@@ -84,4 +84,8 @@ export const StyledRedes = styled.div`
 export const StyledRed = styled.div`
   padding: 5px;
   
+`
+export const StyledPicture = styled.div`
+  display: ${props => props.picture ? "grid" : "flex"};
+  justify-content: center;
 `

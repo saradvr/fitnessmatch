@@ -8,7 +8,6 @@ import { disciplineReducer } from './disciplinesReducer'
 import { pricesRangeReducer } from './pricesRangeReducer'
 import { signUpReducer} from './signUpReducer'
 import { loginReducer } from "./loginReducer"
-import { coachesProfileReducer } from './coachesProfileReducer'
 import { availabilityReducer } from './availabilityReducer'
 import { appointmentReducer } from './appointmentsReducer'
 
@@ -20,7 +19,6 @@ const rootReducer = combineReducers({
   pricesRangeReducer,
   signUpReducer,
   loginReducer,
-  coachesProfileReducer,
   availabilityReducer,
   appointmentReducer,
 })

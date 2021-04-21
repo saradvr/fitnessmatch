@@ -5,8 +5,39 @@ import { history } from '../utils/history'
 const COACHES_LOADING = 'COACHES_LOADING'
 const COACHES_SUCCESS = 'COACHES_SUCCESS'
 const COACH_SUCCESS = 'COACH_SUCCESS'
-const COACHES_ERROR = 'COACHES_ERROR'
+export const COACHES_ERROR = 'COACHES_ERROR'
 const COACHES_FINISHED = 'COACHES_FINISHED'
+export const SAVE_COACH = 'SAVE_COACH'
+
+export function getCoach() {
+  return async function(dispatch){
+    dispatch({ type: COACHES_LOADING })
+    dispatch({ type: COACHES_ERROR, payload: '' })
+    try {
+      const token = localStorage.getItem('token')
+
+      const {data} = await axios({
+        method: 'GET',
+        baseURL: process.env.REACT_APP_SERVER_URL,
+        url: `/coaches/coach`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      dispatch({ type: COACH_SUCCESS, payload: data.coach})
+    } catch (error) {
+      console.log(error)
+      dispatch({ type: COACHES_ERROR, payload: error })
+      if(error.response !== undefined && error.response.request.status === 401){
+        localStorage.removeItem('token')
+        alert("Su sesión expiró, ingrese nuevamente.")
+        history.push('/login')
+      }
+    } finally {
+      dispatch({ type: COACHES_FINISHED })
+    }
+  }
+}
 
 export function getPublicCoach(coachId) {
   return async function(dispatch){
@@ -104,6 +135,11 @@ export function coachReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
+      }
+    case SAVE_COACH:
+      return {
+        ...state,
+        coach: action.payload,
       }
     default:
       return state

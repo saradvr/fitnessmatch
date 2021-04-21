@@ -2,59 +2,54 @@ import axios from 'axios'
 import React from 'react'
 import Button from '../Button'
 import FormInputs from '../FormInputs'
+import { LinkButton } from '../LinkButton'
 import Filter from '../Filter'
-import { useHistory } from 'react-router'
-import { StyledForm, StyledSection1, StyledSection2, StyledLabel, StyledTextArea, StyledTopContainer, StyledTop, StyledMid, StyledSpan, StyledRedes, StyledRed } from './styles'
-import { changeDescription, changeExperience, changeName, changePrice, editProfile, changeError, GET_COACH } from '../../store/coachesProfileReducer'
+import { StyledForm, StyledSection1, StyledSection2, StyledLabel, StyledTextArea, StyledTopContainer, StyledTop, StyledMid, StyledSpan, StyledRedes, StyledRed, StyledPicture } from './styles'
 import { useSelector, useDispatch } from 'react-redux'
-import { useEffect } from 'react'
-import { getDisciplines } from '../../store/disciplinesReducer'
-import { getSpecializations } from '../../store/specializationsReducer'
-import { toggleSpecialization, toggleDiscipline } from '../../store/coachesProfileReducer'
+import { useEffect, useState } from 'react'
+import { getDisciplines, toggleDiscipline, addDiscipline } from '../../store/disciplinesReducer'
+import { addSpecialization, getSpecializations, toggleSpecialization } from '../../store/specializationsReducer'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebookSquare, faInstagram, faTwitterSquare } from '@fortawesome/free-brands-svg-icons'
+import { FileUploader } from '../FileUploader'
+import { getCoach, SAVE_COACH, COACHES_ERROR } from '../../store/coachesReducer'
 
 
 
 function CoachProfileForm (){
 
-  // const history = useHistory()
-  const {
-    name,
-    description,
-    experience,
-    price,
-    specializations, 
-    checkSpecializations, 
-    disciplines,
-    checkDisciplines,
-    edit,
-    error,
-    coach,
-    } = useSelector(({
-      coachesProfileReducer,
-      specializationReducer,
-      disciplineReducer,
-    })=>({
-    name: coachesProfileReducer.name,
-    description: coachesProfileReducer.description,
-    experience: coachesProfileReducer.experience,
-    price: coachesProfileReducer.price,
-    specializations: specializationReducer.specializations,
-    checkSpecializations: coachesProfileReducer.checkSpecializations,
-    disciplines: disciplineReducer.disciplines,
-    checkDisciplines: coachesProfileReducer.checkDisciplines,
-    edit: coachesProfileReducer.edit,
-    error: coachesProfileReducer.error,
-    coach: coachesProfileReducer.coach,
-  }))
+  const [edit,setEdit] = useState(false)
+  const [name, setName] = useState('')
+  const [description, setDescription] = useState('')
+  const [experience, setExperience] = useState('')
+  const [price, setPrice] = useState('')
 
+  const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(getSpecializations())
     dispatch(getDisciplines())
+    dispatch(getCoach())
   }, [])
-  const dispatch = useDispatch()
+
+  const {
+    checkSpecializations,
+    specializations, 
+    disciplines,
+    checkDisciplines,
+    coach,
+    } = useSelector(({
+      specializationReducer,
+      disciplineReducer,
+      coachReducer,
+    })=>({
+    checkSpecializations: specializationReducer.checkSpecializations,
+    specializations: specializationReducer.specializations,
+    disciplines: disciplineReducer.disciplines,
+    checkDisciplines: disciplineReducer.checkDisciplines,
+    coach: coachReducer.coach,
+  }))
+
 
   async function handleSubmit (e){
     e.preventDefault()
@@ -76,63 +71,38 @@ function CoachProfileForm (){
           Authorization: `bearer ${token}`
         }
       })
-      dispatch({type: GET_COACH, payload: data.coach})
-      dispatch(editProfile(!edit))
+      dispatch({type: SAVE_COACH, payload: data.coach})
+      setEdit(false)
     } catch(error) {
-        dispatch(changeError(error.response.data.message))
+        dispatch({type: COACHES_ERROR, payload: error})
     }
   }
+  
   return(
 
     <StyledForm>
       
       <StyledSection1 primerColumna>
+        <StyledPicture picture>
+          {coach.profilePicture && <FileUploader initialPicture={coach.profilePicture} url='/coaches/profile/picture'/>}
+        </StyledPicture>
         
-        {edit === false ? (
-          <Button
-            type="button"
-            handleClick={() => dispatch(editProfile(!edit))}
-          >
-            Editar perfil
-          </Button>
-          ) : ("")
-        }
-
-        {edit === true ? (
-          <Button
-            type="button"
-            handleClick={handleSubmit}
-          >
-            Guardar cambios
-          </Button>
-          ) : ("")
-        }
-
-        {edit === true ? (
-          <Button
-            type="button"
-            handleClick={() => dispatch(editProfile(!edit))}
-          >
-            Cancelar
-          </Button>
-          ) : ("")
-        }
-
-        {error && <p> {error} </p>}
-        {edit === true ? (
-          <FormInputs
-            id="name"
-            type="text"
-            name="name"
-            onChange={(e)=> dispatch(changeName(e.target.value))}
-            value={name}
-          >
-            Nombre
-          </FormInputs>) :
-          (<StyledSpan>{coach.name}</StyledSpan>)
-        }
+        <StyledPicture>
+          {edit === true ? (
+            <FormInputs
+              id="name"
+              type="text"
+              name="name"
+              onChange={(e)=> setName(e.target.value)}
+              value={name}
+            >
+              Nombre
+            </FormInputs>) :
+            (<StyledLabel>{coach.name}</StyledLabel>)
+          }
+        </StyledPicture>
       </StyledSection1>
-      <StyledSection1>
+      <StyledSection1 segundaColumna>
         <StyledTop>
           <StyledTopContainer align="right">
             <Button
@@ -140,11 +110,9 @@ function CoachProfileForm (){
               >
               Ver transacciones
             </Button>
-            <Button
-              type="button"
-              >
+            <LinkButton to='/profile/availability'>
               Ver agenda
-            </Button>
+            </LinkButton>
           </StyledTopContainer>
             
           <StyledTopContainer>
@@ -156,7 +124,7 @@ function CoachProfileForm (){
           <StyledTextArea
             id="description"
             name="description"
-            onChange={(e)=> dispatch(changeDescription(e.target.value))}
+            onChange={(e)=> setDescription(e.target.value)}
             value={description}
           >
             Esta es una breve descripción acerca del entrenador
@@ -164,6 +132,58 @@ function CoachProfileForm (){
           ) : 
           (<StyledSpan textArea>{coach.description}</StyledSpan>)
         }
+      </StyledSection1>
+      <StyledSection1>
+        <StyledRedes>
+          <StyledRed>
+            {edit === false ? (
+              <Button
+                type="button"
+                handleClick={() => {
+                  setName(coach.name)
+                  setDescription(coach.description)
+                  setExperience(coach.experienceYears)
+                  setPrice(coach.appointmentFee)
+                  setEdit(true)
+                  if( coach.specializations.length > 0){
+                    coach.specializations.map(el => dispatch(addSpecialization(el._id)))
+                  }
+                  if( coach.disciplines.length > 0){
+                    coach.disciplines.map(el => dispatch(addDiscipline(el._id)))
+                  }
+                }}
+              >
+                Editar perfil
+              </Button>
+              ) : ("")
+            }
+          </StyledRed>
+
+          <StyledRed>
+            {edit === true ? (
+              <Button
+                type="button"
+                handleClick={handleSubmit}
+              >
+                Guardar cambios
+              </Button>
+              ) : ("")
+            }
+          </StyledRed>
+
+          <StyledRed>
+            {edit === true ? (
+              <Button
+                type="button"
+                handleClick={() => setEdit(false)}
+              >
+                Cancelar
+              </Button>
+              ) : ("")
+            }
+          </StyledRed>
+        </StyledRedes>
+        
       </StyledSection1>
 
       <StyledSection2 primerColumna>
@@ -190,7 +210,7 @@ function CoachProfileForm (){
               id="experience"
               type="text"
               name="experience"
-              onChange={(e)=> dispatch(changeExperience(e.target.value))}
+              onChange={(e)=> setExperience(e.target.value)}
               value={experience}
             />) : 
             (<StyledSpan>{coach.experienceYears}</StyledSpan>)
@@ -201,7 +221,7 @@ function CoachProfileForm (){
               id="price"
               type="text"
               name="price"
-              onChange={(e)=> dispatch(changePrice(e.target.value))}
+              onChange={(e)=> setPrice(e.target.value)}
               value={price}
             />) : 
             (<StyledSpan>{coach.appointmentFee}</StyledSpan>)
