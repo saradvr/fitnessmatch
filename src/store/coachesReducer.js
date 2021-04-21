@@ -5,8 +5,9 @@ import { history } from '../utils/history'
 const COACHES_LOADING = 'COACHES_LOADING'
 const COACHES_SUCCESS = 'COACHES_SUCCESS'
 const COACH_SUCCESS = 'COACH_SUCCESS'
-const COACHES_ERROR = 'COACHES_ERROR'
+export const COACHES_ERROR = 'COACHES_ERROR'
 const COACHES_FINISHED = 'COACHES_FINISHED'
+export const SAVE_COACH = 'SAVE_COACH'
 
 export function getCoach() {
   return async function(dispatch){
@@ -133,6 +134,11 @@ export function coachReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
+      }
+    case SAVE_COACH:
+      return {
+        ...state,
+        coach: action.payload,
       }
     default:
       return state

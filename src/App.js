@@ -4,13 +4,13 @@ import {
   Redirect,
   Switch,
 } from 'react-router-dom'
-import {ListadoEntrenadores} from './pages/ListadoEntrenadores'
-import {Login} from "./pages/Login"
-import {CoachProfile} from './pages/CoachProfile'
 import './App.css'
+import {Login} from "./pages/Login"
 import { SignUp } from './pages/SignUp'
-import { LandingPage } from './pages/LandingPage'
+import { CoachProfile } from './pages/CoachProfile/index'
 import { CoachAvailability } from './pages/CoachSetAvailability'
+import {ListadoEntrenadores} from './pages/ListadoEntrenadores'
+import { LandingPage } from './pages/LandingPage'
 import { history } from './utils/history'
 import { ClientProfile } from './pages/ClientProfile'
 import { ClientSetAppointment } from './pages/ClientSetAppointment'
