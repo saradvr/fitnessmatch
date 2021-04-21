@@ -32,6 +32,13 @@ export function toggleDiscipline(isIncluded, id) {
   }
 }
 
+export function addDiscipline(id){
+  return {
+    type: DISCIPLINES_CHECKED,
+    payload: id,
+  }
+}
+
 const initialState = {
   disciplines: [],
   checkDisciplines: [],
