@@ -25,7 +25,6 @@ export function getCoach() {
       })
       dispatch({ type: COACH_SUCCESS, payload: data.coach})
     } catch (error) {
-      console.log(error)
       dispatch({ type: COACHES_ERROR, payload: error })
       if(error.response !== undefined && error.response.request.status === 401){
         localStorage.removeItem('token')
