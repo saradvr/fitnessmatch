@@ -16,16 +16,15 @@ import { getCoach, SAVE_COACH, COACHES_ERROR, getPublicCoach, getCoaches } from 
 import { useHistory, useParams } from 'react-router'
 
 
-
 function CoachProfileForm ({isPublic}){
-
+  
   const [edit,setEdit] = useState(false)
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [experience, setExperience] = useState('')
   const [price, setPrice] = useState('')
-  const history = useHistory()
 
+  const history = useHistory()
   const dispatch = useDispatch()
   const { coachId } = useParams()
 
@@ -88,7 +87,6 @@ function CoachProfileForm ({isPublic}){
         <StyledPicture picture>
           {!!coach && coach.profilePicture !== undefined && <FileUploader isPublic={isPublic} initialPicture={coach.profilePicture} url='/coaches/profile/picture'/>}
         </StyledPicture>
-        
         <StyledPicture>
           {edit === true && !!coach ? (
             <FormInputs
@@ -116,13 +114,11 @@ function CoachProfileForm ({isPublic}){
             <LinkButton to='/profile/availability'>
               Ver agenda
             </LinkButton>
-          </StyledTopContainer>}
-            
+          </StyledTopContainer>}   
           <StyledTopContainer>
             <StyledLabel htmlFor="description">Descripción</StyledLabel>
           </StyledTopContainer>
         </StyledTop>
-      
         {edit === true && !!coach ? (
           <StyledTextArea
             id="description"
@@ -168,7 +164,6 @@ function CoachProfileForm ({isPublic}){
               Pedir cita de valoracion
             </LinkButton>
           }
-
           <StyledRed>
             {edit === true && !!coach? (
               <Button
@@ -180,7 +175,6 @@ function CoachProfileForm ({isPublic}){
               ) : ("")
             }
           </StyledRed>
-
           <StyledRed>
             {edit === true && !!coach ? (
               <Button
@@ -211,7 +205,6 @@ function CoachProfileForm ({isPublic}){
           </StyledSpan>)
         }
       </StyledSection2>
-
       <StyledSection2 segundaColumna>
         <StyledMid expYears>
           <StyledLabel>Años de experiencia</StyledLabel>

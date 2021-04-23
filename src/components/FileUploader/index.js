@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Button from '../Button'
 
 export function FileUploader({initialPicture, url, isPublic}) {
+
   const [image, setImage] = useState(null)
   const [file, setFile] = useState(null)
   const [picture, setPicture] = useState(initialPicture)
