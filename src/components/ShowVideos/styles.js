@@ -8,10 +8,6 @@ export const SliderContentItem = styled.section`
   align-items: center;
 `
 
-export const StyledIframeVideos  = styled.iframe`
-
-`
-
 export const StyledButtonVideos = styled.section`
   margin-left: 35%;
 `
