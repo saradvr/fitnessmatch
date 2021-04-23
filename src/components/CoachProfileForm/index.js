@@ -13,6 +13,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebookSquare, faInstagram, faTwitterSquare } from '@fortawesome/free-brands-svg-icons'
 import { FileUploader } from '../FileUploader'
 import { getCoach, SAVE_COACH, COACHES_ERROR } from '../../store/coachesReducer'
+import ShowVideos from '../ShowVideos'
+import ChargeVideos from '../ChargeVideos'
 
 
 
@@ -115,7 +117,7 @@ function CoachProfileForm (){
           </StyledTopContainer>
             
           <StyledTopContainer>
-            <StyledLabel for="description">Descripción</StyledLabel>
+            <StyledLabel htmlFor="description">Descripción</StyledLabel>
           </StyledTopContainer>
         </StyledTop>
       
@@ -234,6 +236,13 @@ function CoachProfileForm (){
           <StyledRed><FontAwesomeIcon icon={faInstagram}/></StyledRed>
           <StyledRed><FontAwesomeIcon icon={faTwitterSquare}/></StyledRed>
         </StyledRedes>
+        <StyledMid>
+        {edit && <ChargeVideos />}
+        </StyledMid>
+        <StyledMid>
+          {edit && <ShowVideos />}
+          {!edit && <ShowVideos editIsFalse={!edit}/>}
+        </StyledMid>
       </StyledSection2>
 
       <StyledSection2>
