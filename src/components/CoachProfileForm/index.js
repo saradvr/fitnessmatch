@@ -12,24 +12,27 @@ import { addSpecialization, getSpecializations, toggleSpecialization } from '../
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebookSquare, faInstagram, faTwitterSquare } from '@fortawesome/free-brands-svg-icons'
 import { FileUploader } from '../FileUploader'
-import { getCoach, SAVE_COACH, COACHES_ERROR } from '../../store/coachesReducer'
+import { getCoach, SAVE_COACH, COACHES_ERROR, getPublicCoach, getCoaches } from '../../store/coachesReducer'
+import { useHistory, useParams } from 'react-router'
 
 
 
-function CoachProfileForm (){
+function CoachProfileForm ({isPublic}){
 
   const [edit,setEdit] = useState(false)
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [experience, setExperience] = useState('')
   const [price, setPrice] = useState('')
+  const history = useHistory()
 
   const dispatch = useDispatch()
+  const { coachId } = useParams()
 
   useEffect(() => {
     dispatch(getSpecializations())
     dispatch(getDisciplines())
-    dispatch(getCoach())
+    isPublic ? dispatch(getPublicCoach(coachId)) : dispatch(getCoach())
   }, [])
 
   const {
@@ -83,11 +86,11 @@ function CoachProfileForm (){
       
       <StyledSection1 primerColumna>
         <StyledPicture picture>
-          {!!coach && coach.profilePicture !== undefined && <FileUploader initialPicture={coach.profilePicture} url='/coaches/profile/picture'/>}
+          {!!coach && coach.profilePicture !== undefined && <FileUploader isPublic={isPublic} initialPicture={coach.profilePicture} url='/coaches/profile/picture'/>}
         </StyledPicture>
         
         <StyledPicture>
-          {edit === true ? (
+          {edit === true && !!coach ? (
             <FormInputs
               id="name"
               type="text"
@@ -97,12 +100,13 @@ function CoachProfileForm (){
             >
               Nombre
             </FormInputs>) :
-            (<StyledLabel>{coach.name}</StyledLabel>)
+            <StyledLabel>{coach.name}</StyledLabel>
           }
         </StyledPicture>
       </StyledSection1>
       <StyledSection1 segundaColumna>
         <StyledTop>
+          {!isPublic && 
           <StyledTopContainer align="right">
             <Button customWidth='175px'
               type="button"
@@ -112,14 +116,14 @@ function CoachProfileForm (){
             <LinkButton to='/profile/availability'>
               Ver agenda
             </LinkButton>
-          </StyledTopContainer>
+          </StyledTopContainer>}
             
           <StyledTopContainer>
-            <StyledLabel for="description">Descripción</StyledLabel>
+            <StyledLabel htmlFor="description">Descripción</StyledLabel>
           </StyledTopContainer>
         </StyledTop>
       
-        {edit === true ? (
+        {edit === true && !!coach ? (
           <StyledTextArea
             id="description"
             name="description"
@@ -134,32 +138,39 @@ function CoachProfileForm (){
       </StyledSection1>
       <StyledSection1>
         <StyledRedes>
-          <StyledRed>
-            {edit === false ? (
-              <Button
-                type="button"
-                handleClick={() => {
-                  setName(coach.name)
-                  setDescription(coach.description)
-                  setExperience(coach.experienceYears)
-                  setPrice(coach.appointmentFee)
-                  setEdit(true)
-                  if( coach.specializations.length > 0){
-                    coach.specializations.map(el => checkSpecializations.includes(el._id) ? "" : dispatch(addSpecialization(el._id)))
-                  }
-                  if( coach.disciplines.length > 0){
-                    coach.disciplines.map(el => checkDisciplines.includes(el._id) ? "" : dispatch(addDiscipline(el._id)))
-                  }
-                }}
-              >
-                Editar perfil
-              </Button>
-              ) : ("")
-            }
-          </StyledRed>
+          {!isPublic ? 
+            <StyledRed>
+              {edit === false && !!coach && (
+                <Button
+                  type="button"
+                  handleClick={() => {
+                    setName(coach.name)
+                    setDescription(coach.description)
+                    setExperience(coach.experienceYears)
+                    setPrice(coach.appointmentFee)
+                    setEdit(true)
+                    if( coach.specializations.length > 0){
+                      coach.specializations.map(el => checkSpecializations.includes(el._id) ? "" : dispatch(addSpecialization(el._id)))
+                    }
+                    if( coach.disciplines.length > 0){
+                      coach.disciplines.map(el => checkDisciplines.includes(el._id) ? "" : dispatch(addDiscipline(el._id)))
+                    }
+                  }}
+                >
+                  Editar perfil
+                </Button>
+                )
+              }
+            </StyledRed> : 
+            <LinkButton
+              to={location => `${location.pathname}/setappointment`}
+            >
+              Pedir cita de valoracion
+            </LinkButton>
+          }
 
           <StyledRed>
-            {edit === true ? (
+            {edit === true && !!coach? (
               <Button
                 type="button"
                 handleClick={handleSubmit}
@@ -171,7 +182,7 @@ function CoachProfileForm (){
           </StyledRed>
 
           <StyledRed>
-            {edit === true ? (
+            {edit === true && !!coach ? (
               <Button
                 type="button"
                 handleClick={() => setEdit(false)}
@@ -187,7 +198,7 @@ function CoachProfileForm (){
 
       <StyledSection2 primerColumna>
         <StyledLabel>Especializaciones</StyledLabel>
-        {edit === true ? (
+        {edit === true && !!coach? (
           <Filter
             filterName={specializations}
             nameCheckbox='checkSpecializations'
@@ -196,7 +207,7 @@ function CoachProfileForm (){
           />
          ) : 
          (<StyledSpan>{coach.specializations ? coach.specializations
-          .map((el)=> <li>{el.name}</li>) : "" }
+          .map((el)=> <li key={el._id}>{el.name}</li>) : "" }
           </StyledSpan>)
         }
       </StyledSection2>
@@ -204,7 +215,7 @@ function CoachProfileForm (){
       <StyledSection2 segundaColumna>
         <StyledMid expYears>
           <StyledLabel>Años de experiencia</StyledLabel>
-          {edit === true ? (
+          {edit === true && !!coach ? (
             <FormInputs
               id="experience"
               type="text"
@@ -215,7 +226,7 @@ function CoachProfileForm (){
             (<StyledSpan>{coach.experienceYears}</StyledSpan>)
           }
           <StyledLabel>Precio cita</StyledLabel>
-          {edit === true ? (
+          {edit === true && !!coach? (
             <FormInputs
               id="price"
               type="text"
@@ -238,7 +249,7 @@ function CoachProfileForm (){
 
       <StyledSection2>
         <StyledLabel>Disciplinas</StyledLabel>
-        {edit === true ? (
+        {edit === true && !!coach? (
           <Filter
           filterName={disciplines}
           nameCheckbox='checkDisciplines'
@@ -246,7 +257,7 @@ function CoachProfileForm (){
           handleChange = {(e) => dispatch(toggleDiscipline(checkDisciplines.includes(e.target.id), e.target.id))}
         />
         ) : (
-          <StyledSpan>{coach.disciplines ? coach.disciplines.map((el)=> <li>{el.name}</li> ) : "" }</StyledSpan>
+          <StyledSpan>{coach.disciplines ? coach.disciplines.map((el)=> <li key={el._id}>{el.name}</li> ) : "" }</StyledSpan>
         )}
       </StyledSection2>
     </StyledForm> 

@@ -41,7 +41,7 @@ function App() {
           <ListadoEntrenadores />        
         </PrivateRoute>
         <PrivateRoute exact path="/profile">
-          <CoachProfile /> 
+          <CoachProfile isPublic={false} />
         </PrivateRoute>
         <PrivateRoute exact path="/clientprofile">
           <ClientProfile />
@@ -50,7 +50,7 @@ function App() {
           <CoachAvailability />  
         </PrivateRoute>
         <PrivateRoute exact path="/coach/:coachId">
-          <CoachProfile />
+          <CoachProfile isPublic={true}/>
         </PrivateRoute>
         <PrivateRoute exact path="/coach/:coachId/setappointment">
           <ClientSetAppointment />

@@ -3,17 +3,15 @@ import CoachProfileForm from '../../components/CoachProfileForm/index'
 import { Header } from '../../components/Header'
 import { StyledMain } from './styles'
 
-export class CoachProfile extends React.Component {
-  render(){
-    return(
-      <>
-        <Header />
-        <StyledMain>
-          <section>
-            <CoachProfileForm history={this.props.history}/>
-          </section>
-        </StyledMain>
-      </>
-    )
-  }
+export function CoachProfile({isPublic}) {
+  return(
+    <>
+      <Header />
+      <StyledMain>
+        <section>
+          <CoachProfileForm isPublic={isPublic} />
+        </section>
+      </StyledMain>
+    </>
+  )
 }
