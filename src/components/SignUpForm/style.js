@@ -49,11 +49,3 @@ export const StyledLink = styled(Link)`
   color: #FBFCF9;
   margin-left: 5px;
 `
-
-export const LoginText = styled.p`
-  font-family: Roboto;
-  font-weight: 300;
-  color: #FBFCF9;
-  font-size: 14px;
-  margin: 5px 0;
-`
