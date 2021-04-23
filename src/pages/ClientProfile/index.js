@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
+import Filter from '../../components/Filter'
 import { Header } from '../../components/Header'
+import { getSpecializations, toggleSpecialization } from '../../store/specializationsReducer'
+import { getDisciplines, toggleDiscipline } from '../../store/disciplinesReducer'
 import { FileUploader } from '../../components/FileUploader'
-import { changeWeight, changeHeight, changeName, changeBMI, getClient, getMetric } from '../../store/clientReducer'
+import { changeWeight, changeHeight, changeName, getClient } from '../../store/clientReducer'
 import { StyledButton } from '../../components/Button/styles'
+import { coachReducer } from '../../store/coachesReducer'
+
 
 export function ClientProfile() {
   const [edit, setEdit] = useState(false)
@@ -13,6 +18,8 @@ export function ClientProfile() {
 
   useEffect(() => {
     dispatch(getClient())
+    dispatch(getSpecializations())
+    dispatch(getDisciplines())
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
 
@@ -22,16 +29,30 @@ export function ClientProfile() {
     height,
     bmi,
     client,
+    checkSpecializations,
+    specializations,
+    checkDisciplines,
+    disciplines,
+    coach,
 
-  } = useSelector(({clientReducer}) => ({
+  } = useSelector(({
+    clientReducer,
+    specializationReducer,
+    disciplineReducer,
+    coachReducer,
+  }) => ({
     name: clientReducer.name,
     weight: clientReducer.weight,
     height: clientReducer.height,
     bmi: clientReducer.bmi,
-    client: clientReducer.client
+    client: clientReducer.client,
+    checkSpecializations: specializationReducer.checkSpecializations,
+    specializations: specializationReducer.specializations,
+    checkDisciplines: disciplineReducer.checkDisciplines,
+    disciplines: disciplineReducer.disciplines,
+    coach: coachReducer.coach,
   }))
 
-  console.log(client)
   async function handleSubmit(e) {
     e.preventDefault()
     setEdit(false)
@@ -45,6 +66,8 @@ export function ClientProfile() {
         name,
         weight,
         height,
+        disciplines: checkDisciplines,
+        specializations: checkSpecializations,
       },
       headers: {
         'Authorization': `Bearer ${token}`
@@ -57,9 +80,8 @@ export function ClientProfile() {
     return(
       <>
         <Header></Header>
-
+        {client.profilePicture !== undefined && <FileUploader initialPicture={client.profilePicture} url='/clients/clientprofile/picture'/>}
         <main>
-          <FileUploader initialPicture="picture" url="/clients/clientprofile"/>
           <form onSubmit={handleSubmit}>
             <section primerColumna>
                 <label 
@@ -91,6 +113,12 @@ export function ClientProfile() {
                   onChange={e => dispatch(changeHeight(e.target.value))}
      
                 />
+                <Filter
+                  filterName={specializations}
+                  nameCheckbox='checkSpecializations'
+                  checks = {checkSpecializations}
+                  handleChange = {(e) => dispatch(toggleSpecialization(checkSpecializations.includes(e.target.id), e.target.id))}
+                />
                 <StyledButton
                   type="submit"
                   green={true}
@@ -108,7 +136,8 @@ export function ClientProfile() {
       <Header></Header>
       <main>
         <section primerColumna>
-          <img src=""></img>
+        {client.profilePicture !== undefined && <FileUploader initialPicture={client.profilePicture} url='/clients/clientprofile/picture' />}
+  
           <label htmlFor="name"> Nombre: </label>
           <p>{client !== undefined && client.name}</p>
 
@@ -117,7 +146,6 @@ export function ClientProfile() {
           {client.metric !== undefined && <p>{client.metric.weight}</p>}
           <label htmlFor="height"> Height: </label>
           <p
-            edit={edit}
             id="height"
             name="height"
           >
@@ -131,7 +159,6 @@ export function ClientProfile() {
             {client.metric !== undefined && Math.ceil(client.metric.bmi)}
           </p>
           <StyledButton
-            edit={edit}
             type="button"
             onClick={e => setEdit(true)}
             green={true}
@@ -140,6 +167,9 @@ export function ClientProfile() {
           </StyledButton>
         </section>
         <section>
+        <span>
+          {client.specializations ? client.specializations.map((el)=> <li>{el.name}</li>) : "" }
+        </span>)
         </section>
       </main>
     </>
