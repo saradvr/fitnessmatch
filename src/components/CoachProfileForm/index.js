@@ -14,6 +14,9 @@ import { faFacebookSquare, faInstagram, faTwitterSquare } from '@fortawesome/fre
 import { FileUploader } from '../FileUploader'
 import { getCoach, SAVE_COACH, COACHES_ERROR, getPublicCoach, getCoaches } from '../../store/coachesReducer'
 import { useHistory, useParams } from 'react-router'
+import ShowVideos from '../ShowVideos'
+import ChargeVideos from '../ChargeVideos'
+
 
 
 function CoachProfileForm ({isPublic}){
@@ -238,6 +241,13 @@ function CoachProfileForm ({isPublic}){
           <StyledRed><FontAwesomeIcon icon={faInstagram}/></StyledRed>
           <StyledRed><FontAwesomeIcon icon={faTwitterSquare}/></StyledRed>
         </StyledRedes>
+        <StyledMid>
+        {edit && <ChargeVideos />}
+        </StyledMid>
+        <StyledMid>
+          {edit && <ShowVideos />}
+          {!edit && <ShowVideos editIsFalse={!edit}/>}
+        </StyledMid>
       </StyledSection2>
 
       <StyledSection2>
