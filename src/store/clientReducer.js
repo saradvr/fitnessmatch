@@ -8,6 +8,7 @@ export const METRIC_LOADING = 'METRIC_LOADING'
 export const METRIC_LOADED = 'METRIC_LOADED'
 export const METRIC_LOADING_FINISHED = 'METRIC_LOADING_FINISHED'
 export const METRIC_ERROR = 'METRIC_ERROR'
+export const CHANGE_APPOINTMENT = 'CHANGE_APPOINTMENT'
 export const CLIENT_INFO_LOADING = 'CLIENT_INFO_LOADING'
 export const CLIENT_INFO_LOADED = 'CLIENT_INFO_LOADED'
 export const CLIENT_INFO_ERROR = 'CLIENT_INFO_ERROR'
@@ -47,37 +48,13 @@ export function getClient() {
   }
 }
 
-export function setClientInfo(client, metric) {
-  return async function(dispatch) {
-    dispatch({type: SETTING_CLIENT_INFO})
-    dispatch({type: SETTING_CLIENT_INFO_ERROR, payload: ''})
-    try {
-      const token = localStorage.getItem('token')
 
-      const { data } = await axios({
-        method: 'PUT',
-        baseURL: process.env.REACT_APP_SERVER_URL,
-        url: '/clients/profile',
-        headers: {
-          Authorization: `bearer ${token}`
-        },
-        data: {
-          client,
-          metric,
-        },
-      })
-      dispatch({type: SETTING_CLIENT_INFO_SUCCESSFUL, payload: data.message})
-    } catch(error) {
-        dispatch({ type: SETTING_CLIENT_INFO_ERROR, payload: error.message})
-        if(error.response.request.status === 401) {
-          localStorage.removeItem('token')
-          alert("Su sesión expiró, ingrese nuevamente")
-          history.push('/login')
-      }
-    }finally{
-      dispatch({type: SETTING_CLIENT_INFO_FINISHED})
-    }
+export function changeAppointment(value) {
+  return {
+    type: CHANGE_APPOINTMENT,
+    payload: value,
   }
+  
 }
 
 export function changeWeight(value) {
@@ -169,6 +146,11 @@ export function clientReducer(state = initialState, action) {
       return {
         ...state,
         name: action.payload,
+      } 
+    case CHANGE_APPOINTMENT:
+      return {
+        ...state,
+        appointments: action.payload,
       } 
   default:
       return state

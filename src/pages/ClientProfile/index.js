@@ -8,7 +8,7 @@ import { getDisciplines, toggleDiscipline } from '../../store/disciplinesReducer
 import { FileUploader } from '../../components/FileUploader'
 import { changeWeight, changeHeight, changeName, getClient } from '../../store/clientReducer'
 import { StyledButton } from '../../components/Button/styles'
-import { coachReducer } from '../../store/coachesReducer'
+import { StyledForm, StyledLabel, StyledSection, StyledSection1 } from './styles'
 
 
 export function ClientProfile() {
@@ -21,7 +21,7 @@ export function ClientProfile() {
     dispatch(getSpecializations())
     dispatch(getDisciplines())
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+  }, [])
 
   const {
     name,
@@ -33,13 +33,11 @@ export function ClientProfile() {
     specializations,
     checkDisciplines,
     disciplines,
-    coach,
-
+    appointments,
   } = useSelector(({
     clientReducer,
     specializationReducer,
     disciplineReducer,
-    coachReducer,
   }) => ({
     name: clientReducer.name,
     weight: clientReducer.weight,
@@ -50,7 +48,7 @@ export function ClientProfile() {
     specializations: specializationReducer.specializations,
     checkDisciplines: disciplineReducer.checkDisciplines,
     disciplines: disciplineReducer.disciplines,
-    coach: coachReducer.coach,
+    appointments: clientReducer.appointments,
   }))
 
   async function handleSubmit(e) {
@@ -66,8 +64,9 @@ export function ClientProfile() {
         name,
         weight,
         height,
-        disciplines: checkDisciplines,
-        specializations: checkSpecializations,
+        appointments,
+        specializations,
+        disciplines,
       },
       headers: {
         'Authorization': `Bearer ${token}`
@@ -76,57 +75,64 @@ export function ClientProfile() {
     dispatch(getClient())
 
   }
-  if(edit === true) {
+  if(!!client && edit === true) {
     return(
       <>
         <Header></Header>
         {client.profilePicture !== undefined && <FileUploader initialPicture={client.profilePicture} url='/clients/clientprofile/picture'/>}
         <main>
-          <form onSubmit={handleSubmit}>
-            <section primerColumna>
-                <label 
-                  htmlFor="name"
-                >
-                  Nombre
-                </label>  
-                <input
-                  type="text"
-                  id="name"
-                  value={name}
-                  onChange={e => dispatch(changeName(e.target.value))}
-                />
-                <label htmlFor="weight">Peso:</label>
-                <input 
-                  type="text" 
-                  id="weight" 
-                  name="weight" 
-                  value={weight}
-                  onChange={e => dispatch(changeWeight(e.target.value))}
+          <StyledForm onSubmit={handleSubmit}>
+            <StyledSection primerColumna>
+              <StyledLabel>
+                Nombre
+              </StyledLabel>  
+              <input
+                type="text"
+                id="name"
+                value={name}
+                onChange={e => dispatch(changeName(e.target.value))}
+              />
+              <StyledLabel htmlFor="weight">Peso:</StyledLabel>
+              <input 
+                type="text" 
+                id="weight" 
+                name="weight" 
+                value={weight}
+                onChange={e => dispatch(changeWeight(e.target.value))}
+  
+              />
+              <StyledLabel htmlFor="height">Estatura:</StyledLabel>
+              <input 
+                type="text" 
+                id="height" 
+                name="height" 
+                value={height}
+                onChange={e => dispatch(changeHeight(e.target.value))}
     
-                />
-                <label htmlFor="height">Estatura:</label>
-                <input 
-                  type="text" 
-                  id="height" 
-                  name="height" 
-                  value={height}
-                  onChange={e => dispatch(changeHeight(e.target.value))}
-     
-                />
-                <Filter
-                  filterName={specializations}
-                  nameCheckbox='checkSpecializations'
-                  checks = {checkSpecializations}
-                  handleChange = {(e) => dispatch(toggleSpecialization(checkSpecializations.includes(e.target.id), e.target.id))}
-                />
-                <StyledButton
-                  type="submit"
-                  green={true}
-                >
-                  Guardar Cambios
-                </StyledButton>
-            </section>
-          </form>
+              />
+              <StyledLabel>Métodos</StyledLabel>
+              <Filter
+                filterName={specializations}
+                nameCheckbox='checkSpecializations'
+                checks = {checkSpecializations}
+                handleChange = {(e) => dispatch(toggleSpecialization(checkSpecializations.includes(e.target.id), e.target.id))}
+                marginLeft = '20px'
+              />
+              <Filter
+                filterName={disciplines}
+                nameCheckbox='checkDisciplines'
+                checks = {checkDisciplines}
+                handleChange = {e => dispatch(toggleDiscipline(checkDisciplines.includes(e.target.id), e.target.id))}
+                marginLeft = '20px'
+              />
+              <StyledButton
+                type="submit"
+                green={true}
+              >
+                Guardar Cambios
+              </StyledButton>
+            </StyledSection>
+          </StyledForm>
         </main>
       </>
     )
@@ -135,42 +141,51 @@ export function ClientProfile() {
       <>
       <Header></Header>
       <main>
-        <section primerColumna>
-        {client.profilePicture !== undefined && <FileUploader initialPicture={client.profilePicture} url='/clients/clientprofile/picture' />}
-  
-          <label htmlFor="name"> Nombre: </label>
-          <p>{client !== undefined && client.name}</p>
-
-          <label> Weight: </label>
-          
-          {client.metric !== undefined && <p>{client.metric.weight}</p>}
-          <label htmlFor="height"> Height: </label>
-          <p
-            id="height"
-            name="height"
-          >
-            {client.metric !== undefined && client.metric.height}
-          </p>
-          <label htmlFor="bmi"> IMC: </label>
-          <p
-            id="bmi"
-            name="bmi"
-          >
-            {client.metric !== undefined && Math.ceil(client.metric.bmi)}
-          </p>
-          <StyledButton
-            type="button"
-            onClick={e => setEdit(true)}
-            green={true}
-          >
-            Editar Perfil
-          </StyledButton>
-        </section>
-        <section>
-        <span>
-          {client.specializations ? client.specializations.map((el)=> <li>{el.name}</li>) : "" }
-        </span>)
-        </section>
+        <StyledForm>
+          <StyledSection primerColumna>
+            {client.profilePicture !== undefined && <FileUploader initialPicture={client.profilePicture} url='/clients/clientprofile/picture' />}
+            <br/>
+            <StyledLabel>Nombre: </StyledLabel>
+            <p>{client !== undefined && client.name}</p>
+          </StyledSection>
+          <StyledSection segundaColumna>
+              <StyledLabel> Weight: </StyledLabel>
+              {client.metric !== undefined && <p>{client.metric.weight}</p>}
+              <StyledLabel htmlFor="height"> Height: </StyledLabel>
+              <p
+                id="height"
+                name="height"
+              >
+                {client.metric !== undefined && client.metric.height}
+              </p>
+              <StyledLabel htmlFor="bmi"> IMC: </StyledLabel>
+              <p
+                id="bmi"
+                name="bmi"
+              >
+              {client.metric !== undefined && Math.ceil(client.metric.bmi)}
+              </p> 
+          </StyledSection>   
+        </StyledForm>
+        <StyledForm>
+            <StyledSection1 primerColumna>
+              <StyledLabel>Mis Metas</StyledLabel>
+              {!!client && !!client.specializations && client.specializations.length > 0 && client.specializations.map((el) => <p>{el.name}</p>)}
+              <StyledLabel>Mis Citas</StyledLabel>
+              {!!client && !!client.appointments && client.appointments.length > 0 && client.appointments.map((el) => <p>{el.appointmentDate}</p>)}
+            </StyledSection1>
+            <StyledSection1 segundaColumna>
+              <StyledLabel>Mis disciplinas</StyledLabel>
+              {!!client && !!client.disciplines && client.disciplines.length > 0 && client.disciplines.map((el) => <p>{el.name}</p>)}
+            </StyledSection1>
+            <StyledButton
+              type="button"
+              onClick={e => setEdit(true)}
+              green={true}
+            >
+              Editar Perfil
+            </StyledButton>
+        </StyledForm>
       </main>
     </>
     )

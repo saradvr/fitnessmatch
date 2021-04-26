@@ -2,6 +2,7 @@ import { StyledInput, StyledLabel} from '../FormInputs/styles'
 import axios from 'axios'
 import { useState } from 'react'
 import Button from '../Button'
+import { StyledImage } from './styles'
 
 export function FileUploader({initialPicture, url, isPublic}) {
 
@@ -52,7 +53,7 @@ export function FileUploader({initialPicture, url, isPublic}) {
   if(edit === false) {
     return(
       <> 
-        <img src={picture} alt='imagen de perfil' width='150px'></img>
+        <img src={picture} alt='imagen de perfil' width='150px'/>
         {!isPublic && <StyledLabel htmlFor="file"></StyledLabel>}
         {!isPublic && 
           <Button 
@@ -77,7 +78,7 @@ export function FileUploader({initialPicture, url, isPublic}) {
           id="file"
           onChange={handleChange}
         />
-        {image && <img src={image} alt="Profile Picture Preview" />}
+        {image && <StyledImage src={image} alt="Profile Preview" />}
         <Button 
           handleClick={handleSubmit}
           isGreen={true}
