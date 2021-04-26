@@ -2,7 +2,7 @@ import React from 'react'
 import { StyledButton } from './styles';
 
 
-function Button ({type, children, handleClick, isGreen, isWhite, customWidth}){
+function Button ({type, children, handleClick, isGreen, isWhite, customWidth, disabled}){
 
   return (
     <StyledButton 
@@ -11,6 +11,7 @@ function Button ({type, children, handleClick, isGreen, isWhite, customWidth}){
       white={isWhite}
       type={type}
       onClick={handleClick}
+      disabled={disabled}
     >
       {children}
     </StyledButton>

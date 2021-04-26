@@ -255,10 +255,10 @@ function CoachProfileForm ({isPublic}){
         <StyledMid>
         {edit && <ChargeVideos />}
         </StyledMid>
-        <StyledMid>
+        {/* <StyledMid>
           {edit && <ShowVideos />}
           {!edit && <ShowVideos editIsFalse={!edit}/>}
-        </StyledMid>
+        </StyledMid> */}
       </StyledSection>
 
       <StyledSection>

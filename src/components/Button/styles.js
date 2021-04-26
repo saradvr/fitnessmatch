@@ -30,4 +30,9 @@ export const StyledButton = styled.button`
     background-color: rgba(251,251,249,0.7);
     color: #396118;
   }
+
+  &:disabled{
+    cursor: wait;
+    background-color: rgba(251, 252, 249, 0.3);
+  }
 `
