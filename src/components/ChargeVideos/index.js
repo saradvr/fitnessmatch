@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { StyledLabelChargeVideos, StyledInputVideos, StyledFormChargeVideos, StyledChargeVideoSection, StyledLabelVideoUploader } from './styles'
 import axios from 'axios'
 import  Button  from '../../components/Button'
 
@@ -12,7 +13,7 @@ function ChargeVideo() {
     setLink(link[1])
   }
 
-  async function handleSubmit(e) {
+  async function handleSubmitVideos(e) {
     try {
       e.preventDefault()
       setLink([e.target.value])
@@ -38,10 +39,11 @@ function ChargeVideo() {
   }
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="myLink">Agrega un video </label>
-        <input
+    <StyledChargeVideoSection>
+      {result && <StyledLabelVideoUploader>{result}</StyledLabelVideoUploader>}
+      <StyledFormChargeVideos >
+        <StyledLabelChargeVideos>Agrega un video </StyledLabelChargeVideos>
+        <StyledInputVideos
           type="text"
           name="myLink"
           id="myLink"
@@ -51,12 +53,12 @@ function ChargeVideo() {
         <Button 
           type="submit"
           isGreen="true"
+          handleClick={handleSubmitVideos}
         >
           Subir Video
         </Button>
-      </form>
-      {result && <p>{result}</p>}
-    </>
+      </StyledFormChargeVideos>
+    </StyledChargeVideoSection>
   );
 }
 

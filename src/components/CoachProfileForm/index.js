@@ -4,7 +4,7 @@ import Button from '../Button'
 import FormInputs from '../FormInputs'
 import { LinkButton } from '../LinkButton'
 import Filter from '../Filter'
-import { StyledForm, StyledSection1, StyledSection2, StyledLabel, StyledTextArea, StyledTopContainer, StyledTop, StyledMid, StyledSpan, StyledRedes, StyledRed, StyledPicture } from './styles'
+import { StyledForm, StyledSection, StyledLabel, StyledTextArea, StyledTopContainer, StyledTop, StyledMid, StyledSpan, StyledRedes, StyledRed, StyledPicture } from './styles'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { getDisciplines, toggleDiscipline, addDiscipline } from '../../store/disciplinesReducer'
@@ -12,8 +12,11 @@ import { addSpecialization, getSpecializations, toggleSpecialization } from '../
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebookSquare, faInstagram, faTwitterSquare } from '@fortawesome/free-brands-svg-icons'
 import { FileUploader } from '../FileUploader'
-import { getCoach, SAVE_COACH, COACHES_ERROR, getPublicCoach, getCoaches } from '../../store/coachesReducer'
-import { useHistory, useParams } from 'react-router'
+import { getCoach, SAVE_COACH, COACHES_ERROR, getPublicCoach } from '../../store/coachesReducer'
+import { useParams } from 'react-router'
+import ChargeVideos from '../ChargeVideos'
+import ShowVideos from '../ShowVideos/index'
+
 
 
 function CoachProfileForm ({isPublic}){
@@ -24,7 +27,6 @@ function CoachProfileForm ({isPublic}){
   const [experience, setExperience] = useState('')
   const [price, setPrice] = useState('')
 
-  const history = useHistory()
   const dispatch = useDispatch()
   const { coachId } = useParams()
 
@@ -32,7 +34,7 @@ function CoachProfileForm ({isPublic}){
     dispatch(getSpecializations())
     dispatch(getDisciplines())
     isPublic ? dispatch(getPublicCoach(coachId)) : dispatch(getCoach())
-  }, [])
+  }, [dispatch, isPublic, coachId])
 
   const {
     checkSpecializations,
@@ -51,6 +53,8 @@ function CoachProfileForm ({isPublic}){
     checkDisciplines: disciplineReducer.checkDisciplines,
     coach: coachReducer.coach,
   }))
+
+
 
   async function handleSubmit (e){
     e.preventDefault()
@@ -83,9 +87,14 @@ function CoachProfileForm ({isPublic}){
 
     <StyledForm>
       
-      <StyledSection1 primerColumna>
+      <StyledSection primerColumna>
         <StyledPicture picture>
-          {!!coach && coach.profilePicture !== undefined && <FileUploader isPublic={isPublic} initialPicture={coach.profilePicture} url='/coaches/profile/picture'/>}
+          {coach && coach.profilePicture !== undefined && 
+          <FileUploader 
+          isPublic={isPublic} 
+          initialPicture={coach.profilePicture} 
+          url='/coaches/profile/picture'/>
+          }
         </StyledPicture>
         <StyledPicture>
           {edit === true && !!coach ? (
@@ -98,11 +107,11 @@ function CoachProfileForm ({isPublic}){
             >
               Nombre
             </FormInputs>) :
-            <StyledLabel>{coach.name}</StyledLabel>
+            <StyledLabel>{coach && coach.name}</StyledLabel>
           }
         </StyledPicture>
-      </StyledSection1>
-      <StyledSection1 segundaColumna>
+      </StyledSection>
+      <StyledSection segundaColumna>
         <StyledTop>
           {!isPublic && 
           <StyledTopContainer align="right">
@@ -129,41 +138,46 @@ function CoachProfileForm ({isPublic}){
             Esta es una breve descripción acerca del entrenador
           </StyledTextArea>
           ) : 
-          (<StyledSpan textArea>{coach.description}</StyledSpan>)
+          (<StyledSpan textArea>{coach && coach.description}</StyledSpan>)
         }
-      </StyledSection1>
-      <StyledSection1>
+      </StyledSection>
+      <StyledSection>
         <StyledRedes>
-          {!isPublic ? 
+          {!isPublic && edit === false && !!coach && (
             <StyledRed>
-              {edit === false && !!coach && (
-                <Button
-                  type="button"
-                  handleClick={() => {
-                    setName(coach.name)
-                    setDescription(coach.description)
-                    setExperience(coach.experienceYears)
-                    setPrice(coach.appointmentFee)
-                    setEdit(true)
-                    if( coach.specializations.length > 0){
-                      coach.specializations.map(el => checkSpecializations.includes(el._id) ? "" : dispatch(addSpecialization(el._id)))
-                    }
-                    if( coach.disciplines.length > 0){
-                      coach.disciplines.map(el => checkDisciplines.includes(el._id) ? "" : dispatch(addDiscipline(el._id)))
-                    }
-                  }}
-                >
-                  Editar perfil
-                </Button>
-                )
-              }
-            </StyledRed> : 
-            <LinkButton
-              to={location => `${location.pathname}/setappointment`}
+              <Button
+              type="button"
+              handleClick={() => {
+                setName(coach.name)
+                setDescription(coach.description)
+                setExperience(coach.experienceYears)
+                setPrice(coach.appointmentFee)
+                setEdit(true)
+                if( coach.specializations.length > 0){
+                  coach.specializations
+                  .map(el => checkSpecializations.includes(el._id) ? "" : 
+                  dispatch(addSpecialization(el._id)))
+                }
+                if( coach.disciplines.length > 0){
+                  coach.disciplines.map(el => checkDisciplines.includes(el._id) ? "" : 
+                  dispatch(addDiscipline(el._id)))
+                }
+              }}
             >
-              Pedir cita de valoracion
-            </LinkButton>
-          }
+                Editar perfil
+              </Button>
+            </StyledRed>
+          )}
+          
+          {isPublic && (
+            <StyledRed>
+              <LinkButton
+                to={location => `${location.pathname}/setappointment`}
+              >
+                Pedir cita de valoracion
+              </LinkButton>
+            </StyledRed>
+          )}
           <StyledRed>
             {edit === true && !!coach? (
               <Button
@@ -188,9 +202,9 @@ function CoachProfileForm ({isPublic}){
           </StyledRed>
         </StyledRedes>
         
-      </StyledSection1>
+      </StyledSection>
 
-      <StyledSection2 primerColumna>
+      <StyledSection>
         <StyledLabel>Especializaciones</StyledLabel>
         {edit === true && !!coach? (
           <Filter
@@ -200,12 +214,12 @@ function CoachProfileForm ({isPublic}){
             handleChange = {(e) => dispatch(toggleSpecialization(checkSpecializations.includes(e.target.id), e.target.id))}
           />
          ) : 
-         (<StyledSpan>{coach.specializations ? coach.specializations
+         (<StyledSpan>{coach && coach.specializations ? coach.specializations
           .map((el)=> <li key={el._id}>{el.name}</li>) : "" }
           </StyledSpan>)
         }
-      </StyledSection2>
-      <StyledSection2 segundaColumna>
+      </StyledSection>
+      <StyledSection order={1}>
         <StyledMid expYears>
           <StyledLabel>Años de experiencia</StyledLabel>
           {edit === true && !!coach ? (
@@ -216,7 +230,7 @@ function CoachProfileForm ({isPublic}){
               onChange={(e)=> setExperience(e.target.value)}
               value={experience}
             />) : 
-            (<StyledSpan>{coach.experienceYears}</StyledSpan>)
+            (<StyledSpan>{coach && coach.experienceYears}</StyledSpan>)
           }
           <StyledLabel>Precio cita</StyledLabel>
           {edit === true && !!coach? (
@@ -227,7 +241,7 @@ function CoachProfileForm ({isPublic}){
               onChange={(e)=> setPrice(e.target.value)}
               value={price}
             />) : 
-            (<StyledSpan>{coach.appointmentFee}</StyledSpan>)
+            (<StyledSpan>{coach && coach.appointmentFee}</StyledSpan>)
           }
         </StyledMid>
         <StyledMid>
@@ -238,9 +252,16 @@ function CoachProfileForm ({isPublic}){
           <StyledRed><FontAwesomeIcon icon={faInstagram}/></StyledRed>
           <StyledRed><FontAwesomeIcon icon={faTwitterSquare}/></StyledRed>
         </StyledRedes>
-      </StyledSection2>
+        <StyledMid>
+        {edit && <ChargeVideos />}
+        </StyledMid>
+        <StyledMid>
+          {edit && <ShowVideos />}
+          {!edit && <ShowVideos editIsFalse={!edit}/>}
+        </StyledMid>
+      </StyledSection>
 
-      <StyledSection2>
+      <StyledSection>
         <StyledLabel>Disciplinas</StyledLabel>
         {edit === true && !!coach? (
           <Filter
@@ -250,9 +271,10 @@ function CoachProfileForm ({isPublic}){
           handleChange = {(e) => dispatch(toggleDiscipline(checkDisciplines.includes(e.target.id), e.target.id))}
         />
         ) : (
-          <StyledSpan>{coach.disciplines ? coach.disciplines.map((el)=> <li key={el._id}>{el.name}</li> ) : "" }</StyledSpan>
+          <StyledSpan>{coach && coach.disciplines ? coach.disciplines.map((el)=> <li key={el._id}>{el.name}</li> ) : "" }</StyledSpan>
         )}
-      </StyledSection2>
+      </StyledSection>
+      
     </StyledForm> 
 
   )
