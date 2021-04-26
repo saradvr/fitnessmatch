@@ -1,7 +1,7 @@
 import axios from 'axios'
 import Button from '../Button'
 import { getCoach } from '../../store/coachesReducer'
-import { SliderContentItem, StyledIframeVideos, StyledButtonVideos, StyledLabelVideoDeleted } from './styles'
+import { SliderContentItem, StyledButtonVideos, StyledLabelVideoDeleted } from './styles'
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from 'react-icons/fa'
@@ -61,7 +61,7 @@ function ShowVideos({editIsFalse}){
             <section key={el} className={index === current ? 'slide active' : 'slide'}>
               {index === current && (
                 <>
-                  <StyledIframeVideos 
+                  <iframe 
                     key={el}
                     width="455" 
                     height="205" 
@@ -70,7 +70,7 @@ function ShowVideos({editIsFalse}){
                     frameBorder="0" 
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                     allowFullScreen>
-                  </StyledIframeVideos><br/>
+                  </iframe><br/>
                   <StyledButtonVideos>
                     {!editIsFalse && <Button 
                       key={`btn-${el}`} 
