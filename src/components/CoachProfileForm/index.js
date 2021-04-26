@@ -15,6 +15,7 @@ import { FileUploader } from '../FileUploader'
 import { getCoach, SAVE_COACH, COACHES_ERROR, getPublicCoach } from '../../store/coachesReducer'
 import { useParams } from 'react-router'
 import ChargeVideos from '../ChargeVideos'
+import ShowVideos from '../ShowVideos/index'
 
 
 
@@ -254,10 +255,10 @@ function CoachProfileForm ({isPublic}){
         <StyledMid>
         {edit && <ChargeVideos />}
         </StyledMid>
-        {/* <StyledMid>
+        <StyledMid>
           {edit && <ShowVideos />}
           {!edit && <ShowVideos editIsFalse={!edit}/>}
-        </StyledMid> */}
+        </StyledMid>
       </StyledSection>
 
       <StyledSection>
