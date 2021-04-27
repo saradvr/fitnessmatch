@@ -47,7 +47,7 @@ function ShowVideos({editIsFalse}){
     setCurrent(current === 0 ? coach.uploadedFiles.length -1  : current - 1)
   }
 
-  if(!Array.isArray(coach.uploadedFiles) || coach.uploadedFiles.length <= 0) {
+  if(!!Array && !Array.isArray(coach.uploadedFiles) || coach.uploadedFiles.length <= 0) {
     return <StyledLabelChargeVideos>No se han agregado videos</StyledLabelChargeVideos>
   }
   

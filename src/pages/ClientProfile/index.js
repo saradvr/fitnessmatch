@@ -8,7 +8,8 @@ import { getDisciplines, toggleDiscipline } from '../../store/disciplinesReducer
 import { FileUploader } from '../../components/FileUploader'
 import { changeWeight, changeHeight, changeName, getClient } from '../../store/clientReducer'
 import { StyledButton } from '../../components/Button/styles'
-import { StyledForm, StyledLabel, StyledSection, StyledSection1 } from './styles'
+import { StyledForm, StyledLabel, StyledSection, StyledSection1, StyledMain } from './styles'
+
 
 
 export function ClientProfile() {
@@ -80,37 +81,34 @@ export function ClientProfile() {
       <>
         <Header></Header>
         {client.profilePicture !== undefined && <FileUploader initialPicture={client.profilePicture} url='/clients/clientprofile/picture'/>}
-        <main>
+        <StyledMain>
           <StyledForm onSubmit={handleSubmit}>
             <StyledSection primerColumna>
-              <StyledLabel>
-                Nombre
-              </StyledLabel>  
+              <StyledLabel htmlFor="name">Nombre :</StyledLabel>  
               <input
                 type="text"
                 id="name"
+                name="name"
                 value={name}
                 onChange={e => dispatch(changeName(e.target.value))}
               />
-              <StyledLabel htmlFor="weight">Peso:</StyledLabel>
+              <StyledLabel htmlFor="weight">Peso :</StyledLabel>
               <input 
                 type="text" 
                 id="weight" 
                 name="weight" 
                 value={weight}
                 onChange={e => dispatch(changeWeight(e.target.value))}
-  
               />
-              <StyledLabel htmlFor="height">Estatura:</StyledLabel>
+              <StyledLabel htmlFor="height">Estatura :</StyledLabel>
               <input 
                 type="text" 
                 id="height" 
                 name="height" 
                 value={height}
                 onChange={e => dispatch(changeHeight(e.target.value))}
-    
               />
-              <StyledLabel>Métodos</StyledLabel>
+              <StyledLabel>Intereses :</StyledLabel>
               <Filter
                 filterName={specializations}
                 nameCheckbox='checkSpecializations'
@@ -133,7 +131,7 @@ export function ClientProfile() {
               </StyledButton>
             </StyledSection>
           </StyledForm>
-        </main>
+        </StyledMain>
       </>
     )
   }else if(edit === false) {

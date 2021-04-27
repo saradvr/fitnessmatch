@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import background from '../../components/Images/fondoOscuro.webp'
 
 export const StyledImg = styled.img`
   display: block;
@@ -32,6 +33,8 @@ export const StyledSection1 = styled.section`
   flex-direction: column;
   justify-content: center;
   padding: ${props => props.primerColumna ? "15px 30px 15px 15px" : "15px"};
+  font-family: Roboto;
+  color: #FBFCF9;
 `
 export const StyledSection2 = styled.section`
   grid-column: 3
@@ -44,6 +47,7 @@ export const StyledParagraph = styled.p`
 `
 export const StyledMain = styled.main`
   padding: 0px 0px 0px 0px;
+  background-image: url(${background});
 `
 export const StyledLabel = styled.label`
   border: "1px solid white";
