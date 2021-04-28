@@ -5,6 +5,8 @@ import FormInputs from '../FormInputs'
 import { LinkButton } from '../LinkButton'
 import Filter from '../Filter'
 import { StyledForm, StyledSection, StyledLabel, StyledTextArea, StyledTopContainer, StyledTop, StyledMid, StyledSpan, StyledRedes, StyledRed, StyledPicture } from './styles'
+import { SliderContentItem, StyledButtonVideos, StyledLabelVideoDeleted } from './styles'
+import { StyledLabelChargeVideos, StyledInputVideos, StyledFormChargeVideos, StyledChargeVideoSection } from './styles'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState } from 'react'
 import { getDisciplines, toggleDiscipline, addDiscipline } from '../../store/disciplinesReducer'
@@ -14,10 +16,8 @@ import { faFacebookSquare, faInstagram, faTwitterSquare } from '@fortawesome/fre
 import { FileUploader } from '../FileUploader'
 import { getCoach, SAVE_COACH, COACHES_ERROR, getPublicCoach } from '../../store/coachesReducer'
 import { useParams } from 'react-router'
-import ChargeVideos from '../ChargeVideos'
-import ShowVideos from '../ShowVideos/index'
-
-
+import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from 'react-icons/fa'
+import './styles.css'
 
 function CoachProfileForm ({isPublic}){
   
@@ -26,6 +26,10 @@ function CoachProfileForm ({isPublic}){
   const [description, setDescription] = useState('')
   const [experience, setExperience] = useState('')
   const [price, setPrice] = useState('')
+  const [link, setLink] = useState(null)
+  const [current, setCurrent] = useState(0)
+  const [videoToDelete, setVideoToDelete] = useState(null)
+  const [existVideo, setExistVideo] = useState(false)
 
   const dispatch = useDispatch()
   const { coachId } = useParams()
@@ -54,12 +58,51 @@ function CoachProfileForm ({isPublic}){
     coach: coachReducer.coach,
   }))
 
-
+  function handleChangeVideo(e) {
+    let link = e.target.value
+    link = link.split('=')
+    setLink(link[1])
+    if(coach.uploadedFiles.includes(link[1])){
+      setExistVideo(true)
+    } else {
+      setExistVideo(false)
+    }
+  }
 
   async function handleSubmit (e){
     e.preventDefault()
     try {
       const token = localStorage.getItem('token')
+      if(!!videoToDelete){
+        await axios({
+          method: 'PUT',
+          baseURL: process.env.REACT_APP_SERVER_URL,
+          url: '/coaches/profile/deletefiles',
+          data : {
+            uploadedFiles: videoToDelete,
+          },
+          headers: {
+            'Authorization' : `Bearer ${token}`
+          }
+        })
+        setVideoToDelete(null)
+      }
+      
+      if(existVideo !== true && !!link){
+        await axios({
+          method: 'PUT',
+          baseURL: process.env.REACT_APP_SERVER_URL,
+          url: '/coaches/profile/files',
+          data : {
+            uploadedFiles: link,
+          },
+          headers: {
+            'Authorization' : `Bearer ${token}`
+          }
+        })
+        setLink(null)
+      }
+      
       const { data } = await axios ({
         method: 'PUT',
         baseURL: process.env.REACT_APP_SERVER_URL,
@@ -76,17 +119,26 @@ function CoachProfileForm ({isPublic}){
           Authorization: `bearer ${token}`
         }
       })
+      if(data.coach.uploadedFiles.length <= current){
+        setCurrent(prevCurrent => prevCurrent -1)
+      }
       dispatch({type: SAVE_COACH, payload: data.coach})
       setEdit(false)
     } catch(error) {
         dispatch({type: COACHES_ERROR, payload: error})
     }
   }
-  
+
+  const nextSlide = () => {
+    setCurrent(current === coach.uploadedFiles.length - 1 ? 0 : current + 1)
+  }
+  const prevSlide = () => {
+    setCurrent(current === 0 ? coach.uploadedFiles.length -1  : current - 1)
+  }
+
   return(
 
     <StyledForm>
-      
       <StyledSection primerColumna>
         <StyledPicture picture>
           {coach && coach.profilePicture !== undefined && 
@@ -193,7 +245,10 @@ function CoachProfileForm ({isPublic}){
             {edit === true && !!coach ? (
               <Button
                 type="button"
-                handleClick={() => setEdit(false)}
+                handleClick={() => {
+                  setEdit(false)
+                  setVideoToDelete(null)
+                }}
               >
                 Cancelar
               </Button>
@@ -201,7 +256,6 @@ function CoachProfileForm ({isPublic}){
             }
           </StyledRed>
         </StyledRedes>
-        
       </StyledSection>
 
       <StyledSection>
@@ -253,11 +307,65 @@ function CoachProfileForm ({isPublic}){
           <StyledRed><FontAwesomeIcon icon={faTwitterSquare}/></StyledRed>
         </StyledRedes>
         <StyledMid>
-        {edit && <ChargeVideos />}
+        {edit && 
+          <>
+            {existVideo && <StyledLabelChargeVideos>El video ya existe </StyledLabelChargeVideos>}
+            <StyledChargeVideoSection>
+              <StyledFormChargeVideos >
+                <StyledLabelChargeVideos>Agrega un video </StyledLabelChargeVideos>
+                <StyledInputVideos
+                  type="text"
+                  name="myLink"
+                  id="myLink"
+                  placeholder="Video URL"
+                  onChange={handleChangeVideo}
+                />
+              </StyledFormChargeVideos>
+            </StyledChargeVideoSection>
+          </>
+        }
         </StyledMid>
         <StyledMid>
-          {edit && <ShowVideos />}
-          {!edit && <ShowVideos editIsFalse={!edit}/>}
+          <SliderContentItem>
+            <>
+              {!!coach.uploadedFiles && coach.uploadedFiles.length <= 0 && <StyledLabelChargeVideos> No hay videos</StyledLabelChargeVideos>}
+              {!!coach && !!coach.uploadedFiles && coach.uploadedFiles.length > 0  && coach.uploadedFiles.map((el, index)  => {
+                return ( 
+                <>
+                  <FaArrowAltCircleLeft className="left-arrow" onClick={prevSlide} />
+                  <FaArrowAltCircleRight className="right-arrow" onClick={nextSlide} />
+                  <section key={el}>
+                    {index === current &&  (
+                      <>
+                        <iframe
+                          key={el}
+                          width="420" 
+                          height="205" 
+                          src={`https://www.youtube.com/embed/${el}`}
+                          title="YouTube video player" 
+                          frameBorder="0" 
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                          allowFullScreen>
+                        </iframe><br/>
+                        <StyledButtonVideos>
+                          {edit && <Button 
+                            key={`btn-${el}`} 
+                            handleClick={e => setVideoToDelete(el)}
+                            type="button"
+                            isGreen="true"
+                          >
+                            Eliminar Video
+                          </Button>}
+                        </StyledButtonVideos>
+                        {videoToDelete !== null && <StyledLabelVideoDeleted>Al guadar cambios el video se eliminará.</StyledLabelVideoDeleted> }
+                      </>
+                    )} 
+                  </section>
+                </> )
+              })
+              }
+            </>
+          </SliderContentItem>
         </StyledMid>
       </StyledSection>
 
@@ -274,11 +382,8 @@ function CoachProfileForm ({isPublic}){
           <StyledSpan>{coach && coach.disciplines ? coach.disciplines.map((el)=> <li key={el._id}>{el.name}</li> ) : "" }</StyledSpan>
         )}
       </StyledSection>
-      
     </StyledForm> 
-
   )
 }
 
 export default CoachProfileForm
-
