@@ -138,7 +138,7 @@ export function ClientProfile() {
     return(
       <>
       <Header></Header>
-      <main>
+      <StyledMain>
         <StyledForm>
           <StyledSection primerColumna>
             {client.profilePicture !== undefined && <FileUploader initialPicture={client.profilePicture} url='/clients/clientprofile/picture' />}
@@ -147,7 +147,7 @@ export function ClientProfile() {
             <p>{client !== undefined && client.name}</p>
           </StyledSection>
           <StyledSection segundaColumna>
-              <StyledLabel> Weight: </StyledLabel>
+              <StyledLabel> Peso: </StyledLabel>
               {client.metric !== undefined && <p>{client.metric.weight}</p>}
               <StyledLabel htmlFor="height"> Height: </StyledLabel>
               <p
@@ -184,7 +184,7 @@ export function ClientProfile() {
               Editar Perfil
             </StyledButton>
         </StyledForm>
-      </main>
+      </StyledMain>
     </>
     )
   }

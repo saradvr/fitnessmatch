@@ -82,7 +82,12 @@ const LoginForm = function() {
       </StyledSection>
       <StyledSection>
         <StyledLabel>¿No tienes una cuenta?</StyledLabel>
-        <LinkButton to="/signup">Registrarme</LinkButton>
+        <LinkButton 
+          to="/signup"
+          onClick={(e) => dispatch(changeEmail(''), dispatch(changePassword('')))}
+        >
+          Registrarme
+        </LinkButton>
       </StyledSection>
     </StyledForm>
   )
