@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
+import { LinkButton } from '../../components/LinkButton'
 import Filter from '../../components/Filter'
 import { Header } from '../../components/Header'
 import { getSpecializations, toggleSpecialization } from '../../store/specializationsReducer'
@@ -8,7 +9,7 @@ import { getDisciplines, toggleDiscipline } from '../../store/disciplinesReducer
 import { FileUploader } from '../../components/FileUploader'
 import { changeWeight, changeHeight, changeName, getClient } from '../../store/clientReducer'
 import { StyledButton } from '../../components/Button/styles'
-import { StyledForm, StyledLabel, StyledSection, StyledSection1, StyledMain } from './styles'
+import { StyledForm, StyledLabel, StyledSection, StyledSection1, StyledMain, StyledLabelEdit } from './styles'
 
 
 
@@ -84,7 +85,7 @@ export function ClientProfile() {
         <StyledMain>
           <StyledForm onSubmit={handleSubmit}>
             <StyledSection primerColumna>
-              <StyledLabel htmlFor="name">Nombre :</StyledLabel>  
+              <StyledLabelEdit htmlFor="name">Nombre</StyledLabelEdit>  
               <input
                 type="text"
                 id="name"
@@ -92,7 +93,7 @@ export function ClientProfile() {
                 value={name}
                 onChange={e => dispatch(changeName(e.target.value))}
               />
-              <StyledLabel htmlFor="weight">Peso :</StyledLabel>
+              <StyledLabelEdit htmlFor="weight">Peso</StyledLabelEdit>
               <input 
                 type="text" 
                 id="weight" 
@@ -100,7 +101,7 @@ export function ClientProfile() {
                 value={weight}
                 onChange={e => dispatch(changeWeight(e.target.value))}
               />
-              <StyledLabel htmlFor="height">Estatura :</StyledLabel>
+              <StyledLabelEdit htmlFor="height">Estatura</StyledLabelEdit>
               <input 
                 type="text" 
                 id="height" 
@@ -108,7 +109,7 @@ export function ClientProfile() {
                 value={height}
                 onChange={e => dispatch(changeHeight(e.target.value))}
               />
-              <StyledLabel>Intereses :</StyledLabel>
+              <StyledLabelEdit>Objetivos</StyledLabelEdit>
               <Filter
                 filterName={specializations}
                 nameCheckbox='checkSpecializations'
@@ -116,6 +117,9 @@ export function ClientProfile() {
                 handleChange = {(e) => dispatch(toggleSpecialization(checkSpecializations.includes(e.target.id), e.target.id))}
                 marginLeft = '20px'
               />
+            </StyledSection>
+            <StyledSection>
+            <StyledLabelEdit>Disciplinas</StyledLabelEdit>
               <Filter
                 filterName={disciplines}
                 nameCheckbox='checkDisciplines'
@@ -123,13 +127,19 @@ export function ClientProfile() {
                 handleChange = {e => dispatch(toggleDiscipline(checkDisciplines.includes(e.target.id), e.target.id))}
                 marginLeft = '20px'
               />
-              <StyledButton
+            </StyledSection>
+            <StyledButton
                 type="submit"
                 green={true}
-              >
+            >
                 Guardar Cambios
-              </StyledButton>
-            </StyledSection>
+            </StyledButton>
+            <StyledButton
+              type='button'
+              onClick={() => setEdit(false)}
+            >
+              Cancelar
+            </StyledButton>
           </StyledForm>
         </StyledMain>
       </>
@@ -148,7 +158,7 @@ export function ClientProfile() {
           </StyledSection>
           <StyledSection segundaColumna>
               <StyledLabel> Peso: </StyledLabel>
-              {client.metric !== undefined && <p>{client.metric.weight}</p>}
+              {!!client && !!client.metric && <p>{client.metric.weight}</p>}
               <StyledLabel htmlFor="height"> Height: </StyledLabel>
               <p
                 id="height"

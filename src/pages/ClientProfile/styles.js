@@ -50,10 +50,14 @@ export const StyledParagraph = styled.p`
 export const StyledMain = styled.main`
   padding: 0px 0px 0px 0px;
   background-image: url(${background});
+  padding-bottom: 55px;
 `
 export const StyledLabel = styled.label`
   border: "1px solid white";
   border: 1px solid white;
   border-radius: 30px;
   padding: 0px 30px 0px 30px;
+`
+export const StyledLabelEdit = styled.label`
+  display: block;
 `

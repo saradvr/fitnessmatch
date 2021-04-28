@@ -1,8 +1,8 @@
-import { StyledInput, StyledLabel} from '../FormInputs/styles'
+import { StyledLabel } from '../FormInputs/styles'
 import axios from 'axios'
 import { useState } from 'react'
 import Button from '../Button'
-import { StyledImage } from './styles'
+import { StyledImage, SytledMain, StyledInput } from './styles'
 
 export function FileUploader({initialPicture, url, isPublic}) {
 
@@ -53,38 +53,41 @@ export function FileUploader({initialPicture, url, isPublic}) {
   if(edit === false) {
     return(
       <> 
-        <StyledImage src={picture} alt='imagen de perfil' width='150px'/>
-        {!isPublic && <StyledLabel htmlFor="file"></StyledLabel>}
-        {!isPublic && 
-          <Button 
-            type="button"
-            isGreen={true}
-            handleClick={e => setEdit(true)}
-          >
-            Cambiar Foto
-          </Button>
-        }
+        <SytledMain>
+          <StyledImage src={picture} alt='imagen de perfil' width='150px'/>
+          {!isPublic && <StyledLabel htmlFor="file"></StyledLabel>}
+          {!isPublic && 
+            <Button 
+              type="button"
+              isGreen={true}
+              handleClick={e => setEdit(true)}
+            >
+              Cambiar Foto
+            </Button>
+          }
+        </SytledMain>
       </>  
     )
   } 
   else {
     return(
       <>
-        <StyledLabel htmlFor="file"></StyledLabel>
-        <StyledInput
-          type="file"
-          accept="image/*"
-          name="file"
-          id="file"
-          onChange={handleChange}
-        />
-        {image && <StyledImage src={image} alt="Profile Preview" />}
-        <Button 
-          handleClick={handleSubmit}
-          isGreen={true}
-        >
-          Guardar Foto
-        </Button>
+        <SytledMain>
+          <StyledInput          
+            type="file"
+            accept="image/*"
+            name="file"
+            id="file"
+            onChange={handleChange}
+          />
+          {image && <StyledImage src={image} alt="Profile Preview" />}
+          <Button 
+            handleClick={handleSubmit}
+            isGreen={true}
+          >
+            Guardar Foto
+          </Button>
+        </SytledMain>
       </>
     ) 
   }
