@@ -5,7 +5,6 @@ export const StyledMain = styled.main`
   background-image: url(${backimg});
   font-size: 18px;
   font-weight: 300;
-  /* position: absolute; */
   width: 100%;
   display: grid;
   grid-template-columns: 1fr;
@@ -14,7 +13,6 @@ export const StyledMain = styled.main`
 export const CalendarHorasSection = styled.section`
   display: grid;
   grid-template-columns: 1fr;
-  height: 380px;
   margin: 30px 0px;
 
   @media screen and (min-width:870px){
@@ -25,6 +23,9 @@ export const CalendarHorasSection = styled.section`
 export const CalendarSection = styled.section`
   grid-column: 1;
   border-right: 1px solid white;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 `
 
 export const HoursMessageSection = styled.section`

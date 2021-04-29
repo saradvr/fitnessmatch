@@ -77,7 +77,7 @@ export function FileUploader({initialPicture, url, isPublic}) {
           id="file"
           onChange={handleChange}
         />
-        {image && <img src={image} alt="Profile Picture Preview" />}
+        {image && <img src={image} alt="Profile Preview" />}
         <Button 
           handleClick={handleSubmit}
           isGreen={true}

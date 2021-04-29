@@ -6,6 +6,8 @@ export const StyledFiltrosH2 = styled.h2`
   color: #FBFCF9;
   font-family: 'Roboto';
   text-align: center;
+  margin-block-start: 0.83em;
+  margin-block-end: 0.83em;
 `
 
 export const StyledTitle = styled.h2`
@@ -14,6 +16,8 @@ export const StyledTitle = styled.h2`
   color: #FBFCF9;
   font-family: 'Roboto';
   font-weight: 400;
+  margin-block-start: 0.83em;
+  margin-block-end: 0.83em;
 
   &:hover {
     cursor: pointer;

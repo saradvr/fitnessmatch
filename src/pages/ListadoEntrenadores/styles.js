@@ -23,9 +23,9 @@ export const StyledSection = styled.section`
 `
 
 export const StyledDescription = styled.section`
-  margin: 0 20px;
+  margin: 20px 20px;
 
   @media screen and (min-width: 769px){
-    margin: 0 70px;
+    margin: 20px 70px;
   }
 `
