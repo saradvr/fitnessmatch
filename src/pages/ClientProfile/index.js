@@ -1,20 +1,25 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
-import { LinkButton } from '../../components/LinkButton'
 import Filter from '../../components/Filter'
 import { Header } from '../../components/Header'
 import { getSpecializations, toggleSpecialization } from '../../store/specializationsReducer'
 import { getDisciplines, toggleDiscipline } from '../../store/disciplinesReducer'
 import { FileUploader } from '../../components/FileUploader'
-import { changeWeight, changeHeight, changeName, getClient } from '../../store/clientReducer'
+import { getClient } from '../../store/clientReducer'
 import { StyledButton } from '../../components/Button/styles'
 import { StyledForm, StyledLabel, StyledSection, StyledSection1, StyledMain, StyledLabelEdit } from './styles'
+import Button from '../../components/Button'
+import { addSpecialization } from '../../store/specializationsReducer'
+import { addDiscipline } from '../../store/disciplinesReducer'
 
 
 
 export function ClientProfile() {
   const [edit, setEdit] = useState(false)
+  const [name, setName] = useState('')
+  const [weight, setWeight] = useState(0)
+  const [height, setHeight] = useState(0)
   
   const dispatch = useDispatch()
 
@@ -26,9 +31,6 @@ export function ClientProfile() {
   }, [])
 
   const {
-    name,
-    weight,
-    height,
     bmi,
     client,
     checkSpecializations,
@@ -41,9 +43,6 @@ export function ClientProfile() {
     specializationReducer,
     disciplineReducer,
   }) => ({
-    name: clientReducer.name,
-    weight: clientReducer.weight,
-    height: clientReducer.height,
     bmi: clientReducer.bmi,
     client: clientReducer.client,
     checkSpecializations: specializationReducer.checkSpecializations,
@@ -67,22 +66,21 @@ export function ClientProfile() {
         weight,
         height,
         appointments,
-        specializations,
-        disciplines,
+        specializations: checkSpecializations,
+        disciplines: checkDisciplines,
       },
       headers: {
         'Authorization': `Bearer ${token}`
       }
     })
     dispatch(getClient())
-
   }
   if(!!client && edit === true) {
     return(
       <>
         <Header></Header>
-        {client.profilePicture !== undefined && <FileUploader initialPicture={client.profilePicture} url='/clients/clientprofile/picture'/>}
         <StyledMain>
+         {client && client.profilePicture && <FileUploader initialPicture={client.profilePicture} url='/clients/clientprofile/picture'/>}
           <StyledForm onSubmit={handleSubmit}>
             <StyledSection primerColumna>
               <StyledLabelEdit htmlFor="name">Nombre</StyledLabelEdit>  
@@ -91,7 +89,7 @@ export function ClientProfile() {
                 id="name"
                 name="name"
                 value={name}
-                onChange={e => dispatch(changeName(e.target.value))}
+                onChange={e => setName(e.target.value)}
               />
               <StyledLabelEdit htmlFor="weight">Peso</StyledLabelEdit>
               <input 
@@ -99,7 +97,7 @@ export function ClientProfile() {
                 id="weight" 
                 name="weight" 
                 value={weight}
-                onChange={e => dispatch(changeWeight(e.target.value))}
+                onChange={e => setWeight(e.target.value)}
               />
               <StyledLabelEdit htmlFor="height">Estatura</StyledLabelEdit>
               <input 
@@ -107,7 +105,7 @@ export function ClientProfile() {
                 id="height" 
                 name="height" 
                 value={height}
-                onChange={e => dispatch(changeHeight(e.target.value))}
+                onChange={e => setHeight(e.target.value)}
               />
               <StyledLabelEdit>Objetivos</StyledLabelEdit>
               <Filter
@@ -128,14 +126,14 @@ export function ClientProfile() {
                 marginLeft = '20px'
               />
             </StyledSection>
-            <StyledButton
-                type="submit"
+            <Button
+                type="button"
                 green={true}
+                handleClick={handleSubmit}
             >
                 Guardar Cambios
-            </StyledButton>
+            </Button>
             <StyledButton
-              type='button'
               onClick={() => setEdit(false)}
             >
               Cancelar
@@ -149,51 +147,65 @@ export function ClientProfile() {
       <>
       <Header></Header>
       <StyledMain>
-        <StyledForm>
-          <StyledSection primerColumna>
-            {client.profilePicture !== undefined && <FileUploader initialPicture={client.profilePicture} url='/clients/clientprofile/picture' />}
-            <br/>
-            <StyledLabel>Nombre: </StyledLabel>
-            <p>{client !== undefined && client.name}</p>
-          </StyledSection>
-          <StyledSection segundaColumna>
-              <StyledLabel> Peso: </StyledLabel>
-              {!!client && !!client.metric && <p>{client.metric.weight}</p>}
-              <StyledLabel htmlFor="height"> Height: </StyledLabel>
-              <p
-                id="height"
-                name="height"
+          <StyledForm>
+            <StyledSection primerColumna>
+              {client && client.profilePicture && <FileUploader initialPicture={client.profilePicture} url='/clients/clientprofile/picture' />}
+              <br/>
+              <StyledLabel>Nombre: </StyledLabel>
+              <p>{client !== undefined && client.name}</p>
+            </StyledSection>
+            <StyledSection segundaColumna>
+                <StyledLabel> Peso: </StyledLabel>
+                {!!client && !!client.metric && <p>{client.metric.weight}</p>}
+                <StyledLabel htmlFor="height"> Height: </StyledLabel>
+                <p
+                  id="height"
+                  name="height"
+                >
+                  {client.metric !== undefined && client.metric.height}
+                </p>
+                <StyledLabel htmlFor="bmi"> IMC: </StyledLabel>
+                <p
+                  id="bmi"
+                  name="bmi"
+                >
+                {client.metric !== undefined && Math.ceil(client.metric.bmi)}
+                </p> 
+            </StyledSection>   
+          </StyledForm>
+          <StyledForm>
+              <StyledSection1 primerColumna>
+                <StyledLabel>Mis Metas</StyledLabel>
+                {!!client && !!client.specializations && client.specializations.length > 0 && client.specializations.map((el) => <p>{el.name}</p>)}
+                <StyledLabel>Mis Citas</StyledLabel>
+                {!!client && !!client.appointments && client.appointments.length > 0 && client.appointments.map((el) => <p>{el.appointmentDate}</p>)}
+              </StyledSection1>
+              <StyledSection1 segundaColumna>
+                <StyledLabel>Mis disciplinas</StyledLabel>
+                {!!client && !!client.disciplines && client.disciplines.length > 0 && client.disciplines.map((el) => <p>{el.name}</p>)}
+              </StyledSection1>
+              <Button
+                type="button"
+                handleClick={() => {
+                  setName(client.name)
+                  setWeight(client.metric.weight)
+                  setHeight(client.metric.height)
+                  setEdit(true)
+                  if( client.specializations.length > 0){
+                  client.specializations
+                  .map(el => checkSpecializations.includes(el._id) ? "" : 
+                  dispatch(addSpecialization(el._id)))
+                }
+                if( client.disciplines.length > 0){
+                  client.disciplines.map(el => checkDisciplines.includes(el._id) ? "" : 
+                  dispatch(addDiscipline(el._id)))
+                }
+              }}
+                green={true}
               >
-                {client.metric !== undefined && client.metric.height}
-              </p>
-              <StyledLabel htmlFor="bmi"> IMC: </StyledLabel>
-              <p
-                id="bmi"
-                name="bmi"
-              >
-              {client.metric !== undefined && Math.ceil(client.metric.bmi)}
-              </p> 
-          </StyledSection>   
-        </StyledForm>
-        <StyledForm>
-            <StyledSection1 primerColumna>
-              <StyledLabel>Mis Metas</StyledLabel>
-              {!!client && !!client.specializations && client.specializations.length > 0 && client.specializations.map((el) => <p>{el.name}</p>)}
-              <StyledLabel>Mis Citas</StyledLabel>
-              {!!client && !!client.appointments && client.appointments.length > 0 && client.appointments.map((el) => <p>{el.appointmentDate}</p>)}
-            </StyledSection1>
-            <StyledSection1 segundaColumna>
-              <StyledLabel>Mis disciplinas</StyledLabel>
-              {!!client && !!client.disciplines && client.disciplines.length > 0 && client.disciplines.map((el) => <p>{el.name}</p>)}
-            </StyledSection1>
-            <StyledButton
-              type="button"
-              onClick={e => setEdit(true)}
-              green={true}
-            >
-              Editar Perfil
-            </StyledButton>
-        </StyledForm>
+                Editar Perfil
+              </Button>
+          </StyledForm>
       </StyledMain>
     </>
     )

@@ -8,6 +8,7 @@ export const METRIC_LOADING = 'METRIC_LOADING'
 export const METRIC_LOADED = 'METRIC_LOADED'
 export const METRIC_LOADING_FINISHED = 'METRIC_LOADING_FINISHED'
 export const METRIC_ERROR = 'METRIC_ERROR'
+export const SAVE_CLIENT = 'SAVE_CLIENT'
 export const CHANGE_APPOINTMENT = 'CHANGE_APPOINTMENT'
 export const CLIENT_INFO_LOADING = 'CLIENT_INFO_LOADING'
 export const CLIENT_INFO_LOADED = 'CLIENT_INFO_LOADED'
@@ -152,6 +153,11 @@ export function clientReducer(state = initialState, action) {
         ...state,
         appointments: action.payload,
       } 
+    case SAVE_CLIENT:
+      return {
+        ...state,
+        client: action.payload,
+      }
   default:
       return state
   }

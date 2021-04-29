@@ -9,10 +9,20 @@ export const StyledForm = styled.form`
   background-color: rgba(105,179,45,0.4);
   box-sizing: border-box;
   margin: auto;
-  width: 580px;
+  width: 35%;
   display: grid;
   padding: 20px;
   grid-template-columns: 1fr 1fr;
+  
+  @media screen and (min-width:768px){
+    background-color: rgba(105,179,45,0.4);
+    box-sizing: border-box;
+    margin: auto;
+    width: 35%;
+    display: grid;
+    padding: 20px;
+    grid-template-columns: 1fr 1fr;
+  }
 `
 
 export const StyledSection = styled.section`
@@ -48,16 +58,24 @@ export const StyledParagraph = styled.p`
   border: 1px solid white;
 `
 export const StyledMain = styled.main`
-  padding: 0px 0px 0px 0px;
   background-image: url(${background});
-  padding-bottom: 55px;
+  position: absolute;
+  width: 100%;
+  min-height: 100%;
+  margin: 0 auto;
+  padding-top: 60px
 `
 export const StyledLabel = styled.label`
-  border: "1px solid white";
   border: 1px solid white;
   border-radius: 30px;
   padding: 0px 30px 0px 30px;
+
+  @media screen and (max-width:1760px){
+    display: inline-block;
+    margin: 0;
+  }
 `
 export const StyledLabelEdit = styled.label`
   display: block;
+
 `
