@@ -6,7 +6,7 @@ const TRANSACTION_ERROR = 'TRANSACTION_ERROR'
 const TRANSACTION_SUCCESS = 'TRANSACTION_SUCCESS'
 const TRANSACTION_FINISHED = 'TRANSACTION_FINISHED'
 
-export function saveTransaction(transactionDate, amountPaid, status) {
+export function saveTransaction(transaction) {
   return async function (dispatch) {
     dispatch({ type: TRANSACTION_ERROR, payload: ''})
     dispatch({ type: TRANSACTION_SAVING })
@@ -21,9 +21,11 @@ export function saveTransaction(transactionDate, amountPaid, status) {
           Authorization: `Bearer ${token}`,
         },
         data: {
-          transactionDate,
-          amountPaid,
-          status
+          transactionDate: transaction.x_fecha_transaccion,
+          amountPaid: transaction.x_amount,
+          status: transaction.x_transaction_state,
+          appointmentId: transaction.x_extra3,
+          paymentReference: transaction.x_ref_payco,
         }
       }) 
       dispatch({ type: TRANSACTION_SUCCESS, payload: data})

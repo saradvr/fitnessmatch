@@ -1,25 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Header } from "../../components/Header";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { AppointmentDate, ResultContainer, StyledMain, StyledText } from "./styles";
 import { useDispatch, useSelector } from "react-redux";
+import { deleteAppointment, getAppointment, updateAppointment } from '../../store/appointmentsReducer'
 import { saveTransaction } from "../../store/transactionsReducer";
-// import queryString from "query-string";
-// const queryString = require('query-string');
-
-function queryString(query) {
-  const res = {}
-  query
-    .replace('?','')
-    .split('&')
-    .forEach(q => {
-      const [key, value] = q.split('=')
-      res[key] = value
-    })
-  return res
-}
-
+import queryString from "query-string";
 
 export function TransactionResult () {
   
@@ -27,10 +14,8 @@ export function TransactionResult () {
 
   const dispatch = useDispatch()
 
-  const [transactionResult, setTransactionResult] = useState(null)
-
   useEffect(() => {
-    const { ref_payco } = queryString(location.search)
+    const { ref_payco } = queryString.parse(location.search)
 
     axios({
       method: 'GET',
@@ -38,9 +23,9 @@ export function TransactionResult () {
       url: `/validation/v1/reference/${ref_payco}`
     })
       .then(({ data }) => {
-        setTransactionResult(data.data)
-
+        dispatch(saveTransaction(data.data))
       })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location])
 
   const {
@@ -66,17 +51,36 @@ export function TransactionResult () {
     appointment: appointmentReducer.appointment,
   }))
 
+  useEffect(() => {
+    if(!!transaction.appointmentId && !appointment._id){
+      dispatch(getAppointment(transaction.appointmentId))
+    } else if(!!appointment && !!appointment._id && !!transaction.status){
+      if(transaction.status === 'Aceptada') {
+        dispatch(updateAppointment(appointment._id, 'Confirmada'))
+      } else if (transaction.status === 'Pendiente' || transaction.status === "Iniciada") {
+        dispatch(updateAppointment(appointment._id, 'Pendiente de pago'))
+      } else {
+        dispatch(deleteAppointment(appointment._id, appointment.coachId))
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [transaction.appointmentId, transaction.status, appointment._id])
+
   return(
     <>
       <Header />
       <StyledMain>
         <ResultContainer>
           <h2>Su transacción fue:</h2>
-          {!!transactionResult && <h2>{transactionResult.x_transaction_state}</h2>}
-          {!!transactionResult && transactionResult.x_transaction_state === "Aceptada" ? 
+          {!!savingTransaction && <p>Cargando resultado...</p>}
+          {!!errorTransaction && <p>Error al cargar el resultado de transacción.</p>}
+          {!!transaction && !!successTransaction && <h2>{transaction.status}</h2>}
+          {!!transaction && transaction.status === "Aceptada" ? 
             <>
               <StyledText>Su cita queda confirmada para la siguiente fecha:</StyledText>
-              <AppointmentDate>{!!transactionResult && transactionResult.x_extra1}</AppointmentDate>
+              {!!savingAppointment && <p>Guardando su cita...</p>}
+              {!!errorAppointment && <p>Error al guardar la cita.</p>}
+              <AppointmentDate>{!!transaction && !!appointment && !!successAppointment && appointment.appointmentDate}</AppointmentDate>
             </> :
             <StyledText>Por favor intente agendar y pagar su cita nuevamente.</StyledText>
           }

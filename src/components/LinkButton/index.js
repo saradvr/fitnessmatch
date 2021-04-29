@@ -27,6 +27,7 @@ export const LinkButton = styled(Link)`
   &:hover {
     background-color: ${props => props.green ? "rgba(105,179,45,0.5)" : "rgba(251,251,249,0.7)"};
     border: 1px solid #FBFCF9;
-    color: ${props => props.green ? "" : "#396118"}
+    color: ${props => props.green ? "#FBFCF9" : "#396118"};
+    text-decoration: none;
   }
 `

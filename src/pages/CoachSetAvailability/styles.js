@@ -41,6 +41,7 @@ export const StyledParagraph = styled.p`
   font-size: 16px;
   font-family: 'Roboto';
   font-weight: 500;
+  margin: 10px;
 `
 
 export const StyledH2 = styled.h2`
@@ -69,7 +70,7 @@ export const Appointment = styled.article`
 export const LinkClientButton = styled(Link)`
   border: 1px solid white;
   border-radius: 10px;
-  padding: 8px 5px 0 5px;
+  padding: 5px;
   margin-left: 25px;
 
   &:hover{

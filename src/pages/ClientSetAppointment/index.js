@@ -18,12 +18,28 @@ import Button from "../../components/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { getPublicCoach } from "../../store/coachesReducer";
-import { setAppointment } from "../../store/appointmentsReducer";
+import { deleteAppointment, setAppointment } from "../../store/appointmentsReducer";
 import pasos from './pasos.png'
 import banner from './banner.png'
 import { getClient } from "../../store/clientReducer";
+import Modal from 'react-bootstrap/Modal'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export function ClientSetAppointment(){
+
+  const [show, setShow] = useState(false);
+
+  function handleClose() {
+    setPaymentProcess(false)
+    dispatch(deleteAppointment(appointment._id, appointment.coachId))
+    setShow(false)
+  }
+
+  function handleShow(el) {
+    setPaymentProcess(true)
+    dispatch(setAppointment(el,coachId,'Pendiente'))
+    setShow(true)
+  }
 
   function showHours(el){
     const date = parseISO(el, 'yyyy-MM-dd HH:mm', new Date())
@@ -36,10 +52,8 @@ export function ClientSetAppointment(){
     }
   }
 
-  function handleAppointment(e, el) {
-    
-    setPaymentProcess(true)
-    
+  function handleAppointment() {
+
     const handler = window.ePayco.checkout.configure({
       key: process.env.REACT_APP_EPAYCO_PUBLIC_KEY,
       test: true,
@@ -60,8 +74,9 @@ export function ClientSetAppointment(){
       tax_base: '0',
   
       invoice: '1234123',
-      extra1: el,
+      extra1: appointment.appointmentDate,
       extra2: coachId,
+      extra3: appointment._id,
   
       response: `${process.env.REACT_APP_BASE_URL}/transaction-result`,
   
@@ -72,8 +87,6 @@ export function ClientSetAppointment(){
       methodsDisable: ["CASH", "SP", "PSE", "DP"],
     }
     handler.open(data)
-
-    // dispatch(setAppointment(el,coachId,'Pendiente'))
   }
   
   const { coachId } = useParams()
@@ -91,27 +104,59 @@ export function ClientSetAppointment(){
   }, [])
 
   const { 
-    coach,
+    coach, 
+    error, 
+    saving, 
+    success,
     loadingCoach,
+    appointment,
     client
   } = useSelector(({ 
     coachReducer,
     clientReducer,
+    appointmentReducer,
   }) => ({
     coach: coachReducer.coach,
+    error: appointmentReducer.error,
+    saving: appointmentReducer.saving,
+    success: appointmentReducer.success,
     loadingCoach: coachReducer.loading,
+    appointment: appointmentReducer.appointment,
     client: clientReducer.client,
   }))
   
   const availableHours = coach.availableHours
   let hours = []
   if(availableHours){
-    hours = availableHours.filter(showHours)
+    hours = availableHours.filter(showHours).sort()
   }
 
   return(
     <>
       <Header />
+      <Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+        centered
+      >
+        <Modal.Header>
+          <Modal.Title>Confirmación de cita</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {!!success && <p>{success}. Por favor haga el pago para confirmar su cita el {appointment.appointmentDate}, de lo contrario esta no se guardará.</p>}
+          {!!error && <p>Hubo un error al reservar su cita, por favor intente nuevamente.</p>}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button handleClick={handleClose} isGreen={true} fondoClaro={true}>
+            Cancelar
+          </Button>
+          <Button isGreen={true} fondoClaro={true} handleClick={handleAppointment}>
+            Pagar
+          </Button>
+        </Modal.Footer>
+      </Modal>
       <StyledMain>
         <img src={banner} alt="Banner" width="100%"></img>
         <CalendarHorasSection>
@@ -130,7 +175,7 @@ export function ClientSetAppointment(){
                     <StyledDiv key={el}>
                       <Button
                         type="button"
-                        handleClick = {e => handleAppointment(e, el)}
+                        handleClick = {e => handleShow(el)}
                         disabled = {paymentProcess}
                       >
                         {format(date, 'HH:mm')} - {format(addHours(date,1), 'HH:mm', { locale: es })}
@@ -141,11 +186,10 @@ export function ClientSetAppointment(){
               )}
               {!loadingCoach && (!hours || hours.length === 0) && <StyledText>No hay horarios disponibles. Por favor, seleccione otra fecha.</StyledText>}
             </HoursSection>
-            {/* <MessagesSection>
+            <MessagesSection>
               {!!error && <StyledText>{error}</StyledText>}
               {!!saving && <StyledText>Estamos guardando su cita, por favor espere.</StyledText>}
-              {!!success && <StyledText>{`${success}. La cita es: ${appointment.appointmentDate}`}</StyledText>}
-            </MessagesSection> */}
+            </MessagesSection>
           </HoursMessageSection>
         </CalendarHorasSection>
         <img src={pasos} alt="Pasos a seguir" width="100%"></img>

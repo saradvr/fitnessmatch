@@ -6,7 +6,7 @@ export const StyledDatePicker = styled(DatePicker)`
   display: block;
   text-align: center;
   margin-top: 30px;
-  height: 320px;
+  height: 400px;
 
   & button {
     font-family: 'Roboto';
