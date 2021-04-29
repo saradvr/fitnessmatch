@@ -35,6 +35,7 @@ export const HeaderLink = styled(Link)`
   &:hover{
     cursor: pointer;
     color: #69B32D;
+    text-decoration: none;
   }
 `
 

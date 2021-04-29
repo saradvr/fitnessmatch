@@ -10,6 +10,7 @@ import { signUpReducer} from './signUpReducer'
 import { loginReducer } from "./loginReducer"
 import { availabilityReducer } from './availabilityReducer'
 import { appointmentReducer } from './appointmentsReducer'
+import { transactionReducer } from './transactionsReducer'
 
 const appReducer = combineReducers({
   coachReducer,
@@ -21,6 +22,7 @@ const appReducer = combineReducers({
   loginReducer,
   availabilityReducer,
   appointmentReducer,
+  transactionReducer,
 })
 
 const rootReducer = (state, action) => {
