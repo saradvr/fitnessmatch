@@ -38,6 +38,7 @@ const LoginForm = function() {
       })
 
       localStorage.setItem('token', data.token)
+      localStorage.setItem('userKind', data.userKind)
       history.push('/clientprofile')
     
     } catch(error){

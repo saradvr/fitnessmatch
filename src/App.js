@@ -26,6 +26,7 @@ function PrivateRoute({children, ...rest}) {
 }
 
 function App() {
+  const userType = localStorage.getItem('userKind')
   return (
     <Router history={history}>
       <Switch>
@@ -39,13 +40,11 @@ function App() {
           <Login />
         </Route>
         <PrivateRoute exact path="/coacheslist">
-          <ListadoEntrenadores />        
+          <ListadoEntrenadores />
         </PrivateRoute>
         <PrivateRoute exact path="/profile">
-          <CoachProfile isPublic={false} />
-        </PrivateRoute>
-        <PrivateRoute exact path="/clientprofile">
-          <ClientProfile />
+          {!!userType && userType === 'coach' && <CoachProfile isPublic={false} />}
+          {!!userType && userType === 'client' && <ClientProfile />}
         </PrivateRoute>
         <PrivateRoute exact path="/profile/availability">
           <CoachAvailability />  
