@@ -14,6 +14,7 @@ import { LandingPage } from './pages/LandingPage'
 import { history } from './utils/history'
 import { ClientProfile } from './pages/ClientProfile'
 import { ClientSetAppointment } from './pages/ClientSetAppointment'
+import { TransactionResult } from './pages/TransactionResult'
 
 function PrivateRoute({children, ...rest}) {
   const token = localStorage.getItem('token')
@@ -54,6 +55,9 @@ function App() {
         </PrivateRoute>
         <PrivateRoute exact path="/coach/:coachId/setappointment">
           <ClientSetAppointment />
+        </PrivateRoute>
+        <PrivateRoute exact path="/transaction-result">
+          <TransactionResult />
         </PrivateRoute>
       </Switch>
     </Router>

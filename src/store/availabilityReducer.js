@@ -42,7 +42,7 @@ export function getAvailability() {
 export function setAvailability({availableHours}) {
   return async function(dispatch){
     dispatch({ type: AVAILABILITY_SAVING })
-    
+    dispatch({ type: AVAILABILITY_ERROR, payload: ''})
     try {
       const token = localStorage.getItem('token')
       
