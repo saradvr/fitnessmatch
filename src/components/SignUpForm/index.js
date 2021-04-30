@@ -46,7 +46,7 @@ function SignUpForm() {
   
         localStorage.setItem('token', data.token)
         localStorage.setItem('userKind', data.userKind)
-        history.push('/coacheslist')
+        history.push('/profile')
         
       } catch(error){
         dispatch(changeError(error.response.data.error.errors.email.message))
