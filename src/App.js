@@ -12,9 +12,9 @@ import { CoachAvailability } from './pages/CoachSetAvailability'
 import {ListadoEntrenadores} from './pages/ListadoEntrenadores'
 import { LandingPage } from './pages/LandingPage'
 import { history } from './utils/history'
-import { ClientProfile } from './pages/ClientProfile'
 import { ClientSetAppointment } from './pages/ClientSetAppointment'
 import { TransactionResult } from './pages/TransactionResult'
+import { UserProfile } from './pages/UserProfile'
 
 function PrivateRoute({children, ...rest}) {
   const token = localStorage.getItem('token')
@@ -26,7 +26,6 @@ function PrivateRoute({children, ...rest}) {
 }
 
 function App() {
-  const userType = localStorage.getItem('userKind')
   return (
     <Router history={history}>
       <Switch>
@@ -43,8 +42,7 @@ function App() {
           <ListadoEntrenadores />
         </PrivateRoute>
         <PrivateRoute exact path="/profile">
-          {!!userType && userType === 'coach' && <CoachProfile isPublic={false} />}
-          {!!userType && userType === 'client' && <ClientProfile />}
+          <UserProfile />
         </PrivateRoute>
         <PrivateRoute exact path="/profile/availability">
           <CoachAvailability />  

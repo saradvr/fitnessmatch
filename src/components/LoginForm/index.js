@@ -39,7 +39,7 @@ const LoginForm = function() {
 
       localStorage.setItem('token', data.token)
       localStorage.setItem('userKind', data.userKind)
-      history.push('/clientprofile')
+      history.push('/profile')
     
     } catch(error){
       dispatch(changeError())
