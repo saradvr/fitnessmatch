@@ -122,6 +122,9 @@ function CoachProfileForm ({isPublic}){
       if(data.coach.uploadedFiles.length <= current){
         setCurrent(prevCurrent => prevCurrent -1)
       }
+      if(current < 0){
+        setCurrent(prevCurrent => prevCurrent +1)
+      }
       dispatch({type: SAVE_COACH, payload: data.coach})
       setEdit(false)
     } catch(error) {
