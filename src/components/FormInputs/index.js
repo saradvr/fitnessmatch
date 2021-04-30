@@ -1,15 +1,17 @@
 import React from "react"
+import {StyledInput, StyledLabel} from "./styles"
 
 class FormInputs extends React.Component {
   render() {
     const {children, type, name, id, value, onChange} = this.props
     return (
       <>
-        <label htmlFor={id}>
+        <StyledLabel htmlFor={id}>
           {children}
-        </label>
-        <input 
-          type={type} 
+        </StyledLabel>
+        <StyledInput 
+          type={type}
+          required
           name={name} 
           id={id} 
           value={value} 

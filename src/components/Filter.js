@@ -1,15 +1,32 @@
-import Checkbox from './Checkbox'
+import Checkbox from './Checkbox/index.js'
 
-function Filter({filterName, name}){
+function Filter({
+  filterName, 
+  nameCheckbox, 
+  checks,
+  handleChange,
+  marginLeft,
+}){
   return(
     <>
-      {!!filterName && filterName.length > 0 && filterName.map(( item )  => {
+      {!!filterName && filterName.length > 0 && filterName.map(({_id, name})  => {
+        const removeAccents = (str) => {
+          return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        } 
+        let value = removeAccents(name)
+        value = value.toLowerCase().replace(/ /g, "")
+        const isChecked = checks.includes(_id)
+
         return (
             <Checkbox
-              id = {item.toLowerCase().replace(/ /g, "")}
-              name = {name.toLowerCase().replace(/ /g, "")}
-              value = {item.toLowerCase().replace(/ /g, "")}
-              children= {item}
+              key = {_id}
+              id = {_id}
+              name = {nameCheckbox}
+              value = {value}
+              isChecked = {isChecked}
+              children= {name}
+              handleChange = {handleChange}
+              marginLeft = {marginLeft}
             />
         )
       })  

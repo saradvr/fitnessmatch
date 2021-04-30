@@ -1,11 +1,27 @@
-import {CoachCard} from './CoachCard';
+import {CoachCard} from './CoachCard'
+import { getCoaches } from '../store/coachesReducer'
+import { useSelector, useDispatch } from 'react-redux'
+import { useEffect } from 'react'
 
-export function CoachesList ({ coaches }) {
+export function CoachesList () {
+  const dispatch = useDispatch()
+  const { loading, error, coaches } = useSelector(({ coachReducer }) => ({
+    loading: coachReducer.loading,
+    coaches: coachReducer.coaches,
+    error: coachReducer.error,
+  }))
+
+  useEffect(() => {
+    dispatch(getCoaches())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  if (loading) return <p>Cargando entrenadores disponibles...</p>
+  if (error) return <p>Algo salió mal</p>
   return (
-    <section>
+    <>
       {!!coaches && coaches.length > 0 ? coaches.map(({
-        _id, 
-        _idUserType,
+        _id,
         name, 
         specializations, 
         disciplines, 
@@ -22,12 +38,12 @@ export function CoachesList ({ coaches }) {
             experienceYears={experienceYears}
             appointmentFee={appointmentFee}
             profilePicture={profilePicture}
-            _idUserType={_idUserType}
+            _idUserType={_id}
           />
         )
       }):
-          <p>No se encontraron coaches</p>
+          <p>No se encontraron entrenadores con esas características.</p>
       }
-    </section>
+    </>
   );
 }
