@@ -167,11 +167,6 @@ function CoachProfileForm ({isPublic}){
         <StyledTop>
           {!isPublic && 
           <StyledTopContainer align="right">
-            <Button customWidth='175px'
-              type="button"
-              >
-              Ver transacciones
-            </Button>
             <LinkButton to='/profile/availability'>
               Ver agenda
             </LinkButton>

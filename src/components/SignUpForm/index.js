@@ -45,7 +45,8 @@ function SignUpForm() {
         })
   
         localStorage.setItem('token', data.token)
-        history.push('/coacheslist')
+        localStorage.setItem('userKind', data.userKind)
+        history.push('/profile')
         
       } catch(error){
         dispatch(changeError(error.response.data.error.errors.email.message))
