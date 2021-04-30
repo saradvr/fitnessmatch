@@ -38,15 +38,8 @@ const LoginForm = function() {
       })
 
       localStorage.setItem('token', data.token)
-      
-      const { userKind } = data
-  
-      if(userKind === "coach") {
-        history.push('/profile')
-      } else {
-        history.push('/clientprofile')
-      }
-      
+      localStorage.setItem('userKind', data.userKind)
+      history.push('/profile')
     
     } catch(error){
       dispatch(changeError())
