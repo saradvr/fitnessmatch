@@ -53,7 +53,7 @@ export function FileUploader({initialPicture, url, isPublic}) {
   if(edit === false) {
     return(
       <> 
-        <StyledImage src={picture} alt='imagen de perfil' width='150px'/>
+        <StyledImage src={picture} alt='imagen de perfil' />
         {!isPublic && <StyledLabel htmlFor="file"></StyledLabel>}
         {!isPublic && 
           <Button 

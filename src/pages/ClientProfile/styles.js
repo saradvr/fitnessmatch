@@ -3,6 +3,8 @@ import background from '../../components/Images/fondoOscuro.webp'
 
 export const StyledImg = styled.img`
   display: block;
+  height: 140px;
+  margin: 0px 0px 0px 30px;
 `
 
 export const StyledForm = styled.form`

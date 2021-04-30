@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const StyledImage = styled.img`
   width: 140px;
-  height: 164px;
+  height: 144px;
 `
 export const StyledInput = styled.input`
   border-radius: 5.5px;

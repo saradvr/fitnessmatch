@@ -8,10 +8,11 @@ import { getDisciplines, toggleDiscipline } from '../../store/disciplinesReducer
 import { FileUploader } from '../../components/FileUploader'
 import { getClient } from '../../store/clientReducer'
 import { StyledButton } from '../../components/Button/styles'
-import { StyledForm, StyledLabel, StyledSection, StyledSection1, StyledMain, StyledLabelEdit } from './styles'
+import { StyledForm, StyledLabel, StyledSection, StyledSection1, StyledMain, StyledLabelEdit, StyledImg } from './styles'
 import Button from '../../components/Button'
 import { addSpecialization } from '../../store/specializationsReducer'
 import { addDiscipline } from '../../store/disciplinesReducer'
+
 
 
 
@@ -24,14 +25,17 @@ export function ClientProfile() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(getClient())
     dispatch(getSpecializations())
     dispatch(getDisciplines())
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  useEffect(() => {
+    dispatch(getClient())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [edit])
+
   const {
-    bmi,
     client,
     checkSpecializations,
     specializations,
@@ -43,7 +47,6 @@ export function ClientProfile() {
     specializationReducer,
     disciplineReducer,
   }) => ({
-    bmi: clientReducer.bmi,
     client: clientReducer.client,
     checkSpecializations: specializationReducer.checkSpecializations,
     specializations: specializationReducer.specializations,
@@ -57,7 +60,7 @@ export function ClientProfile() {
     setEdit(false)
     const token = localStorage.getItem('token')
 
-    const { data } = await axios({
+    await axios({
       method: 'PUT',
       baseURL: process.env.REACT_APP_SERVER_URL,
       url: '/clients/clientprofile',
@@ -80,8 +83,9 @@ export function ClientProfile() {
       <>
         <Header></Header>
         <StyledMain>
-         {client && client.profilePicture && <FileUploader initialPicture={client.profilePicture} url='/clients/clientprofile/picture'/>}
           <StyledForm onSubmit={handleSubmit}>
+            {client && client.profilePicture && <StyledImg src={client.profilePicture} url='/clients/clientprofile/picture'/>}
+            {console.log(client.profilePicture)}
             <StyledSection primerColumna>
               <StyledLabelEdit htmlFor="name">Nombre</StyledLabelEdit>  
               <input
@@ -152,7 +156,7 @@ export function ClientProfile() {
               {client && client.profilePicture && <FileUploader initialPicture={client.profilePicture} url='/clients/clientprofile/picture' />}
               <br/>
               <StyledLabel>Nombre: </StyledLabel>
-              <p>{client !== undefined && client.name}</p>
+              <p>{!!client && client.name}</p>
             </StyledSection>
             <StyledSection segundaColumna>
                 <StyledLabel> Peso: </StyledLabel>
@@ -162,14 +166,14 @@ export function ClientProfile() {
                   id="height"
                   name="height"
                 >
-                  {client.metric !== undefined && client.metric.height}
+                  {!!client && !!client.metric && client.metric.height}
                 </p>
                 <StyledLabel htmlFor="bmi"> IMC: </StyledLabel>
                 <p
                   id="bmi"
                   name="bmi"
                 >
-                {client.metric !== undefined && Math.ceil(client.metric.bmi)}
+                {!!client && !!client.metric && Math.ceil(client.metric.bmi)}
                 </p> 
             </StyledSection>   
           </StyledForm>
