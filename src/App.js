@@ -15,6 +15,7 @@ import { history } from './utils/history'
 import { ClientSetAppointment } from './pages/ClientSetAppointment'
 import { TransactionResult } from './pages/TransactionResult'
 import { UserProfile } from './pages/UserProfile'
+import { ClientProfile } from './pages/ClientProfile'
 
 function PrivateRoute({children, ...rest}) {
   const token = localStorage.getItem('token')

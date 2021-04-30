@@ -88,7 +88,6 @@ export function ClientProfile({isPublic}) {
         <StyledMain>
           <StyledForm onSubmit={handleSubmit}>
             {client && client.profilePicture && <StyledImg src={client.profilePicture} url='/clients/clientprofile/picture'/>}
-            {console.log(client.profilePicture)}
             <StyledSection primerColumna>
               <StyledLabelEdit htmlFor="name">Nombre</StyledLabelEdit>  
               <input

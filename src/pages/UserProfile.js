@@ -6,7 +6,7 @@ export function UserProfile(){
   return(
     <>
     {!!userType && userType === 'coach' && <CoachProfile isPublic={false} />}
-    {!!userType && userType === 'client' && <ClientProfile />}
+    {!!userType && userType === 'client' && <ClientProfile isPublic={false} />}
     </>
   )
 }
