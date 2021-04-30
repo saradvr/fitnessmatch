@@ -11,7 +11,7 @@ export const StyledForm = styled.form`
   background-color: rgba(105,179,45,0.4);
   box-sizing: border-box;
   margin: auto;
-  width: 35%;
+  width: 50%;
   display: grid;
   padding: 20px;
   grid-template-columns: 1fr 1fr;
@@ -20,7 +20,7 @@ export const StyledForm = styled.form`
     background-color: rgba(105,179,45,0.4);
     box-sizing: border-box;
     margin: auto;
-    width: 35%;
+    width: 50%;
     display: grid;
     padding: 20px;
     grid-template-columns: 1fr 1fr;
