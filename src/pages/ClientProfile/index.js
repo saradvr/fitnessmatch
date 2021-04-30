@@ -6,32 +6,35 @@ import { Header } from '../../components/Header'
 import { getSpecializations, toggleSpecialization } from '../../store/specializationsReducer'
 import { getDisciplines, toggleDiscipline } from '../../store/disciplinesReducer'
 import { FileUploader } from '../../components/FileUploader'
-import { getClient } from '../../store/clientReducer'
+import { getClient, getPublicClient } from '../../store/clientReducer'
 import { StyledButton } from '../../components/Button/styles'
 import { StyledForm, StyledLabel, StyledSection, StyledSection1, StyledMain, StyledLabelEdit, StyledImg } from './styles'
 import Button from '../../components/Button'
 import { addSpecialization } from '../../store/specializationsReducer'
 import { addDiscipline } from '../../store/disciplinesReducer'
+import { useParams } from 'react-router'
 
 
 
 
-export function ClientProfile() {
+export function ClientProfile({isPublic}) {
   const [edit, setEdit] = useState(false)
   const [name, setName] = useState('')
   const [weight, setWeight] = useState(0)
   const [height, setHeight] = useState(0)
   
   const dispatch = useDispatch()
+  const { clientId } = useParams()
 
   useEffect(() => {
     dispatch(getSpecializations())
     dispatch(getDisciplines())
+    isPublic && dispatch(getPublicClient(clientId))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
-    dispatch(getClient())
+    !isPublic && dispatch(getClient())
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [edit])
 
@@ -153,7 +156,7 @@ export function ClientProfile() {
       <StyledMain>
           <StyledForm>
             <StyledSection primerColumna>
-              {client && client.profilePicture && <FileUploader initialPicture={client.profilePicture} url='/clients/clientprofile/picture' />}
+              {client && client.profilePicture && <FileUploader isPublic={isPublic} initialPicture={client.profilePicture} url='/clients/clientprofile/picture' />}
               <br/>
               <StyledLabel>Nombre: </StyledLabel>
               <p>{!!client && client.name}</p>
@@ -181,34 +184,36 @@ export function ClientProfile() {
               <StyledSection1 primerColumna>
                 <StyledLabel>Mis Metas</StyledLabel>
                 {!!client && !!client.specializations && client.specializations.length > 0 && client.specializations.map((el) => <p>{el.name}</p>)}
-                <StyledLabel>Mis Citas</StyledLabel>
-                {!!client && !!client.appointments && client.appointments.length > 0 && client.appointments.map((el) => <p>{el.appointmentDate}</p>)}
+                {!isPublic && <StyledLabel>Mis Citas</StyledLabel>}
+                {!isPublic && !!client && !!client.appointments && client.appointments.length > 0 && client.appointments.map((el) => <p>{el.appointmentDate}</p>)}
               </StyledSection1>
               <StyledSection1 segundaColumna>
                 <StyledLabel>Mis disciplinas</StyledLabel>
                 {!!client && !!client.disciplines && client.disciplines.length > 0 && client.disciplines.map((el) => <p>{el.name}</p>)}
               </StyledSection1>
-              <Button
-                type="button"
-                handleClick={() => {
-                  setName(client.name)
-                  setWeight(client.metric.weight)
-                  setHeight(client.metric.height)
-                  setEdit(true)
-                  if( client.specializations.length > 0){
-                  client.specializations
-                  .map(el => checkSpecializations.includes(el._id) ? "" : 
-                  dispatch(addSpecialization(el._id)))
-                }
-                if( client.disciplines.length > 0){
-                  client.disciplines.map(el => checkDisciplines.includes(el._id) ? "" : 
-                  dispatch(addDiscipline(el._id)))
-                }
-              }}
-                green={true}
-              >
-                Editar Perfil
-              </Button>
+              {!isPublic &&
+                <Button
+                  type="button"
+                  handleClick={() => {
+                    setName(client.name)
+                    setWeight(client.metric.weight)
+                    setHeight(client.metric.height)
+                    setEdit(true)
+                    if( client.specializations.length > 0){
+                    client.specializations
+                    .map(el => checkSpecializations.includes(el._id) ? "" : 
+                    dispatch(addSpecialization(el._id)))
+                  }
+                  if( client.disciplines.length > 0){
+                    client.disciplines.map(el => checkDisciplines.includes(el._id) ? "" : 
+                    dispatch(addDiscipline(el._id)))
+                  }
+                }}
+                  green={true}
+                >
+                  Editar Perfil
+                </Button>
+              }         
           </StyledForm>
       </StyledMain>
     </>

@@ -49,6 +49,35 @@ export function getClient() {
   }
 }
 
+export function getPublicClient(clientId) {
+  return async function(dispatch) {
+    dispatch({type: CLIENT_INFO_LOADING})
+    dispatch({type: CLIENT_INFO_ERROR, payload: ''})
+    try {
+      const token = localStorage.getItem('token')
+
+      const { data } = await axios({
+        method: 'GET',
+        baseURL: process.env.REACT_APP_SERVER_URL,
+        url: `/clients/client/${clientId}`,
+        headers: {
+          Authorization: `bearer ${token}`
+        }
+      })
+      dispatch({type: CLIENT_INFO_LOADED, payload: data.client})
+    } catch(error) {
+      dispatch({ type: CLIENT_INFO_ERROR, payload: error.message })
+      if(error.response !== undefined && error.response.request.status === 401){
+        localStorage.removeItem('token')
+        alert("Su sesión expiró, ingrese nuevamente.")
+        history.push('/login')
+      }
+    } finally {
+        dispatch({type: CLIENT_INFO_LOADING_FINISHED})
+    }
+  }
+}
+
 
 export function changeAppointment(value) {
   return {
