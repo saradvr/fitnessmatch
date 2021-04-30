@@ -1,7 +1,8 @@
-import { StyledInput, StyledLabel} from '../FormInputs/styles'
+import { StyledLabel } from '../FormInputs/styles'
 import axios from 'axios'
 import { useState } from 'react'
 import Button from '../Button'
+import { StyledImage, StyledInput } from './styles'
 
 export function FileUploader({initialPicture, url, isPublic}) {
 
@@ -52,7 +53,7 @@ export function FileUploader({initialPicture, url, isPublic}) {
   if(edit === false) {
     return(
       <> 
-        <img src={picture} alt='imagen de perfil' width='150px'></img>
+        <StyledImage src={picture} alt='imagen de perfil' />
         {!isPublic && <StyledLabel htmlFor="file"></StyledLabel>}
         {!isPublic && 
           <Button 
@@ -69,21 +70,27 @@ export function FileUploader({initialPicture, url, isPublic}) {
   else {
     return(
       <>
-        <StyledLabel htmlFor="file"></StyledLabel>
-        <StyledInput
-          type="file"
-          accept="image/*"
-          name="file"
-          id="file"
-          onChange={handleChange}
-        />
-        {image && <img src={image} alt="Profile Preview" />}
-        <Button 
-          handleClick={handleSubmit}
-          isGreen={true}
-        >
-          Guardar Foto
-        </Button>
+        <main>
+          <StyledInput          
+            type="file"
+            accept="image/*"
+            name="file"
+            id="file"
+            onChange={handleChange}
+          />
+          {image && <StyledImage src={image} alt="Profile Preview" />}
+          <Button 
+            handleClick={handleSubmit}
+            isGreen={true}
+          >
+            Guardar Foto
+          </Button>
+          <Button
+              handleClick={() => setEdit(false)}
+            >
+              Cancelar
+            </Button>
+        </main>
       </>
     ) 
   }

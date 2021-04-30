@@ -27,7 +27,7 @@ const LoginForm = function() {
     e.preventDefault()
 
     try {
-      const {data} = await axios({
+      const { data } = await axios({
         method: 'POST',
         baseURL: process.env.REACT_APP_SERVER_URL,
         url: '/users/signin',
@@ -75,7 +75,12 @@ const LoginForm = function() {
       </StyledSection>
       <StyledSection>
         <StyledLabel>¿No tienes una cuenta?</StyledLabel>
-        <LinkButton to="/signup">Registrarme</LinkButton>
+        <LinkButton 
+          to="/signup"
+          onClick={(e) => dispatch(changeEmail(''), dispatch(changePassword('')))}
+        >
+          Registrarme
+        </LinkButton>
       </StyledSection>
     </StyledForm>
   )

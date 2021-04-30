@@ -50,6 +50,9 @@ function App() {
         <PrivateRoute exact path="/coach/:coachId">
           <CoachProfile isPublic={true}/>
         </PrivateRoute>
+        <PrivateRoute exact path="/client/:clientId">
+          <ClientProfile isPublic={true}/>
+        </PrivateRoute>
         <PrivateRoute exact path="/coach/:coachId/setappointment">
           <ClientSetAppointment />
         </PrivateRoute>

@@ -109,7 +109,7 @@ function SignUpForm() {
           >
             Registrarme  
           </StyledButton>
-          <LoginText>¿Ya tienes una cuenta? <StyledLink to="/login">Inicia sesión</StyledLink></LoginText>
+          <LoginText>¿Ya tienes una cuenta? <StyledLink to="/login" >Inicia sesión</StyledLink></LoginText>
         </StyledSection>
         
       </StyledForm>
