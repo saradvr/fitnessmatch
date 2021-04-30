@@ -3,8 +3,13 @@ import { history } from '../utils/history'
 
 export const CHANGE_WEIGHT = 'CHANGE_WEIGHT'
 export const CHANGE_HEIGHT = 'CHANGE_HEIGHT'
-export const CHANGE_BMI = 'CHANGE_BMI'
 export const CHANGE_NAME = 'CHANGE_NAME'
+export const METRIC_LOADING = 'METRIC_LOADING'
+export const METRIC_LOADED = 'METRIC_LOADED'
+export const METRIC_LOADING_FINISHED = 'METRIC_LOADING_FINISHED'
+export const METRIC_ERROR = 'METRIC_ERROR'
+export const SAVE_CLIENT = 'SAVE_CLIENT'
+export const CHANGE_APPOINTMENT = 'CHANGE_APPOINTMENT'
 export const CLIENT_INFO_LOADING = 'CLIENT_INFO_LOADING'
 export const CLIENT_INFO_LOADED = 'CLIENT_INFO_LOADED'
 export const CLIENT_INFO_ERROR = 'CLIENT_INFO_ERROR'
@@ -33,7 +38,7 @@ export function getClient() {
       dispatch({type: CLIENT_INFO_LOADED, payload: data.client})
     } catch(error){
         dispatch({ type: CLIENT_INFO_ERROR, payload: error.message })
-        if(error.response.request.status === 401){
+        if(error.response !== undefined && error.response.request.status === 401){
           localStorage.removeItem('token')
           alert("Su sesión expiró, ingrese nuevamente.")
           history.push('/login')
@@ -44,38 +49,42 @@ export function getClient() {
   }
 }
 
-
-export function setClientInfo(client, metric) {
+export function getPublicClient(clientId) {
   return async function(dispatch) {
-    dispatch({type: SETTING_CLIENT_INFO})
-    dispatch({type: SETTING_CLIENT_INFO_ERROR, payload: ''})
+    dispatch({type: CLIENT_INFO_LOADING})
+    dispatch({type: CLIENT_INFO_ERROR, payload: ''})
     try {
       const token = localStorage.getItem('token')
 
       const { data } = await axios({
-        method: 'PUT',
+        method: 'GET',
         baseURL: process.env.REACT_APP_SERVER_URL,
-        url: '/clients/profile',
+        url: `/clients/client/${clientId}`,
         headers: {
           Authorization: `bearer ${token}`
-        },
-        data: {
-          client,
-          metric,
-        },
+        }
       })
-      dispatch({type: SETTING_CLIENT_INFO_SUCCESSFUL, payload: data.message})
+      dispatch({type: CLIENT_INFO_LOADED, payload: data.client})
     } catch(error) {
-        dispatch({ type: SETTING_CLIENT_INFO_ERROR, payload: error.message})
-        if(error.response.request.status === 401) {
-          localStorage.removeItem('token')
-          alert("Su sesión expiró, ingrese nuevamente")
-          history.push('/login')
+      dispatch({ type: CLIENT_INFO_ERROR, payload: error.message })
+      if(error.response !== undefined && error.response.request.status === 401){
+        localStorage.removeItem('token')
+        alert("Su sesión expiró, ingrese nuevamente.")
+        history.push('/login')
       }
-    }finally{
-      dispatch({type: SETTING_CLIENT_INFO_FINISHED})
+    } finally {
+        dispatch({type: CLIENT_INFO_LOADING_FINISHED})
     }
   }
+}
+
+
+export function changeAppointment(value) {
+  return {
+    type: CHANGE_APPOINTMENT,
+    payload: value,
+  }
+  
 }
 
 export function changeWeight(value) {
@@ -92,14 +101,6 @@ export function changeHeight(value) {
   }
 }
 
-export function changeBMI(weight, height) {
-  const BMI = weight / (height**2)
-  return {
-    type: CHANGE_BMI,
-    payload: Math.ceil(BMI),
-  }
-}
-
 export function changeName(value) {
   return {
     type: CHANGE_NAME,
@@ -112,7 +113,6 @@ const initialState = {
   profilePicture: '',
   weight: 0,
   height: 0,
-  bmi: 0,
   metrics: {},
   specializations: [],
   disciplines: [],
@@ -176,12 +176,17 @@ export function clientReducer(state = initialState, action) {
       return {
         ...state,
         name: action.payload,
-      }
-    case CHANGE_BMI:
+      } 
+    case CHANGE_APPOINTMENT:
       return {
         ...state,
-        bmi: action.payload,
-      }   
+        appointments: action.payload,
+      } 
+    case SAVE_CLIENT:
+      return {
+        ...state,
+        client: action.payload,
+      }
   default:
       return state
   }
