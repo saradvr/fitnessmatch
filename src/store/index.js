@@ -32,6 +32,10 @@ const rootReducer = (state, action) => {
   return appReducer(state, action)
 }
 
-const middlewares = applyMiddleware(thunk, logger)
+const middlewares = [thunk]
 
-export const store = createStore(rootReducer, middlewares)
+if (process.env.NODE_ENV === 'development') {
+  middlewares.push(logger);
+}
+
+export const store = createStore(rootReducer, applyMiddleware(...middlewares))
